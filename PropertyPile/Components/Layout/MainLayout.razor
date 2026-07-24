@@ -1,0 +1,26 @@
+﻿@inherits LayoutComponentBase
+@inject IHttpClientFactory HttpClientFactory
+
+<div class="page">
+    <NavMenu/>
+    <main>
+        @Body
+    </main>
+</div>
+
+
+@code {
+    private string? body;
+
+    protected override async Task OnInitializedAsync() {
+        using var client = HttpClientFactory.CreateClient();
+        var apiKey = Environment.GetEnvironmentVariable("REALTY_API_KEY");
+        Console.WriteLine("API Key" + apiKey);
+        // var url = "https://domain.realtyapi.io/details/byid?id=2020755515";
+        // var request = new HttpRequestMessage(HttpMethod.Get, url);
+        // request.Headers.Add("x-realtyapi-key", apiKey);
+        // var response = await client.SendAsync(request);
+        // body = await response.Content.ReadAsStringAsync();
+        //Console.WriteLine(body); 
+    }
+}
