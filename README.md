@@ -21,6 +21,11 @@ To develop and test the app locally, create a `.env` file in the project root wi
 
 For production deployment, you will need to set the same environment variables in your hosting environment.
 
+### Fonts
+
+>[!IMPORTANT]
+>[Neue Montreal](https://pangrampangram.com/products/neue-montreal) is free for personal use. If you use this codebase for any commercial project, you must either purchase a licence or replace the font with something you have the rights to use commercially.
+
 ## Development
 
 ### Prerequisites

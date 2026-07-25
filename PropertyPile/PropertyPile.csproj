@@ -60,4 +60,8 @@
       <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Include="wwwroot\fonts.css" />
+    </ItemGroup>
+
 </Project>

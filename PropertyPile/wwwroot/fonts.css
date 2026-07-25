@@ -1,0 +1,40 @@
+﻿:root {
+    --font-family-body: "Neue Montreal", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --font-family-heading: var(--font-family-body);
+}
+
+@font-face {
+    font-family: "Neue Montreal";
+    font-style: normal;
+    font-feature-settings: "ss01";
+    src: url("fonts/PPNeueMontreal-Light.woff2") format("woff2");
+    font-weight: 300;
+}
+@font-face {
+    font-family: "Neue Montreal";
+    font-style: normal;
+    font-feature-settings: "ss01";
+    src: url("fonts/PPNeueMontreal-Regular.woff2") format("woff2");
+    font-weight: 400;
+}
+@font-face {
+    font-family: "Neue Montreal";
+    font-feature-settings: "ss01";
+    src: url("fonts/PPNeueMontreal-Italic.woff2") format("woff2");
+    font-weight: 400;
+    font-style: italic;
+}
+@font-face {
+    font-family: "Neue Montreal";
+    font-style: normal;
+    font-feature-settings: "ss01";
+    src: url("fonts/PPNeueMontreal-Semibold.woff2") format("woff2");
+    font-weight: 600 700;
+}
+@font-face {
+    font-family: "Neue Montreal";
+    font-style: italic;
+    font-feature-settings: "ss01";
+    src: url("fonts/PPNeueMontreal-SemiboldItalic.woff2") format("woff2");
+    font-weight: 600 700;
+}

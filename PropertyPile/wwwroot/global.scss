@@ -2,7 +2,7 @@
 @use "../Components/functions" as *;
 @use "../Components/mixins" as *;
 
-:root {
+:root {	
 	--width-wide: #{map-get($widths, 'wide')};
 	--width-contained: #{map-get($widths, 'contained')};
 	--width-narrow: #{map-get($widths, 'narrow')};
