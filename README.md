@@ -45,3 +45,15 @@ From the solution directory:
 ```powershell
 cd PropertyPile && dotnet watch run
 ```
+
+Create a file in the project root called `data.json` and add the IDs of your shortlisted properties like so:
+
+```json
+{
+  "priority": [1, 2, 3],
+  "maybe": [4, 5, 6],
+  "dismissed": [7, 8, 9]
+}
+```
+
+You do not need to manually mark when a property you shorlisted gets sold. The app will automatically account for this when processing the data.
