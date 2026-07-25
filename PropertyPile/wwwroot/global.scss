@@ -1,0 +1,92 @@
+@use "../Components/variables" as *;
+@use "../Components/functions" as *;
+@use "../Components/mixins" as *;
+
+:root {
+	--width-wide: #{map-get($widths, 'wide')};
+	--width-contained: #{map-get($widths, 'contained')};
+	--width-narrow: #{map-get($widths, 'narrow')};
+	--width-narrower: #{map-get($widths, 'narrower')};
+	--width-small: #{map-get($widths, 'small')};
+	
+	--spacing-xxs: 0.25rem;
+	/* Augmented fourth scale - 1.414 */
+	--spacing-xs: 0.5rem;
+	--spacing-sm: 0.707rem;
+	--spacing-md: 1rem;
+	--spacing-lg: 1.414rem;
+	--spacing-xl: 2rem;
+	--spacing-xxl: 2.827rem;
+
+	--font-size-xs: 0.75rem;
+	--font-size-sm: 0.875rem;
+	--font-size-md: #{step-up(1)};
+	--font-size-lg: #{step-up(2)};
+	--font-size-xl: #{step-up(3)};
+	--font-size-xxl: #{step-up(4)};
+	--font-size-display: #{step-up(6)};
+
+	--font-weight-light: 300;
+	--font-weight-regular: 400;
+	--font-weight-semibold: 600;
+	--font-weight-bold: 700;
+
+	--base-font-size: var(--font-size-sm);
+	--typescale: 1.25;
+
+	@include media-breakpoint-up('contained') {
+		--base-font-size: 1rem;
+		--typescale: 1.33;
+	}
+}
+
+html {
+	font-size: var(--base-font-size);
+}
+
+body {
+	font-family: var(--font-family-body), sans-serif;
+	line-height: 1.4;
+	padding: 0;
+	margin: 0;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+[data-size] {
+	width: 100%;
+	display: block;
+	container-name: layout-section;
+	container-type: inline-size;
+	padding-inline: calc((100cqw - var(--container-max-width)) / 2);
+	@include pad-edges();
+
+	> * {
+		width: 100%;
+	}
+	
+	&[data-size="full"] {
+		--container-max-width: 100%;
+	}
+
+	@each $name, $size in $widths {
+		&[data-size="#{$name}"] {
+			--container-max-width: var(--width-#{$name});
+		}
+	}
+
+
+}
+
+
+
+h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+}
+
+ul, ol {
+	margin: 0;
+	padding: 0;
+}

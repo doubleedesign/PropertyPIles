@@ -11,7 +11,6 @@ var app = builder.Build();
 
 // Enable loading variables from .env locally
 if (app.Environment.IsDevelopment()) {
-	Console.WriteLine("is dev");
 	DotNetEnv.Env.Load(".env");
 }
 

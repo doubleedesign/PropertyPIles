@@ -1,0 +1,10 @@
+.property-list {
+  padding-block: var(--spacing-lg);
+}
+@media (min-width: 768px) {
+  .property-list {
+    padding-block: var(--spacing-xl);
+  }
+}
+
+/*# sourceMappingURL=PropertyList.razor.css.map */

@@ -1,0 +1,40 @@
+@use "../mixins" as *;
+
+.site-header {
+	padding-block: var(--spacing-md);
+	
+	@include media-breakpoint-up('small') {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	
+	&__name {
+		span, strong {
+			display: block;
+		}
+		
+		span {
+			
+		}
+		
+		strong {
+			font-size: var(--font-size-md);
+			font-weight: var(--font-weight-bold);
+		}
+	}
+	
+	&__menu {
+		
+		&__list {
+			display: flex;
+			justify-content: center;
+			list-style: none;
+			gap: var(--spacing-md);
+
+			@include media-breakpoint-up('small') {
+				justify-content: flex-end;
+			}
+		}
+	}
+}

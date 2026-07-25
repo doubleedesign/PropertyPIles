@@ -1,19 +1,9 @@
 ﻿@page "/"
+@using PropertyPile.Components.Data
 
 <PageTitle>Property Pile</PageTitle>
 
-<h2 id="shortlist">Priority Pile</h2>
-
-Properties we're particularly keen on will go here.
-
-<h2>Maybe Pile</h2>
-
-Properties we're considering or will be keen on if they go down in price will go here.
-
-<h2 id="dismissed">Rubbish Pile</h2>
-
-Properties we've looked at but vetoed will go here.
-
-<h2 id="sold">Sold Pile</h2>
-
-Properties we shortlisted, but have since sold will go here.
+<PropertyList Id="shortlist" ListName="priority" Title="Priority Pile" />
+<PropertyList Id="maybe" ListName="maybe" Title="Maybe Pile" />
+<PropertyList Id="dismissed" ListName="dismissed" Title="Rubbish Pile"/>
+<PropertyList Id="sold" ListName="sold" Title="Sold Pile" />

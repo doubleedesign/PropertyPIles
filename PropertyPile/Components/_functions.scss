@@ -1,0 +1,56 @@
+﻿@use "sass:color";
+
+// Replacements for SASS colour functions that will automatically adopt replacement vanilla CSS variables.
+// Calculations are added so that the syntax for their use is the same as SCSS,
+// e.g. darken by 10% would usually mean 90% for color-mix, but this function means we can still write it as 10%.
+// To use, ensure @use 'path/to/functions' as *; is at the top of your SCSS file.
+@function lighten($colorName, $amount) {
+	@return color-mix(in srgb, var(--color-#{$colorName}) (100% - $amount), white);
+}
+
+@function darken($colorName, $amount) {
+	@return color-mix(in srgb, var(--color-#{$colorName}) (100% - $amount), black);
+}
+
+// Other custom theme colour functions
+@function lighten-theme-color($amount) {
+	@return color-mix(in srgb, var(--theme-color) (100% - $amount), white);
+}
+
+@function darken-theme-color($amount) {
+	@return color-mix(in srgb, var(--theme-color) (100% - $amount), black);
+}
+
+@function lighten-background-color($amount) {
+	@return color-mix(in srgb, var(--background-color) (100% - $amount), white);
+}
+
+@function darken-background-color($amount) {
+	@return color-mix(in srgb, var(--background-color) (100% - $amount), black);
+}
+
+@function transparentize-color($colorName, $amount) {
+	@return rgb(from var(--color-#{$colorName}) r g b / $amount);
+}
+
+@function transparentize-theme-color($amount) {
+	@return rgb(from var(--theme-color) r g b / $amount);
+}
+
+@function transparentize-background-color($amount) {
+	@return rgb(from var(--background-color) r g b / $amount);
+}
+
+// Typography sizing functions
+// Can't use SASS pow() with vanilla CSS variables, so this is a workaround for that
+@function step-up($steps, $multiplier: 1) {
+	$result: 1rem;
+
+	@return calc(#{$result} * pow(var(--typescale), $steps * $multiplier));
+}
+
+@function step-down($steps, $multiplier: 1) {
+	$result: 1rem;
+
+	@return calc(#{$result} / pow(var(--typescale), $steps * $multiplier));
+}

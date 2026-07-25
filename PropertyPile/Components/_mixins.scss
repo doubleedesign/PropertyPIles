@@ -1,0 +1,141 @@
+﻿@use 'variables' as *;
+
+@mixin container-width-up($widthName, $containerName: 'layout-section') {
+	// Workaround for browsers that don't support the var-based min-width
+	@container #{$containerName} (min-width: #{map-get($widths, $widthName)}) {
+		@content;
+	}
+	// End workaround
+
+	@container #{$containerName} (min-width: var(--width-#{$widthName})) {
+		@content;
+	}
+}
+
+@mixin container-width-down($widthName, $containerName: 'layout-section') {
+	// Workaround for browsers that don't support the var-based min-width
+	@container #{$containerName} (max-width: #{map-get($widths, $widthName)}) {
+		@content;
+	}
+	// End workaround
+
+	@container  #{$containerName} (max-width: var(--width-#{$widthName})) {
+		@content;
+	}
+}
+
+@mixin media-breakpoint-up($widthName) {
+	@media (min-width: #{map-get($widths, $widthName)}) {
+		@content;
+	}
+}
+
+@mixin media-breakpoint-down($widthName) {
+	@media (max-width: #{map-get($widths, $widthName)}) {
+		@content;
+	}
+}
+
+@mixin section-margin() {
+	margin-block: var(--spacing-lg);
+
+	@include media-breakpoint-up('narrower') {
+		margin-block: var(--spacing-xl);
+	}
+
+	@include media-breakpoint-up('wide') {
+		margin-block: var(--spacing-xxl);
+	}
+}
+
+// Mixin for standard padding between sections
+@mixin section-padding() {
+	padding-block: var(--spacing-lg);
+
+	@include media-breakpoint-up('narrower') {
+		padding-block: var(--spacing-xl);
+	}
+}
+
+// Mixin to add equal padding on the sides of a section in select cases,
+// while keeping its content aligned with that of elements that do not have this
+@mixin section-padding-inline() {
+	padding-inline: var(--spacing-md);
+	box-sizing: content-box;
+	transform: translateX(calc(var(--spacing-md) * -1));
+
+	@include media-breakpoint-up('narrower') {
+		padding-inline: var(--spacing-lg);
+		transform: translateX(calc(var(--spacing-lg) * -1));
+	}
+
+	@include media-breakpoint-up('wide') {
+		padding-inline: var(--spacing-xl);
+		transform: translateX(calc(var(--spacing-xl) * -1));
+	}
+}
+
+// Small padding for nested elements like groups and columns
+@mixin nested-padding() {
+	padding: var(--spacing-md);
+}
+
+@mixin pad-edges() {
+	// make sure content doesn't hit the edges on small viewports or when full-width,
+	// while also leaving enough space to adjust elements with nested section padding so their content aligns with the rest of the page
+	border-inline: var(--spacing-xl) solid transparent;
+	box-sizing: border-box;
+}
+
+// Use unpad-edges() to "break out" a specific element (such as an image) from a parent with pad-edges()
+@mixin unpad-edges() {
+	width: calc(100% + var(--spacing-xl) * 2);
+	margin-inline: calc(var(--spacing-xl) * -1);
+}
+
+@mixin follows-adjacent-sibling($selector) {
+	#{$selector} + & {
+		@content;
+	}
+}
+
+
+@mixin line-clamp($lineCount) {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: $lineCount;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+@mixin active-link() {
+	text-decoration: underline;
+	text-decoration-thickness: 1px; // Edge default is thicker which looks weird with lighter fonts
+	text-decoration-color: currentColor;
+}
+
+@mixin link-underline-on-hover() {
+	@include active-link();
+	text-decoration-color: transparent;
+	transition: all 0.3s ease-in-out;
+
+	&:hover, &:focus, &:active {
+		text-decoration-color: currentColor;
+	}
+
+	&:has(> span) {
+		text-decoration: none;
+
+		> span:not(:has(svg)):not(:has(i)) {
+			@include active-link();
+			transition: all 0.3s ease;
+			text-decoration-color: transparent;
+		}
+
+		&:hover, &:focus, &:active {
+			> span:not(:has(svg)):not(:has(i)) {
+				text-decoration-color: currentColor;
+			}
+		}
+	}
+}
