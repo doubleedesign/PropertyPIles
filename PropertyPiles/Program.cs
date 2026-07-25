@@ -1,4 +1,4 @@
-using PropertyPile.Components;
+using PropertyPiles.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 

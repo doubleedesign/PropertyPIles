@@ -1,4 +1,4 @@
-﻿namespace PropertyPile.Services;
+﻿namespace PropertyPiles.Services;
 using System.Text.Json;
 
 public class ShortlistService {

@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyPile", "PropertyPile\PropertyPile.csproj", "{BBE5BCC4-50F4-44DC-B716-388D47C0118E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyPile", "PropertyPiles\PropertyPiles.csproj", "{BBE5BCC4-50F4-44DC-B716-388D47C0118E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,8 +1,8 @@
-﻿# PropertyPile
+﻿# PropertyPiles
 
 Retrieve and display property listings in a format you can share with friends and family when you are house-hunting (to purchase).
 
-PropertyPile uses [RealtyAPI](https://www.realtyapi.io) to retrieve property listings. It has only been tested with Domain.com.au but should theoretically work with other APIs offered through this service.
+PropertyPiles uses [RealtyAPI](https://www.realtyapi.io) to retrieve property listings. It has only been tested with Domain.com.au but should theoretically work with other APIs offered through this service.
 
 ## Setup and Deployment
 
@@ -30,7 +30,7 @@ For production deployment, you will need to set the same environment variables i
 
 ### Prerequisites
 
-PropertyPile is a [Blazor Web App](https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor), so you will need:
+PropertyPiles is a [Blazor Web App](https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor), so you will need:
 
 - [RealtyAPI](https://www.realtyapi.io/) account and API key
 - .NET 10 SDK (`choco install dotnet-sdk` or [download](https://dotnet.microsoft.com/en-us/download/dotnet/10.0))
@@ -48,7 +48,7 @@ To run with hot reloading in Rider, use the CLI instead of the IDE's Run configu
 From the solution directory:
 
 ```powershell
-cd PropertyPile && dotnet watch run
+cd PropertyPiles && dotnet watch run
 ```
 
 Create a file in the project root called `data.json` and add the IDs of your shortlisted properties like so:

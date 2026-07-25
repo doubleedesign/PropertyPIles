@@ -1,4 +1,4 @@
-﻿namespace PropertyPile.Services;
+﻿namespace PropertyPiles.Services;
 
 public class DataService {
 	private readonly string _apiKey = Environment.GetEnvironmentVariable("REALTY_API_KEY") ?? "";

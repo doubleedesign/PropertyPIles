@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
-using PropertyPile.Services;
+using PropertyPiles.Services;
 
-namespace PropertyPile.Components.Data;
+namespace PropertyPiles.Components.Data;
 
 public partial class PropertyList : ComponentBase {
 	[Parameter]

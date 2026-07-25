@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
-namespace PropertyPile.Components.Layout;
+namespace PropertyPiles.Components.Layout;
 
 public partial class SiteHeader : ComponentBase {
 	private string? UserName { get; set; }
