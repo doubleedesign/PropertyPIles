@@ -1,0 +1,80 @@
+﻿@use "../mixins" as *;
+
+@mixin active-nav-link() {
+	text-decoration: none;
+	border-bottom-color: var(--global-background);
+	opacity: 1;
+}
+
+.nav-menu {
+	order: 3;
+	width: 100%;
+	flex-basis: 100%;
+	background: var(--color-secondary);
+	position: relative;
+
+	@include media-breakpoint-up('small') {
+		background: transparent;
+		width: fit-content;
+		flex-basis: fit-content;
+	}
+
+	&:before {
+		content: ''; 
+		width: 140%;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: -20%;
+		right: -20%;
+		background: var(--color-secondary);
+
+		@include media-breakpoint-up('small') {
+			content: none;
+		}
+	}
+
+	&__list {
+		display: flex;
+		justify-content: center;
+		list-style: none;
+		gap: var(--spacing-md);
+		position: relative;
+		z-index: 20;
+
+		@include media-breakpoint-up('small') {
+			justify-content: flex-end;
+		}
+
+		li {
+			::deep a {
+				text-decoration: none;
+				display: block;
+				padding-block: var(--spacing-sm) var(--spacing-xs);
+				border-bottom: 4px solid transparent;
+				transition: all 0.3s ease;
+				color: white;
+				opacity: 0.8;
+				font-weight: var(--font-weight-semibold);
+				
+				@include media-breakpoint-up('narrow') {
+				    font-size: 1.1rem;
+				}
+
+				&.active,
+				&:hover, &:focus, &:active {
+					@include active-nav-link();
+				}
+			}
+		}
+
+		&:not(:has(.active)) {
+			li:first-of-type {
+				::deep a {
+					@include active-nav-link();
+				}
+			}
+		}
+	}
+}
+

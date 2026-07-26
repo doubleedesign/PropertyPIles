@@ -1,0 +1,21 @@
+﻿@rendermode InteractiveServer
+
+<nav class="nav-menu">
+    <ul class="nav-menu__list">
+        <li>
+            <NavLink href="#shortlist" @onclick='() => Navigate("#shortlist")'>
+                Shortlist
+            </NavLink>
+        </li>
+        <li>
+            <NavLink href="#dismissed" @onclick='() => Navigate("#dismissed")'>
+                Dismissed
+            </NavLink>
+        </li>
+        <li>
+            <NavLink href="#sold" @onclick='() => Navigate("#sold")'>
+                Sold
+            </NavLink>
+        </li>
+    </ul>
+</nav> 

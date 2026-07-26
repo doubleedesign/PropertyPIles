@@ -24,5 +24,12 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
+    
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Components\Layout\MainLayout.razor" />
+      <_ContentIncludedByDefault Remove="Components\Layout\SiteHeader.razor" />
+      <_ContentIncludedByDefault Remove="Components\Elements\Layout\MainLayout.razor" />
+      <_ContentIncludedByDefault Remove="Components\Elements\Layout\SiteHeader.razor" />
+    </ItemGroup>
 
 </Project>

@@ -7,6 +7,10 @@
 	justify-content: space-between;
 	align-items: center;
 	flex-wrap: wrap;
+	position: sticky;
+	top: 0;
+	left: 0;
+	right: 0;
 
 	@include media-breakpoint-up('small') {
 		background: var(--color-secondary);
