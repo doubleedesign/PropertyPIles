@@ -1,9 +1,11 @@
 using PropertyPiles.Components;
+using PropertyPiles.Containers;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 // Add services to the container.
+builder.Services.AddSingleton<AppState>();
 builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 builder.Services.AddHttpClient();
 

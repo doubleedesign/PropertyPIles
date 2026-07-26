@@ -2,11 +2,11 @@
 
 <div class="theme-toggle">
     <input @onchange="OnToggle"
-           checked="@IsDarkMode()"
+           checked="@AppState.IsDarkMode()"
            class="theme-toggle__input"
            type="checkbox"
            role="switch"
-           aria-label="Toggle UI theme, current mode is @GetTheme()"
+           aria-label="Toggle UI theme, current mode is @AppState.GetTheme()"
     />
     <div class="theme-toggle__icons">
         <svg xmlns="http://www.w3.org/2000/svg"

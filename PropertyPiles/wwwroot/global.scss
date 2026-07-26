@@ -50,7 +50,7 @@
 		--color-secondary: #{color.scale(map.get($colors, 'secondary'), $blackness: 30%)};
 	}
 }
-
+ 
 html {
 	font-size: var(--base-font-size);
 	scroll-behavior: smooth;
@@ -62,11 +62,12 @@ html {
 
 body {
 	font-family: var(--font-family-body), sans-serif;
-	background: var(--global-background);
-	color: var(--body-color);
 	line-height: 1.4;
 	padding: 0;
 	margin: 0;
+	background: var(--global-background);
+	color: var(--body-color);
+	transition: all 0.3s ease-in-out;
 }
 
 * {

@@ -20,6 +20,9 @@
 
     <ItemGroup>
         <!-- Ensure .razor.js files are treated as static assets -->
+        <None Update="Components\Layout\MainLayout.razor.js">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
         <None Update="Components\Elements\ThemeToggle.razor.js">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
