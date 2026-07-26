@@ -54,6 +54,7 @@
 html {
 	font-size: var(--base-font-size);
 	scroll-behavior: smooth;
+	overflow-x: hidden;
 	
 	@media (prefers-reduced-motion: reduce) {
 		scroll-behavior: unset;
@@ -99,6 +100,15 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
 	margin: 0;
+}
+
+h2 {
+	color: var(--color-secondary);			
+	margin-block-end: var(--spacing-xs);
+	
+	@include dark-mode() {
+		color: var(--global-inverse);
+	}
 }
 
 ul, ol {

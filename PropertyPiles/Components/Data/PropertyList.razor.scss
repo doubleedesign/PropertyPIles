@@ -1,5 +1,88 @@
 ﻿@use "../mixins" as *;
+@use "../functions" as *;
+
+@mixin row-layout() {
+	@include media-breakpoint-up('narrow') {
+		display: grid;
+		grid-template-columns: repeat(10, 1fr);
+	}
+
+	[data-key="address"],
+	[data-key="notes"] {
+		width: 100%;
+		flex-basis: 100%;
+	}
+
+	[data-key="specs"],
+	[data-key="price"] {
+		width: 50%;
+		flex-basis: 50%;
+
+		@include media-breakpoint-up('narrow') {
+			width: unset;
+			flex-basis: unset;
+		}
+		
+	}
+	[data-key="address"] {
+		grid-column: span 3;
+	}
+
+	[data-key="specs"] {
+		grid-column: span 2;
+	}
+
+	[data-key="price"] {
+		grid-column: span 2;
+	}
+	
+	[data-key="notes"] {
+		grid-column: span 3;
+	}
+}
 
 .property-list {
 	@include section-padding(); 
+	
+	&__table {
+		display: block;
+		
+		thead {
+			display: none;
+		}
+		
+		tbody {
+			display: block;
+			width: 100%;
+			border-block: 1px solid rgba(0, 0, 0, 0.15);
+			
+			@include dark-mode() {
+				border-block-color: rgba(255, 255, 255, 0.15);
+			}
+			
+		}
+		
+		tr {
+			display: flex;
+			width: 100%;
+			flex-direction: column;
+			flex-wrap: wrap;
+			padding-block: var(--spacing-md);
+			@include row-layout();
+			
+			&:nth-of-type(odd) {
+				background: rgba(0, 0, 0, 0.05);
+
+				@include dark-mode() {
+					background: rgba(255, 255, 255, 0.05);
+				}
+			}
+		}
+	}
+	
+	&__empty {
+		border: 1px solid var(--color-warning);
+		padding: var(--spacing-sm);
+		text-align: center;
+	}
 } 

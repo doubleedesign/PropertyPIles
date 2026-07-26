@@ -6,5 +6,72 @@
     padding-block: var(--spacing-xl);
   }
 }
+.property-list__table {
+  display: block;
+}
+.property-list__table thead {
+  display: none;
+}
+.property-list__table tbody {
+  display: block;
+  width: 100%;
+  border-block: 1px solid rgba(0, 0, 0, 0.15);
+}
+[data-theme=dark] .property-list__table tbody {
+  border-block-color: rgba(255, 255, 255, 0.15);
+}
+.property-list__table tr {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding-block: var(--spacing-md);
+}
+@media (min-width: 940px) {
+  .property-list__table tr {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+  }
+}
+.property-list__table tr [data-key=address],
+.property-list__table tr [data-key=notes] {
+  width: 100%;
+  flex-basis: 100%;
+}
+.property-list__table tr [data-key=specs],
+.property-list__table tr [data-key=price] {
+  width: 50%;
+  flex-basis: 50%;
+}
+@media (min-width: 940px) {
+  .property-list__table tr [data-key=specs],
+  .property-list__table tr [data-key=price] {
+    width: unset;
+    flex-basis: unset;
+  }
+}
+.property-list__table tr [data-key=address] {
+  grid-column: span 3;
+}
+.property-list__table tr [data-key=specs] {
+  grid-column: span 2;
+}
+.property-list__table tr [data-key=price] {
+  grid-column: span 2;
+}
+.property-list__table tr [data-key=notes] {
+  grid-column: span 3;
+}
+.property-list__table tr:nth-of-type(odd) {
+  background: rgba(0, 0, 0, 0.05);
+}
+[data-theme=dark] .property-list__table tr:nth-of-type(odd) {
+  background: rgba(255, 255, 255, 0.05);
+}
+.property-list__empty {
+  border: 1px solid var(--color-warning);
+  padding: var(--spacing-sm);
+  text-align: center;
+}
 
 /*# sourceMappingURL=PropertyList.razor.css.map */

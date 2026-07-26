@@ -1,3 +1,29 @@
 ﻿<section class="property-list" data-size="wide">
     <h2 id="@Id">@Title</h2>
+    
+    @if (Items.Count > 0) {
+        <table class="property-list__table">
+            <thead>
+            <tr class="property-list__table__header">
+                <td data-key="address">Address</td>
+                <td data-key="specs">Details</td>
+                <td data-key="price">Price</td>
+                <td data-key="notes">@(Id == "dismissed" ? "Dismissed because" : "Notes")</td>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var Item in Items) {
+                <tr class="property-list__table__row">
+                    <td data-key="address"><a href="@Item.GetUrl()" target="_blank">@Item.GetShortAddress()</a></td>
+                    <td data-key="specs"></td>
+                    <td data-key="price"></td>
+                    <td data-key="notes">@Item.GetFormattedNotes()</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+    else {
+        <p class="property-list__empty">We donʼt have any properties in this list yet.</p>
+    }
 </section>

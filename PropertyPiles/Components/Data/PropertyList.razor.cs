@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Components;
 using PropertyPiles.Services;
+using PropertyPiles.Types;
 
 namespace PropertyPiles.Components.Data;
 
 public partial class PropertyList : ComponentBase {
+	private List<SavedItem> Items;
+	
 	[Parameter]
 	public required string Id { get; set; }
 	
@@ -16,8 +19,6 @@ public partial class PropertyList : ComponentBase {
 	
 	protected override async Task OnInitializedAsync() {
 		await base.OnInitializedAsync();
-		
-		List<int> ids = new ShortlistService().GetList(this.ListName);
-		Console.WriteLine("Found " + ids.Count);
+		this.Items = new ShortlistService().GetList(this.ListName);
 	}
 }
