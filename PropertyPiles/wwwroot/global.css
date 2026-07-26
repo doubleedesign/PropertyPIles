@@ -23,22 +23,42 @@
   --font-weight-regular: 400;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
-  --base-font-size: var(--font-size-sm);
-  --typescale: 1.25;
+  --base-font-size: 1rem;
+  --typescale: 1.2;
+  --color-primary: #00b8c1;
+  --color-secondary: #262a70;
+  --color-accent: #a82f63;
+  --color-info: #00b8c1;
+  --color-warning: #f9c971;
+  --color-success: #00d4a9;
+  --color-error: #C22B00;
+  --color-light: #EFD3A1;
+  --color-dark: #0f0f2a;
+  --color-white: #ffffff;
+  --global-background: #FFF;
+  --global-inverse: var(--color-dark);
+  --body-color: var(--global-inverse);
 }
-@media (min-width: 1140px) {
-  :root {
-    --base-font-size: 1rem;
-    --typescale: 1.33;
-  }
+:root[data-theme=dark] {
+  --global-background: #0d0f17;
+  --global-inverse: #eafcff;
+  --color-secondary: rgb(38, 40.1837837838, 78.4);
 }
 
 html {
   font-size: var(--base-font-size);
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: unset;
+  }
 }
 
 body {
   font-family: var(--font-family-body), sans-serif;
+  background: var(--global-background);
+  color: var(--body-color);
   line-height: 1.4;
   padding: 0;
   margin: 0;
@@ -86,6 +106,31 @@ h1, h2, h3, h4, h5, h6 {
 ul, ol {
   margin: 0;
   padding: 0;
+}
+
+a {
+  color: color-mix(in srgb, var(--color-primary) 90%, black);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: currentColor;
+  text-decoration-color: transparent;
+  transition: all 0.2s ease;
+}
+a:hover, a:focus, a:active {
+  text-decoration-color: currentColor;
+}
+a:has(> span) {
+  text-decoration: none;
+}
+a:has(> span) > span:not(:has(svg)):not(:has(i)) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: currentColor;
+  transition: all 0.2s ease;
+  text-decoration-color: transparent;
+}
+a:has(> span):hover > span:not(:has(svg)):not(:has(i)), a:has(> span):focus > span:not(:has(svg)):not(:has(i)), a:has(> span):active > span:not(:has(svg)):not(:has(i)) {
+  text-decoration-color: currentColor;
 }
 
 /*# sourceMappingURL=global.css.map */

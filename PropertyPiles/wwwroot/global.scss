@@ -1,13 +1,15 @@
+@use "sass:map";
+@use "sass:color";
 @use "../Components/variables" as *;
 @use "../Components/functions" as *;
 @use "../Components/mixins" as *;
 
 :root {	
-	--width-wide: #{map-get($widths, 'wide')};
-	--width-contained: #{map-get($widths, 'contained')};
-	--width-narrow: #{map-get($widths, 'narrow')};
-	--width-narrower: #{map-get($widths, 'narrower')};
-	--width-small: #{map-get($widths, 'small')};
+	--width-wide: #{map.get($widths, 'wide')};
+	--width-contained: #{map.get($widths, 'contained')};
+	--width-narrow: #{map.get($widths, 'narrow')};
+	--width-narrower: #{map.get($widths, 'narrower')};
+	--width-small: #{map.get($widths, 'small')};
 	
 	--spacing-xxs: 0.25rem;
 	/* Augmented fourth scale - 1.414 */
@@ -31,21 +33,37 @@
 	--font-weight-semibold: 600;
 	--font-weight-bold: 700;
 
-	--base-font-size: var(--font-size-sm);
-	--typescale: 1.25;
+	--base-font-size: 1rem;
+	--typescale: 1.2;
+	
+	@each $color, $value in $colors {
+		--color-#{$color}: #{$value};
+	}
+	 
+	--global-background: #FFF;
+	--global-inverse: var(--color-dark);
+	--body-color: var(--global-inverse);
 
-	@include media-breakpoint-up('contained') {
-		--base-font-size: 1rem;
-		--typescale: 1.33;
+	&[data-theme="dark"] {
+		--global-background: #0d0f17;
+		--global-inverse: #eafcff;
+		--color-secondary: #{color.scale(map.get($colors, 'secondary'), $blackness: 30%)};
 	}
 }
 
 html {
 	font-size: var(--base-font-size);
+	scroll-behavior: smooth;
+	
+	@media (prefers-reduced-motion: reduce) {
+		scroll-behavior: unset;
+	}
 }
 
 body {
 	font-family: var(--font-family-body), sans-serif;
+	background: var(--global-background);
+	color: var(--body-color);
 	line-height: 1.4;
 	padding: 0;
 	margin: 0;
@@ -76,11 +94,7 @@ body {
 			--container-max-width: var(--width-#{$name});
 		}
 	}
-
-
 }
-
-
 
 h1, h2, h3, h4, h5, h6 {
 	margin: 0;
@@ -89,4 +103,9 @@ h1, h2, h3, h4, h5, h6 {
 ul, ol {
 	margin: 0;
 	padding: 0;
+}
+
+a {
+	color: darken(primary, 10%);
+	@include link-underline-on-hover();
 }

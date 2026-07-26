@@ -1,0 +1,103 @@
+﻿@use "../mixins" as *;
+@use "../functions" as *;
+
+.theme-toggle {
+	--toggle-width: 4em;
+	--toggle-height: calc(var(--toggle-width) / 2);
+	width: var(--toggle-width);
+	max-width: var(--toggle-width);
+	height: var(--toggle-height);
+	position: relative;
+	box-sizing: content-box;
+	border-radius: 1em;
+	background: #{lighten(secondary, 20%)};
+	border: 1px solid transparent;
+	
+	@include media-breakpoint-up('narrow') {
+		--toggle-width: 3.5em;
+	}
+
+	@include dark-mode() {
+		background: var(--color-dark);
+		border-color: #{lighten(dark, 10%)};
+	}
+
+	&__input {
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+		position: relative;
+		color: inherit;
+		font-size: inherit;
+		width: var(--toggle-width);
+		height: var(--toggle-height);
+		box-sizing: content-box;
+		cursor: pointer;
+		margin: 0;
+		z-index: 20;
+
+		&:before {
+			content: "";
+			position: absolute;
+			margin: 2px;
+			width: calc(var(--toggle-height) - 3px);
+			height: calc(var(--toggle-height) - 3px);
+			background: var(--global-background);
+			top: 0;
+			transform: translateX(0);
+			transition: all 0.2s ease-in-out;
+			box-sizing: border-box;
+			border-radius: 50%;
+			z-index: 10;
+
+			@media (prefers-reduced-motion: reduce) {
+				transition: none;
+			}
+
+			@include dark-mode() {
+				background: #{lighten(dark, 20%)};
+			}
+		}
+
+		&:checked {
+			&:before {
+				transform: translateX(calc(100% + 2px));
+			}
+		}
+	} 
+
+	&__icons {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		opacity: 0.75;
+		z-index: 50;
+		pointer-events: none;
+
+		svg {
+			color: contrast-color(var(--toggle-color));
+			padding-inline: 0.05em;
+
+			path {
+				fill: currentColor;
+			}
+		}
+		
+		&__light {
+			[data-theme="light"] & {
+				color: var(--color-dark);
+			}
+		}
+		
+		&__dark {
+			@include dark-mode() {
+				color: white;
+			}
+		}
+	}
+}

@@ -1,8 +1,9 @@
-﻿@use 'variables' as *;
+﻿@use "sass:map";
+@use 'variables' as *;
 
 @mixin container-width-up($widthName, $containerName: 'layout-section') {
 	// Workaround for browsers that don't support the var-based min-width
-	@container #{$containerName} (min-width: #{map-get($widths, $widthName)}) {
+	@container #{$containerName} (min-width: #{map.get($widths, $widthName)}) {
 		@content;
 	}
 	// End workaround
@@ -14,7 +15,7 @@
 
 @mixin container-width-down($widthName, $containerName: 'layout-section') {
 	// Workaround for browsers that don't support the var-based min-width
-	@container #{$containerName} (max-width: #{map-get($widths, $widthName)}) {
+	@container #{$containerName} (max-width: #{map.get($widths, $widthName)}) {
 		@content;
 	}
 	// End workaround
@@ -25,13 +26,19 @@
 }
 
 @mixin media-breakpoint-up($widthName) {
-	@media (min-width: #{map-get($widths, $widthName)}) {
+	@media (min-width: #{map.get($widths, $widthName)}) {
 		@content;
 	}
 }
 
 @mixin media-breakpoint-down($widthName) {
-	@media (max-width: #{map-get($widths, $widthName)}) {
+	@media (max-width: #{map.get($widths, $widthName)}) {
+		@content;
+	}
+}
+
+@mixin dark-mode() {
+	[data-theme="dark"] & {
 		@content;
 	}
 }
@@ -117,7 +124,7 @@
 @mixin link-underline-on-hover() {
 	@include active-link();
 	text-decoration-color: transparent;
-	transition: all 0.3s ease-in-out;
+	transition: all 0.2s ease;
 
 	&:hover, &:focus, &:active {
 		text-decoration-color: currentColor;
@@ -128,7 +135,7 @@
 
 		> span:not(:has(svg)):not(:has(i)) {
 			@include active-link();
-			transition: all 0.3s ease;
+			transition: all 0.2s ease;
 			text-decoration-color: transparent;
 		}
 

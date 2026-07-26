@@ -2,6 +2,7 @@
 namespace PropertyPiles.Components.Layout;
 
 public partial class SiteHeader : ComponentBase {
+	
 	private string? UserName { get; set; }
 	
 	protected override void OnInitialized() {
@@ -10,4 +11,5 @@ public partial class SiteHeader : ComponentBase {
 			this.UserName = Environment.GetEnvironmentVariable("APP_USER_NAME") + "ʼs";
 		}
 	}
+	
 }

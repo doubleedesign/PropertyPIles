@@ -10,11 +10,19 @@
     <ItemGroup>
       <PackageReference Include="Azure.Storage.Blobs" Version="12.29.1" />
       <PackageReference Include="DotNetEnv" Version="3.2.0" />
+      <PackageReference Include="Humanizer.Core" Version="3.0.10" />
       <PackageReference Include="System.Text.Json" Version="10.0.10" />
     </ItemGroup>
     
     <ItemGroup>
       <None Include="wwwroot\fonts.css" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <!-- Ensure .razor.js files are treated as static assets -->
+        <None Update="Components\Elements\ThemeToggle.razor.js">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
 </Project>

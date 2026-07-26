@@ -1,0 +1,88 @@
+.theme-toggle {
+  --toggle-width: 4em;
+  --toggle-height: calc(var(--toggle-width) / 2);
+  width: var(--toggle-width);
+  max-width: var(--toggle-width);
+  height: var(--toggle-height);
+  position: relative;
+  box-sizing: content-box;
+  border-radius: 1em;
+  background: color-mix(in srgb, var(--color-secondary) 80%, white);
+  border: 1px solid transparent;
+}
+@media (min-width: 940px) {
+  .theme-toggle {
+    --toggle-width: 3.5em;
+  }
+}
+[data-theme=dark] .theme-toggle {
+  background: var(--color-dark);
+  border-color: color-mix(in srgb, var(--color-dark) 90%, white);
+}
+.theme-toggle__input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  position: relative;
+  color: inherit;
+  font-size: inherit;
+  width: var(--toggle-width);
+  height: var(--toggle-height);
+  box-sizing: content-box;
+  cursor: pointer;
+  margin: 0;
+  z-index: 20;
+}
+.theme-toggle__input:before {
+  content: "";
+  position: absolute;
+  margin: 2px;
+  width: calc(var(--toggle-height) - 3px);
+  height: calc(var(--toggle-height) - 3px);
+  background: var(--global-background);
+  top: 0;
+  transform: translateX(0);
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+  border-radius: 50%;
+  z-index: 10;
+}
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle__input:before {
+    transition: none;
+  }
+}
+[data-theme=dark] .theme-toggle__input:before {
+  background: color-mix(in srgb, var(--color-dark) 80%, white);
+}
+.theme-toggle__input:checked:before {
+  transform: translateX(calc(100% + 2px));
+}
+.theme-toggle__icons {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  opacity: 0.75;
+  z-index: 50;
+  pointer-events: none;
+}
+.theme-toggle__icons svg {
+  color: contrast-color(var(--toggle-color));
+  padding-inline: 0.05em;
+}
+.theme-toggle__icons svg path {
+  fill: currentColor;
+}
+[data-theme=light] .theme-toggle__icons__light {
+  color: var(--color-dark);
+}
+[data-theme=dark] .theme-toggle__icons__dark {
+  color: white;
+}
+
+/*# sourceMappingURL=ThemeToggle.razor.css.map */

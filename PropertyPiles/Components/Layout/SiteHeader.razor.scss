@@ -1,15 +1,29 @@
 @use "../mixins" as *;
 
 .site-header {
-	padding-block: var(--spacing-md);
-	
+	background: var(--color-dark);
+	color: contrast-color(var(--color-dark));
+	display: flex; 
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+
 	@include media-breakpoint-up('small') {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
+		background: var(--color-secondary);
+		display: grid;
+		grid-template-columns: repeat(4, 1fr); 
+		grid-template-rows: repeat(2, 1fr);
+	}
+	 
+	a {
+		color: contrast-color(var(--color-secondary));
 	}
 	
 	&__name {
+		width: fit-content;
+		padding-block: var(--spacing-md);
+		grid-row: span 2;
+		
 		span, strong {
 			display: block;
 		}
@@ -24,17 +38,19 @@
 		}
 	}
 	
-	&__menu {
+	.theme {
+		display: contents;
 		
-		&__list {
+		@include media-breakpoint-up('small') {
+			grid-column: span 3;
 			display: flex;
-			justify-content: center;
-			list-style: none;
-			gap: var(--spacing-md);
-
-			@include media-breakpoint-up('small') {
-				justify-content: flex-end;
-			}
+			justify-content: flex-end;
 		}
 	}
+	
+	::deep nav {
+		grid-column: span 3;
+		width: auto;
+	}
+	
 }
