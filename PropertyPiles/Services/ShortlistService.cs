@@ -1,26 +1,47 @@
-﻿namespace PropertyPiles.Services;
-using System.Text.Json;
+﻿using PropertyPiles.Types;
+
+namespace PropertyPiles.Services;
+
 
 public class ShortlistService {
-	private ShortlistData _shortlists = new ShortlistData();
-
+	private FileService _fs = new FileService();
+	private Dictionary<string, List<SavedItem>> _shortlists = new();
+	
 	public ShortlistService() {
-		this.LoadFile();
+		this._shortlists.Add("priority", new List<SavedItem>());
+		this._shortlists.Add("maybe", new List<SavedItem>());
+		this._shortlists.Add("dismissed", new List<SavedItem>());
+		this._shortlists.Add("sold", new List<SavedItem>());
+		
+		this.SortLists();
 	}
 
-	private void LoadFile() {
-		using (StreamReader r = new StreamReader("data.json")) {  
-			string json = r.ReadToEnd();
-			this._shortlists = JsonSerializer.Deserialize<ShortlistData>(json) ??  new ShortlistData();
+	private void SortLists() {
+		List<SavedItem>? rawList = this._fs.GetItemsFromFile();
+		if (rawList == null) {
+			throw new NullReferenceException("Failed to load property lists from file.");
+		}
+		
+		foreach (SavedItem item in rawList) {
+			// TODO: If sold and NOT dismissed, put in sold list
+			
+			if(item.IsPriority)  {
+				this._shortlists["priority"].Add(item);
+				continue;
+			}
+			
+			if(item.DismissedReasons != null && item.DismissedReasons.Length > 0) {
+				this._shortlists["dismissed"].Add(item);
+				continue;
+			} 
+			
+			this._shortlists["maybe"].Add(item);
 		}
 	}
 	
-	public List<int> GetList(string name) {
+	public List<SavedItem> GetList(string name) {
 		if (!_shortlists.ContainsKey(name)) {
-			// TODO Sold is not a shortlist, the data needs to be handled in a different way so that sold properties are identified after data fetch
-			// without coupling this class to the data service class
-			//throw new ArgumentException($"Shortlist '{name}' does not exist.");
-			return new List<int>();
+			throw new ArgumentException($"Shortlist '{name}' does not exist.");
 		}
 		
 		return _shortlists[name];

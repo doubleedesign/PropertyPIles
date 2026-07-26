@@ -1,8 +1,8 @@
 ﻿namespace PropertyPiles.Services;
 
-public class DataService {
-	private readonly string _apiKey = Environment.GetEnvironmentVariable("REALTY_API_KEY") ?? "";
+internal class DataService {
 	private readonly HttpClient _httpClient = new HttpClient();
+	private readonly string _apiKey = Environment.GetEnvironmentVariable("REALTY_API_KEY") ?? "";
 	private readonly string _baseUrl = Environment.GetEnvironmentVariable("REALTY_API_BASE_URL") ?? "";
 	
 	public DataService() {

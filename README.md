@@ -4,6 +4,8 @@ Retrieve and display property listings in a format you can share with friends an
 
 PropertyPiles uses [RealtyAPI](https://www.realtyapi.io) to retrieve property listings. It has only been tested with Domain.com.au but should theoretically work with other APIs offered through this service.
 
+_PropertyPiles is not affiliated with or endorsed by RealtyAPI, Domain, or any other property industry entity._
+
 ## Setup and Deployment
 
 ### Prerequisites
@@ -12,11 +14,12 @@ PropertyPiles uses [RealtyAPI](https://www.realtyapi.io) to retrieve property li
 
 ### Environment variables
 
-To develop and test the app locally, create a `.env` file in the project root with your API key, your name to put above the site title (optional), and the base URL for the RealtyAPI endpoints you are using.
+To develop and test the app locally, create a `.env` file in the project root with your API key, your name to put above the site title (optional), the base URL for the RealtyAPI endpoints you are using, and the base URL for the source site (to be used for links to the real listings), e.g.:
    ```dotenv
    APP_USER_NAME="Leesa and Michael"
    REALTY_API_KEY=your_api_key_here
    REALTY_API_BASE_URL=https://domain.realtyapi.io/
+   SOURCE_SITE_BASE_URL=https://www.domain.com.au/
    ```
 
 For production deployment, you will need to set the same environment variables in your hosting environment.
@@ -40,6 +43,9 @@ PropertyPiles is a [Blazor Web App](https://dotnet.microsoft.com/en-us/apps/aspn
 And you will also need to:
 1. Create a .env file in the project root as per the setup instructions above.
 2. Configure your IDE to compile Sass files when they are edited. In Rider, do this by creating a file watcher with the default settings (it will prompt you the first time you open a .scss file) and enabling it to run on save.
+
+>[!TIP]
+> Restart the app after changing environment variables to make sure the new value takes effect.
 
 ### Running locally
 

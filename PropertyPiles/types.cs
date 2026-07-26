@@ -1,1 +1,0 @@
-﻿global using ShortlistData = System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<int>>;
