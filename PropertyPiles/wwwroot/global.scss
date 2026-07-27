@@ -5,6 +5,8 @@
 @use "../Components/mixins" as *;
 
 :root {	
+	--header-height: 96px;
+	 
 	--width-wide: #{map.get($widths, 'wide')};
 	--width-contained: #{map.get($widths, 'contained')};
 	--width-narrow: #{map.get($widths, 'narrow')};
@@ -69,6 +71,10 @@ body {
 	background: var(--global-background);
 	color: var(--body-color);
 	transition: all 0.3s ease-in-out;
+}
+
+main, section {
+	scroll-margin-top: var(--header-height);
 }
 
 * {

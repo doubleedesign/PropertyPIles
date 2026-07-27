@@ -1,6 +1,7 @@
 @use "../mixins" as *;
 
 .site-header {
+	height: var(--header-height);
 	background: var(--color-dark);
 	color: contrast-color(var(--color-dark));
 	display: flex; 
