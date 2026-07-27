@@ -35,9 +35,12 @@ public partial class ThemeToggle : ComponentBase, IAsyncDisposable {
 	}
 
 	public async ValueTask DisposeAsync() {
-		if (this._jsModule is null) return;
-
-		await this._jsModule.DisposeAsync();
+		if (_jsModule is not null) {
+			try {
+				await _jsModule.DisposeAsync();
+			}
+			catch (JSDisconnectedException) { }
+			catch (TaskCanceledException) { }
+		}
 	}
-
 }

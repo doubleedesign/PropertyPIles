@@ -26,6 +26,9 @@
         <None Update="Components\Elements\ThemeToggle.razor.js">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+        <None Update="Components\Elements\NavMenu.razor.js">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
     
     <ItemGroup>
