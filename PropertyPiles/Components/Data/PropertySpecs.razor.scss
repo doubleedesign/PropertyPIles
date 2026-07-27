@@ -1,0 +1,18 @@
+﻿.property-specs {
+	display: flex;
+	gap: var(--spacing-md);
+
+	span {
+		display: flex;
+		align-items: center;
+		gap: 2px;
+
+		svg {
+			width: 1.25rem;
+			
+			path {
+				fill: var(--global-inverse);
+			}
+		}
+	}
+}

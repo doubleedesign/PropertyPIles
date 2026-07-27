@@ -1,0 +1,17 @@
+.property-specs {
+  display: flex;
+  gap: var(--spacing-md);
+}
+.property-specs span {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.property-specs span svg {
+  width: 1.25rem;
+}
+.property-specs span svg path {
+  fill: var(--global-inverse);
+}
+
+/*# sourceMappingURL=PropertySpecs.razor.css.map */

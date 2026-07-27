@@ -24,4 +24,8 @@ public class PropertyRecord : SavedItem {
 	public async Task PopulateData() {
 		this.Data = await this._api.GetPropertyByPath(this.Path);
 	}
+
+	public string GetFormattedAddress() {
+		return this.Data?.Address?.ToString() ?? "";
+	}
 }

@@ -148,4 +148,22 @@ a:has(> span):hover > span:not(:has(svg)):not(:has(i)), a:has(> span):focus > sp
   text-decoration-color: currentColor;
 }
 
+.badge {
+  display: inline-block;
+  width: fit-content;
+  padding: var(--spacing-xxs) var(--spacing-xs);
+  text-transform: uppercase;
+  font-size: var(--font-size-xs);
+  line-height: 1;
+  border-radius: var(--spacing-sm);
+}
+.badge[data-key=Removed] {
+  background: var(--color-dark);
+  color: contrast-color(var(--color-dark));
+}
+.badge[data-key="Under Offer"], .badge[data-key=Sold] {
+  background: var(--color-error);
+  color: contrast-color(var(--color-error));
+}
+
 /*# sourceMappingURL=global.css.map */

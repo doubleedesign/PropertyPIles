@@ -12,6 +12,16 @@
 .property-list__table thead {
   display: none;
 }
+@media (min-width: 940px) {
+  .property-list__table thead {
+    display: block;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-secondary);
+  }
+  [data-theme=dark] .property-list__table thead {
+    color: var(--global-inverse);
+  }
+}
 .property-list__table tbody {
   display: block;
   width: 100%;
@@ -26,11 +36,12 @@
   flex-direction: column;
   flex-wrap: wrap;
   padding-block: var(--spacing-md);
+  padding-inline: var(--spacing-sm);
 }
 @media (min-width: 940px) {
   .property-list__table tr {
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
+    grid-template-columns: repeat(11, 1fr);
   }
 }
 .property-list__table tr [data-key=address],
@@ -53,6 +64,9 @@
 .property-list__table tr [data-key=address] {
   grid-column: span 3;
 }
+.property-list__table tr [data-key=days-on-market] {
+  grid-column: span 1;
+}
 .property-list__table tr [data-key=specs] {
   grid-column: span 2;
 }
@@ -67,6 +81,25 @@
 }
 [data-theme=dark] .property-list__table tr:nth-of-type(odd) {
   background: rgba(255, 255, 255, 0.05);
+}
+.property-list__table tr[data-status=Archived] td:not([data-key=address]),
+.property-list__table tr[data-status=Archived] [data-key=address] span:not(.badge), .property-list__table tr[data-status=Sold] td:not([data-key=address]),
+.property-list__table tr[data-status=Sold] [data-key=address] span:not(.badge), .property-list__table tr[data-status="Under Offer"] td:not([data-key=address]),
+.property-list__table tr[data-status="Under Offer"] [data-key=address] span:not(.badge) {
+  opacity: 0.25;
+  text-decoration: line-through;
+}
+.property-list__table tr [data-key=address] {
+  padding-inline-end: var(--spacing-md);
+}
+.property-list__table tr [data-key=address] a, .property-list__table tr [data-key=address] span {
+  display: block;
+}
+.property-list__table tr [data-key=address] a {
+  font-weight: var(--font-weight-semibold);
+}
+.property-list__table tr [data-key=address] span:not(.badge) {
+  font-size: var(--font-size-sm);
 }
 .property-list__empty {
   border: 1px solid var(--color-warning);

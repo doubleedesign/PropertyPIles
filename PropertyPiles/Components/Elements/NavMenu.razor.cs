@@ -3,7 +3,7 @@ using Microsoft.JSInterop;
 namespace PropertyPiles.Components.Elements;
 	
 public partial class NavMenu : ComponentBase {
-	private string _activeAnchor;
+	private string _activeAnchor = "";
 	
 	[Inject]
 	private NavigationManager Nav { get; set; } = default!;

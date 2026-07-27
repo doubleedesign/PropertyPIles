@@ -4,7 +4,7 @@
 @mixin row-layout() {
 	@include media-breakpoint-up('narrow') {
 		display: grid;
-		grid-template-columns: repeat(10, 1fr);
+		grid-template-columns: repeat(11, 1fr);
 	}
 
 	[data-key="address"],
@@ -28,6 +28,10 @@
 		grid-column: span 3;
 	}
 
+	[data-key="days-on-market"] {
+		grid-column: span 1;
+	}
+
 	[data-key="specs"] {
 		grid-column: span 2;
 	}
@@ -49,6 +53,16 @@
 		
 		thead {
 			display: none;
+
+			@include media-breakpoint-up('narrow') {
+				display: block;
+				font-weight: var(--font-weight-semibold);
+				color: var(--color-secondary);
+				
+				@include dark-mode() {
+					color: var(--global-inverse);
+				}
+			}
 		}
 		
 		tbody {
@@ -68,13 +82,41 @@
 			flex-direction: column;
 			flex-wrap: wrap;
 			padding-block: var(--spacing-md);
+			padding-inline: var(--spacing-sm);
 			@include row-layout();
-			
+
 			&:nth-of-type(odd) {
 				background: rgba(0, 0, 0, 0.05);
 
 				@include dark-mode() {
 					background: rgba(255, 255, 255, 0.05);
+				}
+			}
+			
+			&[data-status="Archived"],
+			&[data-status="Sold"],
+			&[data-status="Under Offer"] {
+				
+				td:not([data-key="address"]),
+				[data-key="address"] span:not(.badge) {
+					opacity: 0.25;
+					text-decoration: line-through;
+				}
+			}
+
+			[data-key="address"] {
+				padding-inline-end: var(--spacing-md);
+				
+				a, span {
+					display: block;
+				}
+				
+				a {
+					font-weight: var(--font-weight-semibold);
+				}
+				
+				span:not(.badge) {
+					font-size: var(--font-size-sm);
 				}
 			}
 		}

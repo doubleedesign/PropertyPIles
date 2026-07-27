@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Humanizer;
 
 namespace PropertyPiles.Types;
 
@@ -11,7 +12,7 @@ internal class PropertyDataResponse {
 	public PropertyAddress? Address { get; set; }
 	
 	[JsonPropertyName("lifecycleStatus")]
-	[AllowedValues("Live", "Under Offer", "Sold")]
+	[AllowedValues("Live", "Under Offer", "Sold", "Archived")]
 	public string? Status { get; set; }
 	
 	[JsonPropertyName("daysOnMarket")]
@@ -21,7 +22,10 @@ internal class PropertyDataResponse {
 	public bool? IsAuction { get; set; }
 	
 	[JsonPropertyName("headline")]
-	public string? ShortDescription { get; set; }
+	public string? ShortDescription {
+		get;
+		set => field = value?.Trim().ToLower().Transform(To.SentenceCase);
+	}
 	
 	[JsonPropertyName("price")]
 	public string? Price { get; set; }

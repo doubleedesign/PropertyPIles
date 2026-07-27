@@ -126,3 +126,24 @@ a {
 	color: darken(primary, 10%);
 	@include link-underline-on-hover();
 }
+
+.badge {
+	display: inline-block;
+	width: fit-content;
+	padding: var(--spacing-xxs) var(--spacing-xs);
+	text-transform: uppercase;
+	font-size: var(--font-size-xs);
+	line-height: 1;
+	border-radius: var(--spacing-sm); 
+	
+	&[data-key="Removed"] {
+		background: var(--color-dark);
+		color: contrast-color(var(--color-dark));
+	}
+
+	&[data-key="Under Offer"],
+	&[data-key="Sold"] {
+		background: var(--color-error);
+		color: contrast-color(var(--color-error));
+	}
+}
