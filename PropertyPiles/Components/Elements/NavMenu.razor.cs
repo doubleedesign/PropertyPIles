@@ -45,16 +45,17 @@ public partial class NavMenu : ComponentBase {
 	
 	[JSInvokable]
 	public async Task OnScroll(string activeSection) {
-		this.Navigate(activeSection);
+		this._activeAnchor = activeSection;
+		this.StateHasChanged();
 	}
 	
 	private void Navigate(string anchor) { 
 		if(anchor.StartsWith("#")) {
 			anchor = anchor.Substring(1);
 		}
+		this._activeAnchor = anchor;
 		
 		this.Nav.NavigateTo($"#{anchor}", replace: true);
-		this._activeAnchor = anchor;
 		StateHasChanged();
 	}
 
