@@ -25,6 +25,18 @@
 		}, {});
 	}
 	
+	getFirstSection() {
+		return Object.keys(this.linkToSectionMap)[0];
+	}
+	
+	getActiveSectionOnPageLoad() {
+		const hash = window.location.hash;
+		if(!hash) return this.getFirstSection();
+
+		const anchor = hash.replace("#", "");
+		return this.linkToSectionMap[anchor] || this.getFirstSection();
+	}
+	
 	getActiveSection() {
 		let closestSectionId = "";
 		let minDistanceToTop = window.innerHeight;
@@ -42,9 +54,9 @@
 
 export function registerEventListeners(dotNetRef) {
 	const instance = new NavMenu(dotNetRef);
-	
+	dotNetRef.invokeMethodAsync('SetActiveAnchor', instance.getActiveSectionOnPageLoad());
+
 	const handler = (event) => {
-		console.log('scroll event');
 		dotNetRef.invokeMethodAsync('OnScroll', instance.getActiveSection());
 	} 
 	
@@ -54,6 +66,6 @@ export function registerEventListeners(dotNetRef) {
 	return handler;
 }
 
-export function unregisterScrollListener(handler) {
+export function unregisterEventListeners(handler) {
 	window.removeEventListener('scrollend', handler);
 }

@@ -1,11 +1,5 @@
 ﻿@use "../mixins" as *;
 
-@mixin active-nav-link() {
-	text-decoration: none;
-	border-bottom-color: var(--global-background);
-	opacity: 1;
-}
-
 .nav-menu {
 	order: 3;
 	width: 100%;
@@ -46,8 +40,8 @@
 			justify-content: flex-end;
 		}
 
-		li {
-			::deep a {
+		li { 
+			::deep a { 
 				text-decoration: none;
 				display: block;
 				padding-block: var(--spacing-sm) var(--spacing-xs);
@@ -61,18 +55,12 @@
 				    font-size: 1.1rem;
 				}
 
-				&.active,
-				&:hover, &:focus, &:active {
-					@include active-nav-link();
-				}
-			}
-		}
-
-		&:not(:has(.active)) {
-			li:first-of-type {
-				::deep a {
-					@include active-nav-link();
-				}
+				&[aria-current="page"],
+				&:hover, &:focus-visible {
+					text-decoration: none;
+					border-bottom-color: var(--global-background);
+					opacity: 1;
+				} 
 			}
 		}
 	}

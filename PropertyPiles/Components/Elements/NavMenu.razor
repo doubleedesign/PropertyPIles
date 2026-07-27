@@ -3,19 +3,19 @@
 <nav class="nav-menu">
     <ul class="nav-menu__list">
         <li>
-            <NavLink href="#shortlist" @onclick='() => Navigate("#shortlist")'>
+            <a href="#shortlist" @onclick='() => Navigate("#shortlist")' aria-current="@AriaCurrent("shortlist")">
                 Shortlist
-            </NavLink>
+            </a>
         </li>
         <li>
-            <NavLink href="#dismissed" @onclick='() => Navigate("#dismissed")'>
+            <a href="#dismissed" @onclick='() => Navigate("#dismissed")' aria-current="@AriaCurrent("dismissed")">
                 Dismissed
-            </NavLink>
+            </a>
         </li>
         <li>
-            <NavLink href="#sold" @onclick='() => Navigate("#sold")'>
+            <a href="#sold" @onclick='() => Navigate("#sold")' aria-current="@AriaCurrent("sold")">
                 Sold
-            </NavLink>
+            </a>
         </li>
     </ul>
 </nav> 
