@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using PropertyPiles.Extensions;
 using PropertyPiles.Services;
 using PropertyPiles.Types;
 
@@ -20,5 +21,6 @@ public partial class PropertyList : ComponentBase {
 	protected override async Task OnInitializedAsync() {
 		await base.OnInitializedAsync();
 		this.Items = new ShortlistService().GetList(this.ListName);
+		this.Items.LogToConsole();
 	}
 }
