@@ -1,7 +1,12 @@
-﻿<section id="@Id" class="property-list" data-size="wide">
+<section id="@Id" class="property-list" data-size="wide">
     <h2>@Title</h2>
     
-    @if (Items.Count > 0) {
+    @if (_isLoading) {
+        <div class="property-list__loading">
+            <p>Loading &hellip;</p>
+        </div>
+    }
+    else if (Items.Count > 0) {
         <table class="property-list__table">
             <thead>
             <tr class="property-list__table__header">

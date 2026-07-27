@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Components;
-using PropertyPiles.Extensions;
 using PropertyPiles.Services;
 using PropertyPiles.Types;
 
 namespace PropertyPiles.Components.Data;
 
 public partial class PropertyList : ComponentBase {
-	private List<SavedItem> Items;
+	private List<PropertyRecord> Items = new();
+	private ShortlistService _service = new();
+	private bool _isLoading = true;
 	
 	[Parameter]
 	public required string Id { get; set; }
@@ -20,7 +21,14 @@ public partial class PropertyList : ComponentBase {
 	
 	protected override async Task OnInitializedAsync() {
 		await base.OnInitializedAsync();
-		this.Items = new ShortlistService().GetList(this.ListName);
-		this.Items.LogToConsole();
+		await this._service.Init();
+		
+		this.Items = await this._service.GetList(this.ListName);
+		
+		if (this._service.GetErrorsForList(this.ListName).Count > 0) {
+			// TODO: Show a single error message somewhere
+		}
+		
+		this._isLoading = false;
 	}
 }
