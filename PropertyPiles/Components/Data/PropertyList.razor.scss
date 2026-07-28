@@ -4,7 +4,7 @@
 @mixin row-layout() {
 	@include media-breakpoint-up('narrow') {
 		display: grid;
-		grid-template-columns: repeat(11, 1fr);
+		grid-template-columns: repeat(12, 1fr);
 	}
 
 	[data-key="address"],
@@ -27,8 +27,9 @@
 	[data-key="address"] {
 		grid-column: span 3;
 	}
-
-	[data-key="days-on-market"] {
+	
+	[data-key="days-on-market"],
+	[data-key="size"] {
 		grid-column: span 1;
 	}
 
@@ -117,6 +118,31 @@
 				
 				span:not(.badge) {
 					font-size: var(--font-size-sm);
+				}
+			}
+			
+			td {
+				&[data-key="days-on-market"],
+				&[data-key="size"],
+				&[data-key="notes"] {
+					display: flex;
+					align-items: center;
+					gap: 2px;
+					
+					&:before {
+						content: attr(aria-label);
+						font-size: var(--font-size-sm);
+						
+						@include media-breakpoint-up('narrow') {
+						    display: none;
+						} 
+					}
+				}
+
+				&[data-key="days-on-market"],
+				&[data-key="size"] {
+					width: fit-content;
+					flex-basis: fit-content;
 				}
 			}
 		}

@@ -90,7 +90,7 @@
 @mixin pad-edges() {
 	// make sure content doesn't hit the edges on small viewports or when full-width,
 	// while also leaving enough space to adjust elements with nested section padding so their content aligns with the rest of the page
-	border-inline: var(--spacing-xl) solid transparent;
+	border-inline: var(--spacing-lg) solid transparent;
 	box-sizing: border-box;
 }
 

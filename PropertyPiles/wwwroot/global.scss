@@ -5,7 +5,10 @@
 @use "../Components/mixins" as *;
 
 :root {	
-	--header-height: 96px;
+	--header-height: 8rem;
+	@include media-breakpoint-up('narrow') {
+	    --header-height: 6rem;
+	}
 	 
 	--width-wide: #{map.get($widths, 'wide')};
 	--width-contained: #{map.get($widths, 'contained')};

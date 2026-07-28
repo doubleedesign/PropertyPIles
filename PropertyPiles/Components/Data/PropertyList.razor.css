@@ -41,7 +41,7 @@
 @media (min-width: 940px) {
   .property-list__table tr {
     display: grid;
-    grid-template-columns: repeat(11, 1fr);
+    grid-template-columns: repeat(12, 1fr);
   }
 }
 .property-list__table tr [data-key=address],
@@ -64,7 +64,8 @@
 .property-list__table tr [data-key=address] {
   grid-column: span 3;
 }
-.property-list__table tr [data-key=days-on-market] {
+.property-list__table tr [data-key=days-on-market],
+.property-list__table tr [data-key=size] {
   grid-column: span 1;
 }
 .property-list__table tr [data-key=specs] {
@@ -100,6 +101,24 @@
 }
 .property-list__table tr [data-key=address] span:not(.badge) {
   font-size: var(--font-size-sm);
+}
+.property-list__table tr td[data-key=days-on-market], .property-list__table tr td[data-key=size], .property-list__table tr td[data-key=notes] {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.property-list__table tr td[data-key=days-on-market]:before, .property-list__table tr td[data-key=size]:before, .property-list__table tr td[data-key=notes]:before {
+  content: attr(aria-label);
+  font-size: var(--font-size-sm);
+}
+@media (min-width: 940px) {
+  .property-list__table tr td[data-key=days-on-market]:before, .property-list__table tr td[data-key=size]:before, .property-list__table tr td[data-key=notes]:before {
+    display: none;
+  }
+}
+.property-list__table tr td[data-key=days-on-market], .property-list__table tr td[data-key=size] {
+  width: fit-content;
+  flex-basis: fit-content;
 }
 .property-list__empty {
   border: 1px solid var(--color-warning);

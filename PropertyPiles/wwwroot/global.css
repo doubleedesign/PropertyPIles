@@ -1,5 +1,12 @@
 :root {
-  --header-height: 96px;
+  --header-height: 8rem;
+}
+@media (min-width: 940px) {
+  :root {
+    --header-height: 6rem;
+  }
+}
+:root {
   --width-wide: 1440px;
   --width-contained: 1140px;
   --width-narrow: 940px;
@@ -81,7 +88,7 @@ main, section {
   container-name: layout-section;
   container-type: inline-size;
   padding-inline: calc((100cqw - var(--container-max-width)) / 2);
-  border-inline: var(--spacing-xl) solid transparent;
+  border-inline: var(--spacing-lg) solid transparent;
   box-sizing: border-box;
 }
 [data-size] > * {
