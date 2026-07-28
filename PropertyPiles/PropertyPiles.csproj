@@ -37,5 +37,9 @@
       <_ContentIncludedByDefault Remove="Components\Elements\Layout\MainLayout.razor" />
       <_ContentIncludedByDefault Remove="Components\Elements\Layout\SiteHeader.razor" />
     </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="cache\" />
+    </ItemGroup>
 
 </Project>

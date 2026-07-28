@@ -41,4 +41,7 @@ internal class PropertyDataResponse {
 	
 	[JsonPropertyName("carspaces")]
 	public int? Carspaces { get; set; }
+	
+	[JsonPropertyName("listingUrl")]
+	public string? ListingUrl { get; set; }
 }
