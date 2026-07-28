@@ -24,6 +24,16 @@ To develop and test the app locally, create a `.env` file in the project root wi
 
 For production deployment, you will need to set the same environment variables in your hosting environment.
 
+### Build step
+
+From the solution or project root:
+
+```powershell
+dotnet publish
+```
+
+The compiled files will be in `./PropertyPiles/bin/Release/net10.0/publish`.
+
 ### Fonts
 
 >[!IMPORTANT]
