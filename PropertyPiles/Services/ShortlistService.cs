@@ -27,6 +27,7 @@ public class ShortlistService {
 	}
 
 	public async Task Init() {
+		await this._fs.LoadFile();
 		this.SortRawSavedItems();
 	}
 

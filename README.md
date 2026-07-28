@@ -14,15 +14,18 @@ _PropertyPiles is not affiliated with or endorsed by RealtyAPI, Domain, or any o
 
 ### Environment variables
 
-To develop and test the app locally, create a `.env` file in the project root with your API key, your name to put above the site title (optional), the base URL for the RealtyAPI endpoints you are using, and the base URL for the source site (to be used for links to the real listings), e.g.:
+To develop and test the app locally, create a `.env` file in the project root with your API key, your name to put above the site title (optional), the base URL for the RealtyAPI endpoints you are using, the base URL for the source site (to be used for links to the real listings), and Azure blob storage credentials. For example:
    ```dotenv
-   APP_USER_NAME="Leesa and Michael"
-   REALTY_API_KEY=your_api_key_here
-   REALTY_API_BASE_URL=https://domain.realtyapi.io/
-   SOURCE_SITE_BASE_URL=https://www.domain.com.au/
+	APP_USER_NAME="Leesa and Michael"
+	REALTY_API_KEY=your_api_key_here
+	REALTY_API_BASE_URL=https://domain.realtyapi.io/
+	SOURCE_SITE_BASE_URL=https://www.domain.com.au/
+	BLOB_STORAGE_ACCOUNT_NAME=propertypilesfiles
+	BLOB_STORAGE_CONTAINER_NAME=propertypilescontainer
+	BLOB_STORAGE_ACCESS_KEY=your_key_here
    ```
 
-For production deployment, you will need to set the same environment variables in your hosting environment.
+For production deployment, you will need to set the same environment variables in your hosting environment. For sensitive credenitals, you can have these refer to Azure Key Vault secrets instead of hardcoding the values in the environment variables.
 
 ### Build step
 
