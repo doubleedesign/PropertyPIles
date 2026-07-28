@@ -35,14 +35,9 @@ internal class DataService {
 		if (cached != null) {
 			return cached;
 		}
-
-		try {
-			var url = $"{this._baseUrl}/details/byid?id={id}";
-			return await this.FetchProperty(url);
-		}
-		catch (HttpRequestException ex) {
-			throw new HttpRequestException($"Failed to fetch property data for property ID {id}");
-		}
+		
+		var url = $"{this._baseUrl}/details/byid?id={id}";
+		return await this.FetchProperty(url);
 	}
 
 	private PropertyDataResponse? GetCachedPropertyById(string id) {
@@ -77,19 +72,8 @@ internal class DataService {
 			return cached;
 		}
 		
-		try {
-			var url = $"{this._baseUrl}/details/byurl?url={path}";
-			return await this.FetchProperty(url);
-		}
-		catch (HttpRequestException ex) {
-			string message = $"Failed to fetch property data for property '{path}': {ex.Message}";
-			
-			Console.ForegroundColor = ConsoleColor.Red;
-			Console.WriteLine(message);
-			Console.ResetColor();
-			
-			throw new HttpRequestException(message);
-		}
+		var url = $"{this._baseUrl}/details/byurl?url={path}";
+		return await this.FetchProperty(url);
 	}
 
 	
@@ -125,7 +109,7 @@ internal class DataService {
 		var response = await this._client.SendAsync(request);
 		
 		if (!response.IsSuccessStatusCode) {
-			throw new HttpRequestException($"Failed to fetch property data");
+			throw new HttpRequestException($"Failed to fetch property data from API. Status code: {response.StatusCode}");
 		}
 		
 		var body = await response.Content.ReadAsStringAsync();
@@ -159,6 +143,7 @@ internal class DataService {
 		}
 		 catch (Exception ex) {
 		 	Console.ForegroundColor = ConsoleColor.Red;
+		    Console.WriteLine(ex.Message);
 		 	Console.ResetColor();
 		 }
 	}

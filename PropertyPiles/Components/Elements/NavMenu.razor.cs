@@ -11,7 +11,7 @@ public partial class NavMenu : ComponentBase {
 	[Inject]
 	private IJSRuntime JsRuntime { get; set; } = default!;
 	private IJSObjectReference? _jsModule;
-	private DotNetObjectReference<NavMenu> _dotNetRef;
+	private DotNetObjectReference<NavMenu>? _dotNetRef;
 
 	protected override void OnInitialized() {
 		// Checking for an active hash in the JS misses the first page load,
@@ -64,7 +64,8 @@ public partial class NavMenu : ComponentBase {
 	}
 	
 	public async ValueTask DisposeAsync() {
-		_dotNetRef.Dispose();
+		if (this._dotNetRef is null) return;
+		this._dotNetRef.Dispose();
 		
 		if (_jsModule is not null) {
 			try {
