@@ -39,6 +39,14 @@ public class SavedItem {
 		return string.Join(" ", addressPieces).Transform(To.TitleCase);
 	}
 
+	public List<string> GetNotes() {
+		if (this.DismissedReasons != null && this.DismissedReasons.Length > 0) {
+			return this.DismissedReasons.ToList();
+		}
+
+		return this.Notes?.ToList() ?? [];
+	}
+
 	public string GetFormattedNotes() {
 		if(this.DismissedReasons != null && this.DismissedReasons.Length > 0) {
 			return string.Join(", ", this.DismissedReasons).Transform(To.LowerCase).Transform(To.SentenceCase);

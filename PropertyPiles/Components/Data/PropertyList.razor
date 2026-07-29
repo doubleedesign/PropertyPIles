@@ -45,7 +45,15 @@
                     <td data-key="days-on-market" aria-label="Days on market">
                         @Item.Data?.DaysOnMarket
                     </td>
-                    <td data-key="notes">@Item.GetFormattedNotes()</td>
+                    <td data-key="notes">
+                        @if (Item.GetNotes().Count > 0) {
+                            <ul>
+                                @foreach (var note in Item.GetNotes()) {
+                                    <li>@note</li>
+                                }
+                            </ul>
+                        }
+                    </td>
                 </tr>
             }
             </tbody>
