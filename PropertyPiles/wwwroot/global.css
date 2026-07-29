@@ -72,6 +72,8 @@ body {
   background: var(--global-background);
   color: var(--body-color);
   transition: all 0.3s ease-in-out;
+  min-height: 100dvh;
+  border-bottom: 1rem solid var(--color-secondary);
 }
 
 main, section {
@@ -180,6 +182,15 @@ a:has(> span):hover > span:not(:has(svg)):not(:has(i)), a:has(> span):focus > sp
 .badge[data-key=New] {
   background: var(--color-accent);
   color: contrast-color(var(--color-accent));
+}
+
+.error-page {
+  padding-block: var(--spacing-lg);
+}
+@media (min-width: 768px) {
+  .error-page {
+    padding-block: var(--spacing-xl);
+  }
 }
 
 /*# sourceMappingURL=global.css.map */
