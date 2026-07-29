@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Nodes;
 using PropertyPiles.Types;
+using PropertyPiles.Utils;
 
 namespace PropertyPiles.Services;
 
@@ -45,7 +46,7 @@ internal class DataService {
 		if (!File.Exists(filePath)) {
 			return null;
 		}
-
+		
 		string jsonString = File.ReadAllText(filePath);
 		using (JsonDocument doc = JsonDocument.Parse(jsonString)) {
 			long timestamp = doc.RootElement.GetProperty("timestamp").GetInt64();
@@ -53,8 +54,11 @@ internal class DataService {
 			long timeAgo = now - timestamp;
 			// Return the data if less than or equal to an hour old
 			if (timeAgo < 3600) {
-				return doc.Deserialize<PropertyDataResponse>();
+				Logger.Info($"Found recent cached record for property {id}");
+				return this.ConvertJsonResponseDetail(doc);
 			}
+			
+			Logger.Info($"Cached record for property {id} is stale");
 		}
 
 		return null;
@@ -95,6 +99,12 @@ internal class DataService {
 		
 		return null;
 	}
+
+	private PropertyDataResponse? ConvertJsonResponseDetail(JsonDocument json) {
+		var details = json.RootElement.GetProperty("detail");
+		
+		return details.Deserialize<PropertyDataResponse>();
+	}
 	
 	
 	/// <summary>
@@ -104,6 +114,8 @@ internal class DataService {
 	/// <returns>The relevant fields from the API response.</returns>
 	/// <exception cref="HttpRequestException"></exception>
 	private async Task<PropertyDataResponse?> FetchProperty(string url) {
+		Logger.Info($"Fetching property data from {url}");
+		
 		var request = new HttpRequestMessage(HttpMethod.Get, url);
 		request.Headers.Add("x-realtyapi-key", this._apiKey);
 		var response = await this._client.SendAsync(request);
@@ -114,10 +126,9 @@ internal class DataService {
 		
 		var body = await response.Content.ReadAsStringAsync();
 		var json = JsonDocument.Parse(body);
-		var details = json.RootElement.GetProperty("detail");
-		
 		this.CacheResponse(json);
-		return details.Deserialize<PropertyDataResponse>();
+		
+		return this.ConvertJsonResponseDetail(json);
 	}
 	
 
@@ -140,11 +151,11 @@ internal class DataService {
 			using FileStream fileStream = File.Create(outputPath);
 			using Utf8JsonWriter writer = new Utf8JsonWriter(fileStream, options);
 			jsonObject.WriteTo(writer);
+			
+			Logger.Info($"Cached property data for property {propertyId}");
 		}
 		 catch (Exception ex) {
-		 	Console.ForegroundColor = ConsoleColor.Red;
-		    Console.WriteLine(ex.Message);
-		 	Console.ResetColor();
+			 Logger.Error(ex.Message);
 		 }
 	}
 }
