@@ -1,8 +1,12 @@
-﻿export class NavMenu {
+export class NavMenu {
 	linkToSectionMap;
 	sections;
 	
 	constructor() {
+		this.init();
+	}
+	
+	init() {
 		this.sections = document.querySelectorAll("section");
 		const sectionIds = Array.from(this.sections).map((el) => el.getAttribute("id"));
 		const menuLinks = Array.from(document.querySelectorAll("nav a")).map(item => item.getAttribute('href').replace("#", ""));
@@ -14,8 +18,8 @@
 
 			if(!menuLinks.includes(sectionId)) {
 				const sectionIndex = sectionIds.findIndex(section => section === sectionId);
-				const previousOrFirst = sectionIndex > 0 ? sectionIds[sectionIndex - 1] : 0;
-				acc[sectionId] = previousOrFirst === 0 ? sectionIds[0] : sectionIds[previousOrFirst];
+				const previousOrFirst = sectionIndex > 0 ? sectionIds[sectionIndex - 1] : sectionIds[0];
+				acc[sectionId] = previousOrFirst;
 
 				return acc;
 			}
@@ -48,7 +52,7 @@
 			}
 		});
 
-		return this.linkToSectionMap[closestSectionId] || closestSectionId;
+		return this.linkToSectionMap[closestSectionId] || this.getFirstSection();
 	}
 }
 

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 namespace PropertyPiles.Components.Elements;
 	
@@ -34,22 +34,43 @@ public partial class NavMenu : ComponentBase {
 
 		_jsModule = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "/Components/Elements/NavMenu.razor.js");
 		_dotNetRef = DotNetObjectReference.Create(this);
+
+		await this.Refresh();
+	}
+
+	/// <summary>
+	/// Re-initialize the JavaScript nav state handling.
+	/// To be called on first load, and when an empty or unexpected active section or anchor is returned
+	/// (as occurs when landing on an error page and then navigating to the main page without refreshing the browser).
+	/// </summary>
+	public async Task Refresh() {
+		if (_jsModule is null) return;
 		
 		await _jsModule.InvokeVoidAsync("registerEventListeners", _dotNetRef);
 	}
 
 	[JSInvokable]
 	public async Task SetActiveAnchor(string activeSection) {
+		if (string.IsNullOrEmpty(activeSection)) {
+			await this.Refresh();
+			return;
+		}
+		
 		this._activeAnchor = activeSection;
 	}
 	
 	[JSInvokable]
 	public async Task OnScroll(string activeSection) {
+		if (string.IsNullOrEmpty(activeSection)) {
+			await this.Refresh();
+			return;
+		}
+		
 		this._activeAnchor = activeSection;
 		this.StateHasChanged();
 	}
 	
-	private void Navigate(string anchor) { 
+	private void Navigate(string anchor) {
 		if(anchor.StartsWith("#")) {
 			anchor = anchor.Substring(1);
 		}
