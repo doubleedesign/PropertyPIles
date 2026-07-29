@@ -1,5 +1,6 @@
 ﻿using Azure;
 using Azure.Storage.Blobs;
+using PropertyPiles.Utils;
 namespace PropertyPiles.Services;
 
 public class BlobService {
@@ -53,9 +54,7 @@ public class BlobService {
 			}
 		} 
 		catch (RequestFailedException ex) {
-			Console.ForegroundColor = ConsoleColor.Red;
-			Console.WriteLine(ex.Message);
-			Console.ResetColor();
+			Logger.Error(ex.Message);
 			return null;
 		}
 	}
