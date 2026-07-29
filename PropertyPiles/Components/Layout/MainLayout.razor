@@ -1,6 +1,20 @@
 ﻿@inherits LayoutComponentBase
+@rendermode InteractiveServer
 
 <SiteHeader/>
-<main id="top">
-    @Body
-</main>
+@if (_isAuthorised) {
+    <main id="top">
+        @Body
+    </main>
+}
+else {
+    <section class="login" data-size="wide">
+        <form @onsubmit="Login">
+            <input type="password" @bind="_inputPassword" placeholder="Enter password"/>
+            <button type="submit">Log in</button>
+        </form>
+        @if (_loginFailed) {
+            <p class="login__error">Incorrect password.</p>
+        }
+    </section>
+}

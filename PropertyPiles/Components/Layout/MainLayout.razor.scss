@@ -1,0 +1,39 @@
+﻿@use "../mixins" as *;
+@use "../functions" as *;
+
+.login {
+	@include section-padding();
+	
+	form {
+		display: flex;
+		justify-content: center;
+		
+		input, button {
+			font-family: var(--font-family-body);
+			font-size: 1rem;
+		}
+		
+		input {
+			padding: var(--spacing-md);
+		}
+		
+		button {
+			cursor: pointer;
+			padding: var(--spacing-sm) var(--spacing-md);
+			transition: all 0.3s ease-in-out;
+			background: var(--color-primary);
+			color: contrast-color(var(--color-primary));
+			border: 0;
+			appearance: none;
+			
+			&:hover, &:focus {
+				background: #{darken(primary, 20%)};
+			}
+		}
+	}
+	
+	&__error {
+		color: var(--color-error);
+		text-align: center;
+	}
+}

@@ -41,7 +41,8 @@ public partial class NavMenu : ComponentBase {
 	/// <summary>
 	/// Re-initialize the JavaScript nav state handling.
 	/// To be called on first load, and when an empty or unexpected active section or anchor is returned
-	/// (as occurs when landing on an error page and then navigating to the main page without refreshing the browser).
+	/// (as occurs when coming from the login page
+	/// or landing on an error page and then navigating to the main page without refreshing the browser),
 	/// </summary>
 	public async Task Refresh() {
 		if (_jsModule is null) return;

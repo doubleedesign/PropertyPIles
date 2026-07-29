@@ -6,6 +6,38 @@ PropertyPiles uses [RealtyAPI](https://www.realtyapi.io) to retrieve property li
 
 _PropertyPiles is not affiliated with or endorsed by RealtyAPI, Domain, or any other property industry entity._
 
+## Usage
+
+### Shortlist input
+
+The most obvious evidence of the short-term nature of this project is the data input. It's just a JSON file. No interface to edit it, just...JSON.
+
+For privacy, it's not committed to Git. Leaving a public record of houses one is considering buying doesn't pass the vibe check, so it's Gitignored locally and expected to be in Azure Blob Storage in production (or alternatively you can fork the project and modify it to put the file somewhere else).
+
+The format is as follows:
+
+```json
+[
+	{
+		"path": "14-dreamer-circuit-mount-duneed-vic-3217-2020738365",
+		"notes": [],
+		"priority": true
+	},
+]
+```
+
+(And no, that's not the house I bought. That listing got taken down before my old place was even on the market.)
+
+Valid fields are "notes" (array of strings), "dismissedReasons" (array of strings), and "priority" (boolean).
+
+You do not need to manually mark when a property you shorlisted gets sold. The app will automatically account for this when processing the data.
+
+### Authentication
+
+Auth is rudimentary by design. Do you want to deal with your boomer family members asking why they need to sign into Google or whatever (or worse, create an account on your random app) just to view your property shortlist, and provide the associated tech support? No, I didn't think so. But, as I mentioned above, privacy is a consideration.
+
+The app is essentially a single page, with a single password protecting it. This is just so that you can have some basic control over who you share your list with, and it shouldn't show up on the Wayback machine or anything like that. The password is set as an environment variable.
+
 ## Setup and Deployment
 
 ### Prerequisites
@@ -23,6 +55,7 @@ To develop and test the app locally, create a `.env` file in the project root wi
 	BLOB_STORAGE_ACCOUNT_NAME=propertypilesfiles
 	BLOB_STORAGE_CONTAINER_NAME=propertypilescontainer
 	BLOB_STORAGE_ACCESS_KEY=your_key_here
+	FRONT_END_PASSWORD=some_password_here
    ```
 
 For production deployment, you will need to set the same environment variables in your hosting environment. For sensitive credenitals, you can have these refer to Azure Key Vault secrets instead of hardcoding the values in the environment variables.
@@ -69,18 +102,3 @@ From the solution directory:
 ```powershell
 cd PropertyPiles && dotnet watch run
 ```
-
-Create a file in the project root called `data.json` and add the IDs of your shortlisted properties like so:
-
-```json
-[
-	{
-		"path": "14-dreamer-circuit-mount-duneed-vic-3217-2020738365",
-		"notes": []
-	},
-]
-```
-
-Valid fields are "notes" (array of strings), "dismissedReasons" (array of strings), and "priority" (boolean).
-
-You do not need to manually mark when a property you shorlisted gets sold. The app will automatically account for this when processing the data.
