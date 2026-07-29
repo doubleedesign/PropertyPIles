@@ -43,6 +43,9 @@ The app is essentially a single page, with a single password protecting it. This
 ### Prerequisites
 
 - [RealtyAPI](https://www.realtyapi.io/) account and API key
+- Azure App Service instance for a .NET 10 app
+- Azure Blob Storage account
+- Azure Key Vault (optional but recommended)
 
 ### Environment variables
 
