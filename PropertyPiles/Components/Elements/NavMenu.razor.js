@@ -1,4 +1,4 @@
-export class NavMenu {
+﻿export class NavMenu {
 	linkToSectionMap;
 	sections;
 	
@@ -61,7 +61,12 @@ export function registerEventListeners(dotNetRef) {
 	dotNetRef.invokeMethodAsync('SetActiveAnchor', instance.getActiveSectionOnPageLoad());
 
 	const handler = (event) => {
-		dotNetRef.invokeMethodAsync('OnScroll', instance.getActiveSection());
+		if(instance.getActiveSection() !== "") {
+			dotNetRef.invokeMethodAsync('OnScroll', instance.getActiveSection());
+			setTimeout(() => {
+				history.pushState(null, '', `#${instance.getActiveSection()}`);
+			}, 300);
+		}
 	} 
 	
 	window.addEventListener('scrollend', handler);
