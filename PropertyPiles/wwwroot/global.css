@@ -33,10 +33,10 @@
   --font-weight-bold: 700;
   --base-font-size: 1rem;
   --typescale: 1.2;
-  --color-primary: #00b8c1;
+  --color-primary: #00c1b1;
   --color-secondary: #262a70;
   --color-accent: #a82f63;
-  --color-info: #00b8c1;
+  --color-info: #00bbed;
   --color-warning: #f9c971;
   --color-success: #00d4a9;
   --color-error: #C22B00;
@@ -171,6 +171,10 @@ a:has(> span):hover > span:not(:has(svg)):not(:has(i)), a:has(> span):focus > sp
 .badge[data-key="Under Offer"], .badge[data-key=Sold] {
   background: var(--color-error);
   color: contrast-color(var(--color-error));
+}
+.badge[data-key=New] {
+  background: var(--color-accent);
+  color: contrast-color(var(--color-accent));
 }
 
 /*# sourceMappingURL=global.css.map */

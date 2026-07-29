@@ -149,4 +149,9 @@ a {
 		background: var(--color-error);
 		color: contrast-color(var(--color-error));
 	}
+
+	&[data-key="New"] {
+		background: var(--color-accent);
+		color: contrast-color(var(--color-accent));
+	}
 }
