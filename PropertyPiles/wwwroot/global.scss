@@ -122,6 +122,7 @@ h2 {
 
 ul, ol {
 	margin: 0;
+	margin-inline-start: 1rem;
 	padding: 0;
 }
 
@@ -142,6 +143,11 @@ a {
 	&[data-key="Removed"] {
 		background: var(--color-dark);
 		color: contrast-color(var(--color-dark));
+		
+		@include dark-mode() {
+			background: var(--color-secondary);
+			color: contrast-color(var(--color-secondary));
+		}
 	}
 
 	&[data-key="Under Offer"],

@@ -127,6 +127,7 @@ h2 {
 
 ul, ol {
   margin: 0;
+  margin-inline-start: 1rem;
   padding: 0;
 }
 
@@ -167,6 +168,10 @@ a:has(> span):hover > span:not(:has(svg)):not(:has(i)), a:has(> span):focus > sp
 .badge[data-key=Removed] {
   background: var(--color-dark);
   color: contrast-color(var(--color-dark));
+}
+[data-theme=dark] .badge[data-key=Removed] {
+  background: var(--color-secondary);
+  color: contrast-color(var(--color-secondary));
 }
 .badge[data-key="Under Offer"], .badge[data-key=Sold] {
   background: var(--color-error);
