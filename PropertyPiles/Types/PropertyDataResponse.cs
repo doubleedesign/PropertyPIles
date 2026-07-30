@@ -4,7 +4,7 @@ using Humanizer;
 
 namespace PropertyPiles.Types;
 
-internal class PropertyDataResponse {
+public class PropertyDataResponse {
 	[JsonPropertyName("id")]
 	public int? Id { get; set; }
 	
@@ -12,7 +12,7 @@ internal class PropertyDataResponse {
 	public PropertyAddress? Address { get; set; }
 	
 	[JsonPropertyName("lifecycleStatus")]
-	[AllowedValues("Live", "Under Offer", "Sold", "Archived")]
+	[AllowedValues("Live", "New", "Under Offer", "Sold", "Archived")]
 	public string? Status { get; set; }
 	
 	[JsonPropertyName("daysOnMarket")]

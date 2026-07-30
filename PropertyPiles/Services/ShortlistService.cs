@@ -3,11 +3,14 @@ namespace PropertyPiles.Services;
 
 
 public class ShortlistService {
-	private FileService? InjectedFileService{ get; set; }
+	private FileService? _injectedFileService;
+	private ListingDataService? _injectedListingDataService;
+	private NbnCoverageService? _injectedNbnCoverageService;
+	
 	private Dictionary<string, List<SavedItem>> _rawlists = new();
 	private Dictionary<string, List<PropertyRecord>> _shortlists = new();
 	private Dictionary<string, List<String>> _fetchErrors = new();
-	private ListingDataService? InjectedListingDataService;
+
 	private bool _isInitialized = false;
 	
 	// One semaphore per list to allow different lists to populate concurrently (from multiple instances of PropertyList on the same page)
@@ -23,9 +26,10 @@ public class ShortlistService {
 	/// Set _isInitialized when done, to ensure this only gets called once if multiple components try to initialize it.
 	/// Otherwise, we get duplicate entries in the lists.
 	/// </summary>
-	/// <param name="injectedFileServiceRef"></param>
-	/// <param name="injectedDataServiceRef"></param>
-	public async Task Init(FileService injectedFileServiceRef, ListingDataService injectedDataServiceRef) {
+	/// <param name="injectedFileServiceRef">The singleton FileService injected into the Blazor component that calls this service.</param>
+	/// <param name="injectedDataServiceRef">The singleton ListingDataService injected into the Blazor component that calls this service.</param>
+	/// <param name="injectedNbnServiceRef">The singleton NbnCoverageService injected into the Blazor component that calls this service.</param>
+	public async Task Init(FileService injectedFileServiceRef, ListingDataService injectedDataServiceRef, NbnCoverageService injectedNbnServiceRef) {
 		if (this._isInitialized) return;
 		
 		this._locks.Add("priority", new SemaphoreSlim(1, 1));
@@ -47,10 +51,11 @@ public class ShortlistService {
 		this._shortlists.Add("dismissed", new List<PropertyRecord>());
 		this._shortlists.Add("sold", new List<PropertyRecord>());
 		
-		this.InjectedFileService = injectedFileServiceRef;
-		this.InjectedListingDataService = injectedDataServiceRef;
+		this._injectedFileService = injectedFileServiceRef;
+		this._injectedListingDataService = injectedDataServiceRef;
+		this._injectedNbnCoverageService = injectedNbnServiceRef;
 		
-		await this.InjectedFileService.LoadFile();
+		await this._injectedFileService.LoadFile();
 		this.SortRawSavedItems();
 
 		this._isInitialized = true;
@@ -61,11 +66,11 @@ public class ShortlistService {
 	/// </summary>
 	/// <exception cref="NullReferenceException"></exception>
 	private void SortRawSavedItems() {
-		if(this.InjectedFileService == null) {
+		if(this._injectedFileService == null) {
 			throw new InvalidOperationException("ShortlistService has not been initialized with a FileService instance. Call Init() before calling SortRawSavedItems().");
 		}
 		
-		List<SavedItem>? rawList = this.InjectedFileService.GetItemsFromFile();
+		List<SavedItem>? rawList = this._injectedFileService.GetItemsFromFile();
 		if (rawList == null) {
 			throw new NullReferenceException("Failed to load property lists from file.");
 		}
@@ -86,7 +91,7 @@ public class ShortlistService {
 	}
 
 	private async Task PopulateList(string listName) {
-		if (this.InjectedListingDataService == null) {
+		if (this._injectedListingDataService == null) {
 			throw new InvalidOperationException("ShortlistService has not been initialized with a ListingDataService instance. Call Init() before calling PopulateList().");
 		}
 		
@@ -113,7 +118,7 @@ public class ShortlistService {
 			foreach (SavedItem item in rawList) {
 				PropertyRecord property = new(item);
 				try {
-					await property.PopulateData(this.InjectedListingDataService);
+					await property.PopulateData(this._injectedListingDataService, this._injectedNbnCoverageService);
 					if (property.Data?.Status != "Sold") {
 						this._shortlists[listName].Add(property);
 					}

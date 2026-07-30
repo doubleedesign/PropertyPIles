@@ -12,6 +12,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddSingleton<FileService>();
 builder.Services.AddSingleton<ListingDataService>();
 builder.Services.AddSingleton<ShortlistService>();
+builder.Services.AddSingleton<NbnCoverageService>();
 
 var app = builder.Build();
 

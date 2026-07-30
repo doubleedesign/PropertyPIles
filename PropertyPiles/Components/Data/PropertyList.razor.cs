@@ -17,6 +17,9 @@ public partial class PropertyList : ComponentBase {
 	[Inject]
 	private ShortlistService InjectedShortlistService { get; set; } = default!;
 	
+	[Inject]
+	private NbnCoverageService InjectedNbnCoverageService { get; set; } = default!;
+	
 	[Parameter]
 	public required string Id { get; set; }
 	
@@ -29,7 +32,7 @@ public partial class PropertyList : ComponentBase {
 	
 	protected override async Task OnInitializedAsync() {
 		await base.OnInitializedAsync();
-		await this.InjectedShortlistService.Init(this.InjectedFileService, this.InjectedListingDataService);
+		await this.InjectedShortlistService.Init(this.InjectedFileService, this.InjectedListingDataService, this.InjectedNbnCoverageService);
 		this.Items = await this.InjectedShortlistService.GetList(this.ListName);
 		
 		if (this.InjectedShortlistService.GetErrorsForList(this.ListName).Count > 0) {

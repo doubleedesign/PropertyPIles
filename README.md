@@ -2,7 +2,7 @@
 
 Retrieve and display property listings in a format you can share with friends and family when you are house-hunting (to purchase).
 
-PropertyPiles uses [RealtyAPI](https://www.realtyapi.io) to retrieve property listings. It has only been tested with Domain.com.au but should theoretically work with other APIs offered through this service.
+PropertyPiles uses [RealtyAPI](https://www.realtyapi.io) to retrieve property listings. It has only been tested with Domain.com.au but should theoretically work with other APIs offered through this service, with some minor modifications to the code.
 
 _PropertyPiles is not affiliated with or endorsed by RealtyAPI, Domain, or any other property industry entity._
 
@@ -22,6 +22,10 @@ For privacy reasons, it's not committed to Git. Leaving a public record of house
 ### Property listing data
 
 The app takes the paths from your JSON file and queries the RealtyAPI for the Domain.com.au listing data. It then transforms the combination of your shortlist data (e.g., notes) and the listing data and displays it in a table, showing key information like asking price, land size, and bedroom/bathroom/car space counts. It also marks when a property has gone under offer, been sold, or the listing has been removed.
+
+### NBN coverage data
+
+For Australian users, National Broadband Network coverage data is fetched from the same TPG endpoint that the iiNet "check your address" page uses (at the time of writing, anyway). The responses are cached as this data is not likely to change frequently, and I do not wish to draw attention to or generally abuse the endpoint that they have so kindly (possibly unintentionally...) left open that allows this to be done.
 
 ### Caching
 
@@ -75,6 +79,8 @@ To develop and test the app locally, create a `.env` file in the project root wi
 	REALTY_API_BASE_URL=https://domain.realtyapi.io/
 	MAX_CACHE_AGE=3600
 	SOURCE_SITE_BASE_URL=https://www.domain.com.au/
+	NBN_BASE_URL=https://onesq.tpgtelecom.com.au/onesq/api/v1/sq
+	NBN_ISP_NAME=IINET
 	BLOB_STORAGE_ACCOUNT_NAME=propertypilesfiles
 	BLOB_STORAGE_CONTAINER_NAME=propertypilescontainer
 	BLOB_STORAGE_ACCESS_KEY=your_key_here
