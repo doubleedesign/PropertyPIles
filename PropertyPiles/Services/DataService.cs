@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Nodes;
+using DotNetEnv;
 using PropertyPiles.Types;
 using PropertyPiles.Utils;
 
@@ -52,8 +53,9 @@ internal class DataService {
 			long timestamp = doc.RootElement.GetProperty("timestamp").GetInt64();
 			long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 			long timeAgo = now - timestamp;
-			// Return the data if less than or equal to an hour old
-			if (timeAgo < 3600) {
+			// Return the data if less than or equal to the max cache age (set in seconds)
+			int maxCacheAge = int.TryParse(Environment.GetEnvironmentVariable("MAX_CACHE_AGE"), out int parsedValue) ? parsedValue : 3600;
+			if (timeAgo < maxCacheAge) {
 				Logger.Info($"Found recent cached record for property {id}");
 				return this.ConvertJsonResponseDetail(doc);
 			}

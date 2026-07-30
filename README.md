@@ -1,4 +1,4 @@
-﻿# PropertyPiles
+# PropertyPiles
 
 Retrieve and display property listings in a format you can share with friends and family when you are house-hunting (to purchase).
 
@@ -54,6 +54,7 @@ To develop and test the app locally, create a `.env` file in the project root wi
 	APP_USER_NAME="Leesa and Michael"
 	REALTY_API_KEY=your_api_key_here
 	REALTY_API_BASE_URL=https://domain.realtyapi.io/
+	MAX_CACHE_AGE=3600
 	SOURCE_SITE_BASE_URL=https://www.domain.com.au/
 	BLOB_STORAGE_ACCOUNT_NAME=propertypilesfiles
 	BLOB_STORAGE_CONTAINER_NAME=propertypilescontainer
