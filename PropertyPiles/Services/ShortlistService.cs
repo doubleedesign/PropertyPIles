@@ -1,16 +1,38 @@
-﻿using System.Diagnostics;
-using PropertyPiles.Types;
-
+﻿using PropertyPiles.Types;
 namespace PropertyPiles.Services;
 
 
 public class ShortlistService {
-	private FileService _fs = new();
+	private FileService? InjectedFileService{ get; set; }
 	private Dictionary<string, List<SavedItem>> _rawlists = new();
 	private Dictionary<string, List<PropertyRecord>> _shortlists = new();
 	private Dictionary<string, List<String>> _fetchErrors = new();
+	private ListingDataService? InjectedListingDataService;
+	private bool _isInitialized = false;
+	
+	// One semaphore per list to allow different lists to populate concurrently (from multiple instances of PropertyList on the same page)
+	// while preventing the same list from being populated multiple times simultaneously
+	private readonly Dictionary<string, SemaphoreSlim> _locks = new();
+	private readonly HashSet<string> _populated = new();
 	
 	public ShortlistService() {
+	}
+
+	/// <summary>
+	/// Initialize the class with the injected providers and empty lists to sort the data into.
+	/// Set _isInitialized when done, to ensure this only gets called once if multiple components try to initialize it.
+	/// Otherwise, we get duplicate entries in the lists.
+	/// </summary>
+	/// <param name="injectedFileServiceRef"></param>
+	/// <param name="injectedDataServiceRef"></param>
+	public async Task Init(FileService injectedFileServiceRef, ListingDataService injectedDataServiceRef) {
+		if (this._isInitialized) return;
+		
+		this._locks.Add("priority", new SemaphoreSlim(1, 1));
+		this._locks.Add("maybe", new SemaphoreSlim(1, 1));
+		this._locks.Add("dismissed", new SemaphoreSlim(1, 1));
+		this._locks.Add("sold", new SemaphoreSlim(1, 1));
+		
 		this._rawlists.Add("priority", new List<SavedItem>());
 		this._rawlists.Add("maybe", new List<SavedItem>());
 		this._rawlists.Add("dismissed", new List<SavedItem>());
@@ -24,11 +46,14 @@ public class ShortlistService {
 		this._shortlists.Add("maybe", new List<PropertyRecord>());
 		this._shortlists.Add("dismissed", new List<PropertyRecord>());
 		this._shortlists.Add("sold", new List<PropertyRecord>());
-	}
-
-	public async Task Init() {
-		await this._fs.LoadFile();
+		
+		this.InjectedFileService = injectedFileServiceRef;
+		this.InjectedListingDataService = injectedDataServiceRef;
+		
+		await this.InjectedFileService.LoadFile();
 		this.SortRawSavedItems();
+
+		this._isInitialized = true;
 	}
 
 	/// <summary>
@@ -36,7 +61,11 @@ public class ShortlistService {
 	/// </summary>
 	/// <exception cref="NullReferenceException"></exception>
 	private void SortRawSavedItems() {
-		List<SavedItem>? rawList = this._fs.GetItemsFromFile();
+		if(this.InjectedFileService == null) {
+			throw new InvalidOperationException("ShortlistService has not been initialized with a FileService instance. Call Init() before calling SortRawSavedItems().");
+		}
+		
+		List<SavedItem>? rawList = this.InjectedFileService.GetItemsFromFile();
 		if (rawList == null) {
 			throw new NullReferenceException("Failed to load property lists from file.");
 		}
@@ -57,37 +86,50 @@ public class ShortlistService {
 	}
 
 	private async Task PopulateList(string listName) {
+		if (this.InjectedListingDataService == null) {
+			throw new InvalidOperationException("ShortlistService has not been initialized with a ListingDataService instance. Call Init() before calling PopulateList().");
+		}
+		
 		if (!this._shortlists.ContainsKey(listName)) {
 			throw new ArgumentException($"List '{listName}' does not exist.");
 		}
-
-		if (listName == "sold") {
-			// TODO: Skip fetching data for properties we already know are sold from previous fetches.
-			// This will probably involve hoisting the shortlist service up so there's only one instance
-			// - currently the PropertyList component instantiates it separately for each list.
-			return;
-		}
+		
+		// Sold list is populated as a side effect of other lists, so we don't need to populate it here
+		if (listName == "sold") return;
 
 		if (!this._rawlists.ContainsKey(listName)) {
 			throw new ArgumentException($"List '{listName}' does not exist.");
 		}
+		
+		var sem = _locks[listName];
+		await sem.WaitAsync();
+		try {
+			// Already populated by a concurrent caller
+			if (_populated.Contains(listName)) return;
 
-		var rawList =  this._rawlists[listName];
-		foreach (SavedItem item in rawList) {
-			PropertyRecord property = new(item);
-			
-			try {
-				await property.PopulateData();
-				if (property.Data?.Status != "Sold") {
-					this._shortlists[listName].Add(property);
+			// Store snapshot to avoid "collection was modified" if anything else touches it
+			var rawList = _rawlists[listName].ToList();
+            
+			foreach (SavedItem item in rawList) {
+				PropertyRecord property = new(item);
+				try {
+					await property.PopulateData(this.InjectedListingDataService);
+					if (property.Data?.Status != "Sold") {
+						this._shortlists[listName].Add(property);
+					}
+				}
+				catch (HttpRequestException ex) {
+					this._fetchErrors[listName].Add(ex.Message);
+					// Include just the the SavedItem data if the API request failed
+					this._shortlists[listName].Add(new PropertyRecord(item));
 				}
 			}
-			catch (HttpRequestException ex) {
-				this._fetchErrors[listName].Add(ex.Message);
-				// Included the SavedItem data if the API request failed
-				this._shortlists[listName].Add(new PropertyRecord(item));
-			}
-		} 
+            
+			_populated.Add(listName);
+		}
+		finally {
+			sem.Release();
+		}
 	}
 	
 	public async Task<List<PropertyRecord>> GetList(string name) {

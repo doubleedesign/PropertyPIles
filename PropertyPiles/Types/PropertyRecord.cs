@@ -1,10 +1,9 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using PropertyPiles.Services;
 
 namespace PropertyPiles.Types;
 
 public class PropertyRecord : SavedItem {
-	private ListingDataService _api = new();
 	internal PropertyDataResponse? Data;
 	
 	// A saved item is usually expected to exist before attempting to create a property record,
@@ -20,9 +19,9 @@ public class PropertyRecord : SavedItem {
 	/// <summary>
 	/// Add data about the property from the selected third-party API.
 	/// </summary>
-	/// <exception cref="HttpRequestException">Thrown when the third-party API returns a non-success status code.</exception>
-	public async Task PopulateData() {
-		this.Data = await this._api.GetPropertyByPath(this.Path);
+	/// <exception cref="HttpRequestException">Thrown when a third-party API returns a non-success status code.</exception>
+	public async Task PopulateData(ListingDataService listingDataService) {
+		this.Data = await listingDataService.GetPropertyByPath(this.Path);
 	}
 
 	public string GetFormattedAddress() {

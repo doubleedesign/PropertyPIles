@@ -1,5 +1,6 @@
 using PropertyPiles.Components;
 using PropertyPiles.Containers;
+using PropertyPiles.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<AppState>();
 builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 builder.Services.AddHttpClient();
+builder.Services.AddSingleton<FileService>();
+builder.Services.AddSingleton<ListingDataService>();
+builder.Services.AddSingleton<ShortlistService>();
 
 var app = builder.Build();
 

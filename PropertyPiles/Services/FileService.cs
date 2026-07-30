@@ -4,7 +4,7 @@ namespace PropertyPiles.Services;
 using Types;
 using System.Text.Json;
 
-internal class FileService {
+public class FileService {
 	private List<SavedItem>? _savedItems;
 	
 	public FileService() {

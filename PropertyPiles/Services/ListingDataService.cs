@@ -6,7 +6,7 @@ using PropertyPiles.Utils;
 
 namespace PropertyPiles.Services;
 
-internal class ListingDataService {
+public class ListingDataService {
 	private readonly HttpClient _client = new HttpClient();
 	private readonly string _apiKey = Environment.GetEnvironmentVariable("REALTY_API_KEY") ?? "";
 	private readonly string _baseUrl = Environment.GetEnvironmentVariable("REALTY_API_BASE_URL") ?? "";
