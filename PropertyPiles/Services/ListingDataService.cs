@@ -6,13 +6,13 @@ using PropertyPiles.Utils;
 
 namespace PropertyPiles.Services;
 
-internal class DataService {
+internal class ListingDataService {
 	private readonly HttpClient _client = new HttpClient();
 	private readonly string _apiKey = Environment.GetEnvironmentVariable("REALTY_API_KEY") ?? "";
 	private readonly string _baseUrl = Environment.GetEnvironmentVariable("REALTY_API_BASE_URL") ?? "";
 	private readonly string _cacheDir;
 	
-	public DataService() {
+	public ListingDataService() {
 		var projectRoot = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", ".."));
 		Directory.CreateDirectory(Path.Combine(projectRoot, "cache"));
 		this._cacheDir = Path.Combine(projectRoot, "cache");

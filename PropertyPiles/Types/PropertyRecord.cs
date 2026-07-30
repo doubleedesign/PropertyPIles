@@ -4,7 +4,7 @@ using PropertyPiles.Services;
 namespace PropertyPiles.Types;
 
 public class PropertyRecord : SavedItem {
-	private DataService _api = new();
+	private ListingDataService _api = new();
 	internal PropertyDataResponse? Data;
 	
 	// A saved item is usually expected to exist before attempting to create a property record,
