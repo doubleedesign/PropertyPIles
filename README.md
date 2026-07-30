@@ -1,4 +1,4 @@
-# PropertyPiles
+﻿# PropertyPiles
 
 Retrieve and display property listings in a format you can share with friends and family when you are house-hunting (to purchase).
 
@@ -6,13 +6,38 @@ PropertyPiles uses [RealtyAPI](https://www.realtyapi.io) to retrieve property li
 
 _PropertyPiles is not affiliated with or endorsed by RealtyAPI, Domain, or any other property industry entity._
 
+- [Features](#features)
+- [Usage](#usage)
+- [Setup and deployment](#setup-and-deployment)
+- [Development](#development)
+
+## Features
+
+### JSON shortlist
+
+Entry of properties into the "piles" is via a simple JSON file. 
+
+For privacy reasons, it's not committed to Git. Leaving a public record of houses one is considering buying doesn't pass the vibe check, so it's Gitignored locally and expected to be in Azure Blob Storage in production.
+
+### Property listing data
+
+The app takes the paths from your JSON file and queries the RealtyAPI for the Domain.com.au listing data. It then transforms the combination of your shortlist data (e.g., notes) and the listing data and displays it in a table, showing key information like asking price, land size, and bedroom/bathroom/car space counts. It also marks when a property has gone under offer, been sold, or the listing has been removed.
+
+### Caching
+
+The nature of the API's capabilities are such that a request is made for every property on every page load, so a rudimentary caching mechanism has been implemented in the form of saving the API responses to JSON files, and only querying the API when the data is more than an hour old. Customise the cache max time by setting the `MAX_CACHE_AGE` environment variable to your desired expiry time in seconds.
+
+### Authentication
+
+Auth is rudimentary by design. Do you want to deal with your boomer family members asking why they need to sign into Google or whatever (or worse, create an account on your random app) just to view your property shortlist, and provide the associated tech support? No, I didn't think so. But, as I mentioned above, privacy is a consideration.
+
+The app is essentially a single page, with a single password protecting it. This is just so that you can have some basic control over who you share your list with, and it shouldn't show up on the Wayback machine or anything like that. The password is set as an environment variable.
+
 ## Usage
 
 ### Shortlist input
 
 The most obvious evidence of the short-term nature of this project is the data input. It's just a JSON file. No interface to edit it, just...JSON.
-
-For privacy, it's not committed to Git. Leaving a public record of houses one is considering buying doesn't pass the vibe check, so it's Gitignored locally and expected to be in Azure Blob Storage in production (or alternatively you can fork the project and modify it to put the file somewhere else).
 
 The format is as follows:
 
@@ -31,12 +56,6 @@ The format is as follows:
 Valid fields are "notes" (array of strings), "dismissedReasons" (array of strings), and "priority" (boolean).
 
 You do not need to manually mark when a property you shorlisted gets sold. The app will automatically account for this when processing the data.
-
-### Authentication
-
-Auth is rudimentary by design. Do you want to deal with your boomer family members asking why they need to sign into Google or whatever (or worse, create an account on your random app) just to view your property shortlist, and provide the associated tech support? No, I didn't think so. But, as I mentioned above, privacy is a consideration.
-
-The app is essentially a single page, with a single password protecting it. This is just so that you can have some basic control over who you share your list with, and it shouldn't show up on the Wayback machine or anything like that. The password is set as an environment variable.
 
 ## Setup and Deployment
 
@@ -91,7 +110,8 @@ PropertyPiles is a [Blazor Web App](https://dotnet.microsoft.com/en-us/apps/aspn
 - A .NET IDE such as [JetBrains Rider](https://www.jetbrains.com/rider/) or [Visual Studio](https://visualstudio.microsoft.com/)
 
 And you will also need to:
-1. Create a .env file in the project root as per the setup instructions above.
+1. Create a `.env` file in the project root as per the setup instructions above.
+2. Create a `data.json` file in the project root as per the format described above.
 2. Configure your IDE to compile Sass files when they are edited. In Rider, do this by creating a file watcher with the default settings (it will prompt you the first time you open a .scss file) and enabling it to run on save.
 
 >[!TIP]
