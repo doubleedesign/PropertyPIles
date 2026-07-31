@@ -6,17 +6,11 @@ using PropertyPiles.Utils;
 
 namespace PropertyPiles.Services;
 
-public class ListingDataService {
-	private readonly HttpClient _client = new HttpClient();
+public class ListingDataService : DataService {
 	private readonly string _apiKey = Environment.GetEnvironmentVariable("REALTY_API_KEY") ?? "";
 	private readonly string _baseUrl = Environment.GetEnvironmentVariable("REALTY_API_BASE_URL") ?? "";
-	private readonly string _cacheDir;
 	
 	public ListingDataService() {
-		var projectRoot = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", ".."));
-		Directory.CreateDirectory(Path.Combine(projectRoot, "cache"));
-		this._cacheDir = Path.Combine(projectRoot, "cache");
-		
 		if(String.IsNullOrEmpty(this._apiKey)) {
 			throw new Exception("REALTY_API_KEY environment variable is not set.");
 		}
@@ -43,7 +37,7 @@ public class ListingDataService {
 	}
 
 	private PropertyDataResponse? GetCachedPropertyById(string id) {
-		string filePath = Path.Combine(this._cacheDir, $"{id}.json");
+		string filePath = Path.Combine(this.CacheDir, $"{id}.json");
 		if (!File.Exists(filePath)) {
 			return null;
 		}
@@ -120,7 +114,7 @@ public class ListingDataService {
 		
 		var request = new HttpRequestMessage(HttpMethod.Get, url);
 		request.Headers.Add("x-realtyapi-key", this._apiKey);
-		var response = await this._client.SendAsync(request);
+		var response = await this.Client.SendAsync(request);
 		
 		if (!response.IsSuccessStatusCode) {
 			throw new HttpRequestException($"Failed to fetch property data from API. Status code: {response.StatusCode}");
@@ -131,33 +125,5 @@ public class ListingDataService {
 		this.CacheResponse(json);
 		
 		return this.ConvertJsonResponseDetail(json);
-	}
-	
-
-	/// <summary>
-	/// Save the API response as a JSON file.
-	/// </summary>
-	/// <param name="response"></param>
-	private void CacheResponse(JsonDocument response) {
-		try {
-			var propertyId = response.RootElement.GetProperty("detail").GetProperty("id").ToString();
-			string outputPath = Path.Combine(this._cacheDir, $"{propertyId}.json");
-
-			// Convert to mutable JsonObject and add timestamp
-			string rawJson = response.RootElement.GetRawText();
-			JsonObject jsonObject = JsonSerializer.Deserialize<JsonObject>(rawJson)!;
-			jsonObject.Add("timestamp", JsonValue.Create(DateTimeOffset.UtcNow.ToUnixTimeSeconds()));
-
-			// Write to file
-			var options = new JsonWriterOptions { Indented = true };
-			using FileStream fileStream = File.Create(outputPath);
-			using Utf8JsonWriter writer = new Utf8JsonWriter(fileStream, options);
-			jsonObject.WriteTo(writer);
-			
-			Logger.Info($"Cached property data for property {propertyId}");
-		}
-		 catch (Exception ex) {
-			 Logger.Error(ex.Message);
-		 }
 	}
 }

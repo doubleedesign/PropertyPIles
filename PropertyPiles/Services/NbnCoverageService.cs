@@ -5,9 +5,7 @@ using PropertyPiles.Utils;
 
 namespace PropertyPiles.Services;
 
-public class NbnCoverageService {
-	private readonly HttpClient _client = new HttpClient();
-	private readonly string _cacheDir;
+public class NbnCoverageService : DataService {
 	private readonly string? _apiUrl = Environment.GetEnvironmentVariable("NBN_BASE_URL");
 	private readonly string? _ispName = Environment.GetEnvironmentVariable("NBN_ISP_NAME");
 
@@ -15,10 +13,6 @@ public class NbnCoverageService {
 		if (!this.CanRequestNbnData()) {
 			Logger.Info("Skipping NBN Coverage Service initialization because the API URL or ISP name is not set.");
 		}
-
-		var projectRoot = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", ".."));
-		Directory.CreateDirectory(Path.Combine(projectRoot, "cache"));
-		this._cacheDir = Path.Combine(projectRoot, "cache");
 	}
 
 	private bool CanRequestNbnData() {
@@ -57,7 +51,7 @@ public class NbnCoverageService {
 				RequestUri = new Uri(this._apiUrl!),
 				Content = requestBodyString
 			};
-			using (var response = await this._client.SendAsync(request)) {
+			using (var response = await this.Client.SendAsync(request)) {
 				response.EnsureSuccessStatusCode();
 				var body = await response.Content.ReadAsStringAsync();
 				Console.WriteLine(body);
