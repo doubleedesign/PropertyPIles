@@ -1,0 +1,22 @@
+{
+  "message": "Success",
+  "source": "domain.com.au",
+  "detail": {
+    "id": 2020754328,
+    "listingType": "property",
+    "lifecycleStatus": "Live",
+    "searchType": "buy",
+    "headline": "Prime Location Living  Space, Style \u0026 Unbeatable Convenience",
+    "description": "Immaculately presented and perfectly positioned, this impressive three-bedroom home offers an exceptional lifestyle in one of Geelong\u0027s most sought-after pockets. Enjoy the ultimate convenience with the Geelong Ring Road just moments away, while being within easy walking distance to Waurn Ponds Shopping Centre, cafes, restaurants, Reading Cinemas, the upgraded Waurn Ponds Train Station, and Deakin University.\n\nDesigned for comfortable family living, the home features three generously sized bedrooms, including a master complete with walk-in robe and ensuite. The remaining bedrooms are well-appointed with built-in robes and ceiling fans, ensuring comfort for all.\n\nMultiple living zones add flexibility, with two separate living areas complemented by a light-filled open plan kitchen, dining, and meals space. The kitchen is beautifully enhanced with new cypress pine benchtops, which continue through to the bathrooms, adding warmth and character throughout the home.\n\nSet on a generous 611m\u00B2 (approx.) allotment, the property boasts a spacious backyard with plenty of room for kids and pets to enjoy. A covered decked entertaining area provides the perfect setting for hosting family and friends all year round.\n\nWhether you\u0027re an investor, downsizer, or first or second home buyer, this is a fantastic opportunity to secure a quality home in a blue-chip location with nothing left to do but move in and enjoy.\n\n\n*All information about the property has been provided to Hayeswinckle by third parties. Hayeswinckle has not verified the information and does not warrant its accuracy or completeness. Parties should make and rely on their own enquiries in relation to this property.",
+    "price": "$699,900 - $749,900",
+    "address": {
+      "full": "72 Rossack Drive, Waurn Ponds",
+      "streetNumber": "72",
+      "street": "Rossack Drive",
+      "suburb": "Waurn Ponds",
+      "postcode": "3216",
+      "state": "VIC"
+    }
+  },
+  "timestamp": 1785493425
+}

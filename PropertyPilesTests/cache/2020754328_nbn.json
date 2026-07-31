@@ -1,0 +1,142 @@
+{
+  "WIRELESS4G_BACKUP": {
+    "res": 1
+  },
+  "Services": {
+    "transact": -1,
+    "ftth": -1,
+    "fwa_5g": 1,
+    "fwa_4g": 1,
+    "nbn": 1,
+    "fttb": 0,
+    "fwa_4g_backup": 1
+  },
+  "fwaDataRetrievalAttempted": true,
+  "WIRELESS4G": {
+    "res": 1,
+    "fwaDetails": {
+      "fwaSqId": "H0020739398",
+      "network": "HOME"
+    }
+  },
+  "WIRELESS5G": {
+    "res": 1,
+    "fwaDetails": {
+      "fwaSqId": "H0020739398",
+      "network": "HOME"
+    }
+  },
+  "NBN": {
+    "svcClass": "3",
+    "productFeatures": [
+      {
+        "TC2": "Yes"
+      },
+      {
+        "High Speed TC2 (greater or equal to 20Mbps)": "Yes"
+      },
+      {
+        "Speed Tier Availability": "Home Fast,Home Superfast,Home Ultrafast,Home Hyperfast"
+      },
+      {
+        "NFAS TC1 High Speed Tiers (greater or equal to 2Mbps)": "No"
+      },
+      {
+        "NFAS TC2 High Speed Tiers (greater or equal to 20Mbps)": "Yes"
+      },
+      {
+        "NFAS TC2 50Mbps Capacity": "Yes"
+      },
+      {
+        "NFAS TC2 80Mbps Capacity": "Yes"
+      },
+      {
+        "NFAS TC2 60Mbps Capacity": "Yes"
+      },
+      {
+        "NFAS TC2 70Mbps Capacity": "Yes"
+      },
+      {
+        "NFAS TC2 30Mbps Capacity": "Yes"
+      },
+      {
+        "NFAS TC2 5Mbps Capacity": "Yes"
+      },
+      {
+        "NFAS TC2 90Mbps Capacity": "Yes"
+      },
+      {
+        "NFAS TC2 10Mbps Capacity": "Yes"
+      },
+      {
+        "NFAS TC2 20Mbps Capacity": "Yes"
+      },
+      {
+        "NFAS TC2 100Mbps Capacity": "Yes"
+      },
+      {
+        "NFAS TC2 40Mbps Capacity": "Yes"
+      },
+      {
+        "NewDevelopmentsChargeApplies": "No"
+      },
+      {
+        "Self Install and RSP Professional Install Eligible": "No"
+      }
+    ],
+    "Self Install and RSP Professional Install Eligible": "No",
+    "ultraFastAvailable": "Yes",
+    "technology": "Fibre",
+    "ndc": "No",
+    "ntd_details": [
+      {
+        "1-UNI-D3": {
+          "uniType": "UNI-D",
+          "portId": 3,
+          "value": "Free"
+        },
+        "speedTiersSupported": [
+          "Home Fast",
+          "Home Superfast",
+          "Home Ultrafast",
+          "Home Hyperfast"
+        ],
+        "1-UNI-D4": {
+          "uniType": "UNI-D",
+          "portId": 4,
+          "value": "Free"
+        },
+        "RemainingBandwidthDownstream": {
+          "unitOfMeasure": "Mbps",
+          "bandwidth": "2200.0"
+        },
+        "NTDVersion": "V4",
+        "ID": "NTD000068167096",
+        "NTDType": "FOUR_PORT",
+        "NTDLocation": "INDOOR",
+        "1-UNI-D1": {
+          "uniType": "UNI-D",
+          "portId": 1,
+          "value": "Free"
+        },
+        "1-UNI-D2": {
+          "uniType": "UNI-D",
+          "portId": 2,
+          "value": "Free"
+        },
+        "NTDPowerType": "AC",
+        "RemainingBandwidthUpstream": {
+          "unitOfMeasure": "Mbps",
+          "bandwidth": "1100.0"
+        }
+      }
+    ],
+    "exch": "WAPD",
+    "superFastAvailable": "Yes"
+  },
+  "FTTB": {
+    "res": 0,
+    "addr": ""
+  },
+  "timestamp": 1785497724
+}

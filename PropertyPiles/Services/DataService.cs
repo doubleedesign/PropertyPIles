@@ -18,11 +18,11 @@ public abstract class DataService {
 	/// <summary>
 	/// Save the API response as a JSON file.
 	/// </summary>
-	/// <param name="response"></param>
-	protected void CacheResponse(JsonDocument response) {
+	/// <param name="response">The raw JSON response from a REST API query.</param>
+	/// <param name="filename">Filename to use for the cached file (without extension)</param>
+	protected void CacheResponse(JsonDocument response, string filename) {
 		try {
-			var propertyId = response.RootElement.GetProperty("detail").GetProperty("id").ToString();
-			string outputPath = Path.Combine(this.CacheDir, $"{propertyId}.json");
+			string outputPath = Path.Combine(this.CacheDir, $"{filename}.json");
 
 			// Convert to mutable JsonObject and add timestamp
 			string rawJson = response.RootElement.GetRawText();
@@ -35,7 +35,7 @@ public abstract class DataService {
 			using Utf8JsonWriter writer = new Utf8JsonWriter(fileStream, options);
 			jsonObject.WriteTo(writer);
 
-			Logger.Info($"Cached property data for property {propertyId}");
+			Logger.Info($"Cached property data for property {filename} at {outputPath}");
 		}
 		catch (Exception ex) {
 			Logger.Error(ex.Message);

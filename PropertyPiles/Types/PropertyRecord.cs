@@ -6,7 +6,7 @@ namespace PropertyPiles.Types;
 
 public class PropertyRecord : SavedItem {
 	internal PropertyDataResponse? Data;
-	internal Dictionary<string, bool>? NbnCoverage;
+	internal NbnCoverageResponse? NbnCoverage;
 
 	// A saved item is usually expected to exist before attempting to create a property record,
 	// so this constructor allows us to create the record from the item with less repetitive double-handling of field data
@@ -22,9 +22,9 @@ public class PropertyRecord : SavedItem {
 	/// Add data about the property from the selected third-party API.
 	/// </summary>
 	/// <exception cref="HttpRequestException">Thrown when a third-party API returns a non-success status code.</exception>
-	public async Task PopulateData(ListingDataService listingDataService, NbnCoverageService nbnCoverageService) {
+	public async Task PopulateData(ListingDataService listingDataService, NbnCoverageService? nbnCoverageService) {
 		this.Data = await listingDataService.GetPropertyByPath(this.Path);
-		if (!this.IncludeNbnCoverage()) return;
+		if (!this.IncludeNbnCoverage() || nbnCoverageService == null) return;
 		
 		 try {
 		 	this.NbnCoverage = await nbnCoverageService.GetCoverageForProperty(this);

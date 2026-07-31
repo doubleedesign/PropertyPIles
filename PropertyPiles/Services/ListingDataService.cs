@@ -122,7 +122,8 @@ public class ListingDataService : DataService {
 		
 		var body = await response.Content.ReadAsStringAsync();
 		var json = JsonDocument.Parse(body);
-		this.CacheResponse(json);
+		var propertyId = json.RootElement.GetProperty("detail").GetProperty("id").ToString();
+		this.CacheResponse(json, propertyId);
 		
 		return this.ConvertJsonResponseDetail(json);
 	}

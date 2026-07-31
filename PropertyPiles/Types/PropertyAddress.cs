@@ -9,13 +9,13 @@ public record PropertyAddress {
 	[JsonPropertyName("streetNumber")]
 	public string StreetNumber { get; init; } = "";
 
-	public string Number => !string.IsNullOrEmpty(this.UnitNumber) ? $"{this.UnitNumber}/{this.StreetNumber}" : this.StreetNumber;
+	public string Number => !string.IsNullOrEmpty(this.UnitNumber) ? $"{this.UnitNumber.Trim()}/{this.StreetNumber.Trim()}" : this.StreetNumber.Trim();
 
 	[JsonPropertyName("street")]
 	public string Street { get; init; } = "";
 	
-	public string StreetType => this.Street.Split(" ").LastOrDefault() ?? "";
-	public string StreetName => this.Street.Replace(this.StreetType, "");
+	public string StreetType => this.Street.Split(" ").LastOrDefault()?.Trim() ?? "";
+	public string StreetName => this.Street.Replace(this.StreetType, "").Trim();
     
 	[JsonPropertyName("suburb")]
 	public string Suburb { get; init; } = "";

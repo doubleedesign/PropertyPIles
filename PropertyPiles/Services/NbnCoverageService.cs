@@ -27,13 +27,47 @@ public class NbnCoverageService : DataService {
 		return true;
 	}
 
-	public async Task<Dictionary<string, bool>?> GetCoverageForProperty(PropertyRecord property) {
+	public async Task<NbnCoverageResponse?> GetCoverageForProperty(PropertyRecord property) {
 		if (!this.CanRequestNbnData()) return null;
-
+		
+		var cached = this.GetCachedNbnData(property.Id);
+		if (cached != null) {
+			return cached;
+		}
+		
 		if (property.Data == null || property.GetAddressData() == null) {
 			throw new ArgumentNullException(nameof(property.Data), $"Property data is not sufficient to check NBN coverage for {property.GetShortAddress()}");
 		}
 	
+		return await this.FetchCoverageForProperty(property);
+	}
+
+	private NbnCoverageResponse? GetCachedNbnData(string propertyId) {
+		string filePath = Path.Combine(this.CacheDir, $"{propertyId}_nbn.json");
+		if (!File.Exists(filePath)) {
+			return null;
+		}
+
+		try {
+			string jsonString = File.ReadAllText(filePath);
+			using (JsonDocument doc = JsonDocument.Parse(jsonString)) {
+				Logger.Info($"Found cached NBN coverage data for property {propertyId}");
+				return this.ConvertJsonResponseDetail(doc);
+			}
+		}
+		catch (Exception ex) {
+			Logger.Error(ex.Message);
+			return null;
+		}
+	}
+	
+	private NbnCoverageResponse? ConvertJsonResponseDetail(JsonDocument json) {
+		var details = json.RootElement;
+		
+		return details.Deserialize<NbnCoverageResponse>();
+	}
+
+	private async Task<NbnCoverageResponse?> FetchCoverageForProperty(PropertyRecord property) {
 		var requestBody = new Dictionary<string, object> {
 			{ "addressDetails", property.GetAddressData()! },
 			{ "brand", this._ispName ?? "" }
@@ -54,9 +88,10 @@ public class NbnCoverageService : DataService {
 			using (var response = await this.Client.SendAsync(request)) {
 				response.EnsureSuccessStatusCode();
 				var body = await response.Content.ReadAsStringAsync();
-				Console.WriteLine(body);
+				var json = JsonDocument.Parse(body);
+				this.CacheResponse(json, $"{property.Id}_nbn");
 
-				return new Dictionary<string, bool>();
+				return json.Deserialize<NbnCoverageResponse>();
 			}
 		}
 		catch (Exception ex) {
