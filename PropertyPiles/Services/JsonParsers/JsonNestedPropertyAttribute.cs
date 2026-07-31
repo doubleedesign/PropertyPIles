@@ -9,6 +9,15 @@ public class JsonNestedPropertyAttribute(string[] hierarchy) : JsonConverterAttr
 		if (type == typeof(bool)) {
 			return new NestedBool(hierarchy);
 		}
+
+		if (type == typeof(string)) {
+			return new NestedString(hierarchy);
+		}
+
+		if (type == typeof(int)) {
+			return new NestedInt(hierarchy);
+		}
+		
 		if(type == typeof(List<Dictionary<string, string>>)) {
 			return new NestedList(hierarchy);
 		}
@@ -24,6 +33,30 @@ public class JsonNestedPropertyAttribute(string[] hierarchy) : JsonConverterAttr
 		}
 
 		public override void Write(Utf8JsonWriter writer, bool value, JsonSerializerOptions options) {
+			throw new NotImplementedException();
+		}
+	}
+
+	private class NestedString(string[] hierarchy) : JsonConverter<string> {
+		public override string Read(ref Utf8JsonReader reader, Type type, JsonSerializerOptions options) {
+			var doc = JsonDocument.ParseValue(ref reader);
+			var value  = hierarchy.Aggregate(doc.RootElement, (el, key) => el.GetProperty(key));
+			return value.GetString() ?? "";
+		}
+
+		public override void Write(Utf8JsonWriter writer, string value, JsonSerializerOptions options) {
+			throw new NotImplementedException();
+		}
+	}
+	
+	private class NestedInt(string[] hierarchy) : JsonConverter<int> {
+		public override int Read(ref Utf8JsonReader reader, Type type, JsonSerializerOptions options) {
+			var doc = JsonDocument.ParseValue(ref reader);
+			var value  = hierarchy.Aggregate(doc.RootElement, (el, key) => el.GetProperty(key));
+			return value.GetInt32();
+		}
+
+		public override void Write(Utf8JsonWriter writer, int value, JsonSerializerOptions options) {
 			throw new NotImplementedException();
 		}
 	}

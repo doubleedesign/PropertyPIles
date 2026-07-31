@@ -25,13 +25,26 @@ public record PropertyAddress {
     
 	[JsonPropertyName("postcode")]
 	public string Postcode { get; init; } = "";
-	
-	public override string ToString() {
+
+	public string ToString(bool withPostcode = false, bool withState = false, bool verboseUnitSyntax = false) {
+		string result;
+
 		if (!string.IsNullOrEmpty(UnitNumber)) {
-			return $"{UnitNumber}/{Number} {this.Street} {this.Suburb}";
+			result = verboseUnitSyntax ? $"Unit {UnitNumber}, {Number}" : $"{UnitNumber}/{Number} {this.Street}, {this.Suburb}";
+		}
+		else {
+			result = $"{this.Number} {this.Street}, {this.Suburb}";
 		}
 		
-		return $"{this.Number} {this.Street}, {this.Suburb}";
+		if (withState) {
+			result = $"{result} {this.State}";
+		}
+
+		if (withPostcode) {
+			result = $"{result} {this.Postcode}";
+		}
+
+		return result;
 	}
 
 	/// <summary>

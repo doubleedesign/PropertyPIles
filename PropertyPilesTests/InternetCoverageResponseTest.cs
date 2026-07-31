@@ -6,7 +6,7 @@ using WireMock.Server;
 
 namespace PropertyPilesTests;
 
-public class NbnCoverageResponseTest {
+public class InternetCoverageResponseTest {
 	private ListingDataService _listingDataService;
 	private WireMockServer _server;
 
@@ -16,8 +16,7 @@ public class NbnCoverageResponseTest {
 		
 		Environment.SetEnvironmentVariable("REALTY_API_BASE_URL", this._server.Url);
 		Environment.SetEnvironmentVariable("REALTY_API_KEY", "test-api-key");
-		Environment.SetEnvironmentVariable("NBN_BASE_URL", $"{this._server.Url}/onesq/api/v1/sq");
-		Environment.SetEnvironmentVariable("NBN_ISP_NAME", "IINET");
+		Environment.SetEnvironmentVariable("NBN_BASE_URL", $"{this._server.Url}");
 		this._listingDataService = new ListingDataService();
 	}
 
@@ -30,12 +29,13 @@ public class NbnCoverageResponseTest {
 	[Test]
 	public async Task HasNbnCoverage() {
 		HttpResponseMocks.MockListingDataResponse(this._server, "72-rossack-drive-waurn-ponds-vic-3216-2020754328");
+		HttpResponseMocks.MockIspPropertyIdResponse(this._server);
 		HttpResponseMocks.MockNbnDataResponse(this._server, "2020754328");
 		
 		SavedItem item = JsonSerializer.Deserialize<SavedItem>("{\"path\": \"72-rossack-drive-waurn-ponds-vic-3216-2020754328\"}")!;
 		var record = new PropertyRecord(item);
-		await record.PopulateData(this._listingDataService, new NbnCoverageService());
+		await record.PopulateData(this._listingDataService, new InternetCoverageService());
 
-		Logger.DebugObject(record);
+		// TODO: Assert coverage fields
 	}
 }

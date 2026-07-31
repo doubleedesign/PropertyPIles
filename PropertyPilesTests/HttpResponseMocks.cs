@@ -22,14 +22,24 @@ public static class HttpResponseMocks {
 			.WithBody(response)
 		);
 	}
+
+	public static void MockIspPropertyIdResponse(WireMockServer server) {
+		server.Given(Request.Create()
+			.WithPath("/api/signup/address/search")
+			.UsingGet()
+		).RespondWith(Response.Create()
+			.WithStatusCode(200)
+			.WithBody("{\"LOC000083302541\": \"72 ROSSACK DRIVE, WAURN PONDS 3216\"}")
+		);
+	}
 	
 	public static void MockNbnDataResponse(WireMockServer server, string propertyId) {
 		string filePath = Path.Combine(_cacheDir, $"{propertyId}_nbn.json");
 		string response = File.ReadAllText(filePath);
 
 		server.Given(Request.Create()
-			.WithPath("/onesq/api/v1/sq")
-			.UsingPost()
+			.WithPath("/api/signup/service-qualification/LOC000083302541")
+			.UsingGet()
 		).RespondWith(Response.Create()
 			.WithStatusCode(200)
 			.WithBody(response)

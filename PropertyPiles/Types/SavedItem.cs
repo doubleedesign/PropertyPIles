@@ -21,7 +21,7 @@ public class SavedItem {
 		return Environment.GetEnvironmentVariable("SOURCE_SITE_BASE_URL") + this.Path;
 	}
 
-	public string GetShortAddress() {
+	public string GetShortAddress(bool withPostcode = false) {
 		var pathPieces = this.Path.Split("-").ToList();
 		// If the first two pieces are both numbers, join them and add a slash
 		if (pathPieces[0].All(char.IsDigit) && pathPieces[1].All(char.IsDigit)) {

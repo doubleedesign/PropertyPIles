@@ -5,7 +5,7 @@ namespace PropertyPiles.Services;
 public class ShortlistService {
 	private FileService? _injectedFileService;
 	private ListingDataService? _injectedListingDataService;
-	private NbnCoverageService? _injectedNbnCoverageService;
+	private InternetCoverageService? _injectedInternetCoverageService;
 	
 	private Dictionary<string, List<SavedItem>> _rawlists = new();
 	private Dictionary<string, List<PropertyRecord>> _shortlists = new();
@@ -28,8 +28,8 @@ public class ShortlistService {
 	/// </summary>
 	/// <param name="injectedFileServiceRef">The singleton FileService injected into the Blazor component that calls this service.</param>
 	/// <param name="injectedDataServiceRef">The singleton ListingDataService injected into the Blazor component that calls this service.</param>
-	/// <param name="injectedNbnServiceRef">The singleton NbnCoverageService injected into the Blazor component that calls this service.</param>
-	public async Task Init(FileService injectedFileServiceRef, ListingDataService injectedDataServiceRef, NbnCoverageService injectedNbnServiceRef) {
+	/// <param name="injectedNbnServiceRef">The singleton InternetCoverageService injected into the Blazor component that calls this service.</param>
+	public async Task Init(FileService injectedFileServiceRef, ListingDataService injectedDataServiceRef, InternetCoverageService injectedNbnServiceRef) {
 		if (this._isInitialized) return;
 		
 		this._locks.Add("priority", new SemaphoreSlim(1, 1));
@@ -53,7 +53,7 @@ public class ShortlistService {
 		
 		this._injectedFileService = injectedFileServiceRef;
 		this._injectedListingDataService = injectedDataServiceRef;
-		this._injectedNbnCoverageService = injectedNbnServiceRef;
+		this._injectedInternetCoverageService = injectedNbnServiceRef;
 		
 		await this._injectedFileService.LoadFile();
 		this.SortRawSavedItems();
@@ -118,7 +118,7 @@ public class ShortlistService {
 			foreach (SavedItem item in rawList) {
 				PropertyRecord property = new(item);
 				try {
-					await property.PopulateData(this._injectedListingDataService, this._injectedNbnCoverageService);
+					await property.PopulateData(this._injectedListingDataService, this._injectedInternetCoverageService);
 					if (property.Data?.Status != "Sold") {
 						this._shortlists[listName].Add(property);
 					}

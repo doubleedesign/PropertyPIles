@@ -24,9 +24,10 @@ public abstract class DataService {
 		try {
 			string outputPath = Path.Combine(this.CacheDir, $"{filename}.json");
 
-			// Convert to mutable JsonObject and add timestamp
+			// Convert to mutable JsonObject, remove some fields we don't need, and add timestamp
 			string rawJson = response.RootElement.GetRawText();
 			JsonObject jsonObject = JsonSerializer.Deserialize<JsonObject>(rawJson)!;
+			jsonObject.Remove("broadbandPlans");
 			jsonObject.Add("timestamp", JsonValue.Create(DateTimeOffset.UtcNow.ToUnixTimeSeconds()));
 
 			// Write to file

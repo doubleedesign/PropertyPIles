@@ -22,12 +22,12 @@ public class PropertyRecord : SavedItem {
 	/// Add data about the property from the selected third-party API.
 	/// </summary>
 	/// <exception cref="HttpRequestException">Thrown when a third-party API returns a non-success status code.</exception>
-	public async Task PopulateData(ListingDataService listingDataService, NbnCoverageService? nbnCoverageService) {
+	public async Task PopulateData(ListingDataService listingDataService, InternetCoverageService? InternetCoverageService) {
 		this.Data = await listingDataService.GetPropertyByPath(this.Path);
-		if (!this.IncludeNbnCoverage() || nbnCoverageService == null) return;
+		if (!this.IncludeNbnCoverage() || InternetCoverageService == null) return;
 		
 		 try {
-		 	this.NbnCoverage = await nbnCoverageService.GetCoverageForProperty(this);
+		 	this.NbnCoverage = await InternetCoverageService.GetCoverageForProperty(this);
 		 }
 		 catch (Exception ex) {
 		 	Logger.Error(ex.ToString());
@@ -45,8 +45,8 @@ public class PropertyRecord : SavedItem {
 		return true;
 	}
 	
-	public string GetFormattedAddress() {
-		return this.Data?.Address?.ToString() ?? "";
+	public string GetFormattedAddress(bool withPostcode = false, bool withState = false, bool verboseUnitSyntax = false) {
+		return this.Data?.Address?.ToString(withPostcode, withState, verboseUnitSyntax) ?? "";
 	}
 
 	public Dictionary<string, string>? GetAddressData() {

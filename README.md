@@ -23,9 +23,15 @@ For privacy reasons, it's not committed to Git. Leaving a public record of house
 
 The app takes the paths from your JSON file and queries the RealtyAPI for the Domain.com.au listing data. It then transforms the combination of your shortlist data (e.g., notes) and the listing data and displays it in a table, showing key information like asking price, land size, and bedroom/bathroom/car space counts. It also marks when a property has gone under offer, been sold, or the listing has been removed.
 
-### NBN coverage data
+### Internet coverage data
 
-For Australian users, National Broadband Network coverage data is fetched from the same TPG endpoint that the iiNet "check your address" page uses (at the time of writing, anyway). The responses are cached as this data is not likely to change frequently, and I do not wish to draw attention to or generally abuse the endpoint that they have so kindly (possibly unintentionally...) left open that allows this to be done.
+For Australian users: National Broadband Network, Opticomm or alternative coverage data is fetched from the same endpoint that the Aussie Broadband "check your address" page uses (at the time of writing, anyway). The responses are cached as this data is not likely to change frequently, and I do not wish to draw attention to or generally abuse the endpoint that they have so kindly (possibly unintentionally...) left open that allows this to be done. 
+
+> **Alternative APIs**
+> 
+> At the time of writing:
+> - The TPG endpoint used by iiNet provides similar data, but only for NBN (including fixed wireless).
+> - The endpoint used on the Opticomm site itself provides data for suburbs that do not have NBN fibre but do have theirs.
 
 ### Caching
 
@@ -79,8 +85,7 @@ To develop and test the app locally, create a `.env` file in the project root wi
 	REALTY_API_BASE_URL=https://domain.realtyapi.io/
 	MAX_CACHE_AGE=3600
 	SOURCE_SITE_BASE_URL=https://www.domain.com.au/
-	NBN_BASE_URL=https://onesq.tpgtelecom.com.au/onesq/api/v1/sq
-	NBN_ISP_NAME=IINET
+	NBN_BASE_URL=https://wrapper.aussiebroadband.com.au
 	BLOB_STORAGE_ACCOUNT_NAME=propertypilesfiles
 	BLOB_STORAGE_CONTAINER_NAME=propertypilescontainer
 	BLOB_STORAGE_ACCESS_KEY=your_key_here
