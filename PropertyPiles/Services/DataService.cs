@@ -24,11 +24,12 @@ public abstract class DataService {
 		try {
 			string outputPath = Path.Combine(this.CacheDir, $"{filename}.json");
 
-			// Convert to mutable JsonObject, remove some fields we don't need, and add timestamp
+			// Convert to mutable JsonObject and add timestamp
 			string rawJson = response.RootElement.GetRawText();
 			JsonObject jsonObject = JsonSerializer.Deserialize<JsonObject>(rawJson)!;
-			jsonObject.Remove("broadbandPlans");
-			jsonObject.Add("timestamp", JsonValue.Create(DateTimeOffset.UtcNow.ToUnixTimeSeconds()));
+			if (!jsonObject.ContainsKey("timestamp")) {
+				jsonObject.Add("timestamp", JsonValue.Create(DateTimeOffset.UtcNow.ToUnixTimeSeconds()));
+			}
 
 			// Write to file
 			var options = new JsonWriterOptions { Indented = true };
@@ -36,7 +37,7 @@ public abstract class DataService {
 			using Utf8JsonWriter writer = new Utf8JsonWriter(fileStream, options);
 			jsonObject.WriteTo(writer);
 
-			Logger.Info($"Cached property data for property {filename} at {outputPath}");
+			Logger.Info($"Cached data at {outputPath}");
 		}
 		catch (Exception ex) {
 			Logger.Error(ex.Message);

@@ -1,9 +1,16 @@
 using PropertyPiles.Components;
 using PropertyPiles.Containers;
 using PropertyPiles.Services;
+using Spectre.Console;
+
+Console.OutputEncoding = System.Text.Encoding.UTF8;
+Environment.SetEnvironmentVariable("DOTNET_SYSTEM_CONSOLE_ALLOW_ANSI_COLOR_REDIRECTION", "1");
+Environment.SetEnvironmentVariable("ENABLE_VIRTUAL_TERMINAL_PROCESSING", "1");
+AnsiConsole.Profile.Capabilities.Ansi = true;
+AnsiConsole.Profile.Capabilities.ColorSystem = ColorSystem.TrueColor;
+AnsiConsole.Profile.Width = 160;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 // Add services to the container.
 builder.Services.AddSingleton<AppState>();

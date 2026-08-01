@@ -15,6 +15,7 @@
       <PackageReference Include="Azure.Storage.Blobs" Version="12.29.1" />
       <PackageReference Include="DotNetEnv" Version="3.2.0" />
       <PackageReference Include="Humanizer.Core" Version="3.0.10" />
+      <PackageReference Include="Spectre.Console" Version="0.57.2" />
     </ItemGroup>
     
     <ItemGroup>
@@ -45,6 +46,12 @@
     <ItemGroup>
         <Content Remove="data.json" />
         <Content Remove="cache\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Watch Include="**/*.cs" />
+        <Watch Include="**/*.razor" />
+        <Watch Include="**/*.json" Exclude="appsettings.*.json" />
     </ItemGroup>
 
 </Project>
