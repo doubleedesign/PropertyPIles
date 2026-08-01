@@ -37,7 +37,7 @@ public class ListingDataService : DataService {
 	}
 
 	private PropertyDataResponse? GetCachedPropertyById(string id) {
-		string filePath = Path.Combine(this.CacheDir, $"{id}.json");
+		string filePath = Path.Combine(this.CacheDir, $"{id}_listing.json");
 		if (!File.Exists(filePath)) {
 			return null;
 		}
