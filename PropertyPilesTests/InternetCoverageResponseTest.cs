@@ -9,7 +9,7 @@ namespace PropertyPilesTests;
 public class InternetCoverageResponseTest {
 	private ListingDataService _listingDataService;
 	private WireMockServer _server;
-
+	
 	[SetUp]
 	public void Setup() {
 		this._server = WireMockServer.Start();
@@ -35,7 +35,30 @@ public class InternetCoverageResponseTest {
 		SavedItem item = JsonSerializer.Deserialize<SavedItem>("{\"path\": \"72-rossack-drive-waurn-ponds-vic-3216-2020754328\"}")!;
 		var record = new PropertyRecord(item);
 		await record.PopulateData(this._listingDataService, new InternetCoverageService());
+		
+		Assert.That(record.NbnCoverage, Is.Not.Null);
+		Assert.That(record.NbnCoverage.Type, Is.EqualTo("nbn"));
+		Assert.That(record.NbnCoverage.ServiceClass, Is.EqualTo(3));
+		Assert.That(record.NbnCoverage.SpeedPotential?.DownloadSpeed, Is.EqualTo(2000));
+		Assert.That(record.NbnCoverage.SpeedPotential?.UploadSpeed, Is.EqualTo(500));
+	}
+	
+	[Test]
+	public async Task HasOpticommCoverage() {
+		HttpResponseMocks.MockListingDataResponse(this._server, "14-dreamer-circuit-mount-duneed-2020738365");
+		HttpResponseMocks.MockIspPropertyIdResponse(this._server);
+		HttpResponseMocks.MockNbnDataResponse(this._server, "2020738365");
+		
+		SavedItem item = JsonSerializer.Deserialize<SavedItem>("{\"path\": \"14-dreamer-circuit-mount-duneed-2020738365\"}")!;
+		var record = new PropertyRecord(item);
+		await record.PopulateData(this._listingDataService, new InternetCoverageService());
 
-		// TODO: Assert coverage fields
+		Logger.DebugObject(record);
+		
+		Assert.That(record.NbnCoverage, Is.Not.Null);
+		Assert.That(record.NbnCoverage.Type, Is.EqualTo("opticomm"));
+		Assert.That(record.NbnCoverage.ServiceClass, Is.EqualTo(3));
+		Assert.That(record.NbnCoverage.SpeedPotential?.DownloadSpeed, Is.EqualTo(1000));
+		Assert.That(record.NbnCoverage.SpeedPotential?.UploadSpeed, Is.EqualTo(50));
 	}
 }

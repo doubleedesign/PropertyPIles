@@ -10,7 +10,7 @@ public static class HttpResponseMocks {
 
 	public static void MockListingDataResponse(WireMockServer server, string propertyPath) {
 		string assumedId = propertyPath.Split('-').Last();
-		string filePath = Path.Combine(_cacheDir, $"{assumedId}.json");
+		string filePath = Path.Combine(_cacheDir, $"{assumedId}_listing.json");
 		string response = File.ReadAllText(filePath);
 		
 		server.Given(Request.Create()

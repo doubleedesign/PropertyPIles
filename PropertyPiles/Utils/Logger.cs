@@ -37,7 +37,7 @@ public static class Logger {
 			return;
 		}
 
-		var options = new JsonSerializerOptions { WriteIndented = true };
+		var options = new JsonSerializerOptions { WriteIndented = true, IncludeFields = true };
 		string jsonString = JsonSerializer.Serialize(theObject, options);
 		AnsiConsole.MarkupLine($"[grey]{jsonString.EscapeMarkup()}[/]");
 	}

@@ -1,0 +1,12 @@
+﻿{
+	"type": "opticomm",
+	"technology": "FTTP",
+	"serviceClass": 3,
+	"isServiceable": true,
+	"speedPotential": {
+		"downloadSpeed": 1000,
+		"uploadSpeed": 50
+	},
+	"lastUpdated": "2026-08-02T01:03:14.000000Z",
+	"alternateTechnology": ""
+}

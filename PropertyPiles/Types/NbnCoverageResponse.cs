@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using PropertyPiles.Services.JsonParsers;
 
 namespace PropertyPiles.Types;
 
@@ -15,12 +14,15 @@ public class NbnCoverageResponse {
 	[JsonPropertyName("technology")]
 	public string? Technology { get; set; }
 	
-	[JsonPropertyName("alternateTechology")]
+	[JsonPropertyName("alternateTechnology")]
 	public string? AlternateTechology { get; set; }
 	
-	[JsonNestedProperty(["speedPotential", "downloadSpeed"])]
-	public int? DownloadSpeed { get; set; }
-		
-	[JsonNestedProperty(["speedPotential", "uploadSpeed"])]
-	public int? UploadSpeed { get; set; }
+	
+	[JsonPropertyName("speedPotential")]
+	public SpeedPotentialData? SpeedPotential { get; set; }
 }
+
+public record SpeedPotentialData(
+	[property: JsonPropertyName("downloadSpeed")] int? DownloadSpeed,
+	[property: JsonPropertyName("uploadSpeed")]   int? UploadSpeed
+);

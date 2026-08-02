@@ -1,0 +1,25 @@
+{
+  "message": "Success",
+  "source": "domain.com.au",
+  "detail": {
+    "id": 2020738365,
+    "listingType": "property",
+    "lifecycleStatus": "Live",
+    "searchType": "buy",
+    "headline": "Easy Family Living, Moments from Open Space and Playgrounds",
+    "description": "Defined: Embodying the ease and artistry of playful living just a short stroll from the open space of Armstrong Creek\u0027s walking trails and reserves, this completely resolved residence offers an exceptional opportunity for families or downsizers seeking quality craftsmanship and solitude. Featuring three living zones and generous outdoor entertaining, the low-maintenance 448sqm (approx.) sits just a quick dash from the recently finished Mount Duneed Village and the convenience of local primary and secondary education.\n\nConsidered:\n\nKitchen: Island with stone benchtop and breakfast bar overhang, dishwasher, dual in-set sink, and black fixtures. Large pot drawers, 900mm gas cooktop and underbench oven, overhead cabinetry, fridge cavity, and large walk-in pantry with open shelving and prep area. Feature pendant light and downlights.\n\nOpen Plan Living/Dining: Hard-wearing modern floors, dedicated living and dining zones, corner-opening sliders to alfresco, multiple window banks, roller blinds, dramatic sheer curtain, and downlights.\n\nSecondary Living: Carpet underfoot, window with roller blind, and downlights.\n\nMaster Suite: Generous proportions, walk-in robe, double window bank with roller blinds and sheer curtains, carpet underfoot, and downlights. Light-filled ensuite with twin vanity with stone top and underbench storage, large shower with tiled base and wall niche, double rail head, large wall mirror, window with privacy glass, and private toilet.\n\nMain Bathroom: Black framed shower with tiled base and wall niche, double rail head, feature tub centred below window (with privacy glass), single vanity with underbench storage and stone top, full-width wall mirror, towel rail, and tiled floor. Separate powder room.\n\nAdditional Bedrooms: Three additional bedrooms centred around the third living zone. All come complete with built-in robes, carpet underfoot, and a window with roller blind. The third bedroom also features sheer curtains.\n\nOutside: Undercover alfresco with extended deck and festoon lighting meets with a low-maintenance yard complete with a clothesline and an established tree line. With a 443sqm (approx.) block, the striking street frontage features a landscaped frontage, portico, and concrete driveway.\n\nLuxury Inclusions: Evaporative cooling, ducted heating, plush carpet, premium flooring, high ceilings throughout, full laundry with sliding exterior door, and ample interior storage. Double garage with internal access, extra-wide entrance hall with recessed shelf, and feature front door.\n\nClose by Facilities: Armstrong Creek and its open reserve/walking tracks, Rocketship (Nova) Park, Mount Duneed Village, 9grams, Bunjils Nest, Mirripoa Primary School, Sovereign Drive Oval, Armstrong Creek Township, Waurn Ponds Train Station, Waurn Ponds Shopping Centre, Grovedale West Primary School, Grovedale College, Grovedale Primary School.\n\nIdeal For: Growing or large families.\n\n*All information offered by Armstrong Real Estate is provided in good faith. It is derived from sources believed to be accurate and current as at the date of publication and as such Armstrong Real Estate simply pass this information on. Use of such material is at your sole risk. Prospective purchasers are advised to make their own enquiries with respect to the information that is passed on. Armstrong Real Estate will not be liable for any loss resulting from any action or decision by you in reliance on the information. PHOTO ID MUST BE SHOWN TO ATTEND ALL INSPECTIONS*",
+    "price": "$830,000-$880,000",
+    "address": {
+      "full": "14 Dreamer Circuit, Mount Duneed",
+      "streetNumber": "14",
+      "street": "Dreamer Circuit",
+      "suburb": "Mount Duneed",
+      "postcode": "3217",
+      "state": "VIC",
+      "region": "Melbourne Region",
+      "area": "Geelong \u0026 District - Greater Area",
+      "suburbId": 68492
+    }
+  },
+  "timestamp": 1785631782
+}
