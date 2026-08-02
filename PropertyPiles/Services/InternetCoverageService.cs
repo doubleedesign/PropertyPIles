@@ -69,37 +69,46 @@ public class InternetCoverageService : DataService {
 	/// <param name="property"></param>
 	/// <returns></returns>
 	private async Task<string?> FetchPropertyIdForQuery(PropertyRecord property) {
+		var address = property.GetFormattedAddress(withPostcode: true, withState: true, verboseUnitSyntax: true);
+		
+		var request = new HttpRequestMessage {
+			Method = HttpMethod.Get,
+			RequestUri = new Uri(this._apiUrl! + "/api/signup/address/search/?address=" + address)
+		};
+		
+		Logger.Info($"Fetching internet coverage data from {request.RequestUri}");
+
 		try {
-			var request = new HttpRequestMessage {
-				Method = HttpMethod.Get,
-				RequestUri = new Uri(this._apiUrl! + "/api/signup/address/search/?address=" + property.GetFormattedAddress(withPostcode: true).Replace(",", "").Replace(" ", "+"))
-			};
+			using var response = await this.Client.SendAsync(request);
+			response.EnsureSuccessStatusCode();
+			string body = await response.Content.ReadAsStringAsync();
+			var json = JsonDocument.Parse(body);
 			
-			using (var response = await this.Client.SendAsync(request)) {
-				response.EnsureSuccessStatusCode();
-				string body = await response.Content.ReadAsStringAsync();
-				var json = JsonDocument.Parse(body);
-				var results = json.Deserialize<Dictionary<string, string>>();
-				
-				if (results == null) {
-					return null;
-				}
-				
-				return this.FindKeyForAddress(results, property);
+			var results = json.Deserialize<Dictionary<string, string>>();
+			if (results == null) {
+				return null;
 			}
+
+			return this.FindKeyForAddress(results, address);
 		}
-		catch (Exception ex) {
+		catch (HttpRequestException ex) {
 			Logger.Error(ex.Message);
 			return null;
 		}
 	}
 
-	private string? FindKeyForAddress(Dictionary<string, string> results, PropertyRecord property) {
+	private string? FindKeyForAddress(Dictionary<string, string> results, string address) {
+		var normalizedAddress = address.Replace(",", "").Trim();
+		
 		foreach (var item in results) {
-			if (item.Value.Equals(property.GetFormattedAddress(true, true, true), StringComparison.OrdinalIgnoreCase)) {
+			var normalizedValue = item.Value.Replace(",", "").Trim();
+			if (normalizedValue.Equals(normalizedAddress, StringComparison.OrdinalIgnoreCase)) {
 				return item.Key;
 			}
 		}
+		
+		Logger.Warning($"{address} not found in ISP property ID search results. Candidates were:");
+		Logger.DebugObject(results);
 
 		return null;
 	}
@@ -114,7 +123,6 @@ public class InternetCoverageService : DataService {
 		string? ispPropertyId = await this.FetchPropertyIdForQuery(property);
 		
 		if (string.IsNullOrEmpty(ispPropertyId)) {
-			Logger.Warning($"No property ID for ISP query found for {property.GetShortAddress()}");
 			return null;
 		}
 		
