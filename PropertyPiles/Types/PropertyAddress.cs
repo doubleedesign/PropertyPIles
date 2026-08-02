@@ -30,18 +30,20 @@ public record PropertyAddress {
 		string result;
 
 		if (!string.IsNullOrEmpty(UnitNumber)) {
-			result = verboseUnitSyntax ? $"Unit {UnitNumber}, {Number}" : $"{UnitNumber}/{Number} {this.Street}, {this.Suburb}";
+			result = verboseUnitSyntax ? $"Unit {UnitNumber}, {StreetNumber}" : $"{UnitNumber}/{StreetNumber}";
 		}
 		else {
-			result = $"{this.Number} {this.Street}, {this.Suburb}";
+			result = $"{this.Number}";
 		}
+
+		result += $" {this.Street}, {this.Suburb}";
 		
 		if (withState) {
-			result = $"{result} {this.State}";
+			result += $" {this.State}";
 		}
 
 		if (withPostcode) {
-			result = $"{result} {this.Postcode}";
+			result += $" {this.Postcode}";
 		}
 
 		return result;
