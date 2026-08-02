@@ -1,4 +1,5 @@
-﻿using PropertyPiles.Types;
+﻿using System.Collections.Concurrent;
+using PropertyPiles.Types;
 namespace PropertyPiles.Services;
 
 
@@ -7,16 +8,17 @@ public class ShortlistService {
 	private ListingDataService? _injectedListingDataService;
 	private InternetCoverageService? _injectedInternetCoverageService;
 	
-	private Dictionary<string, List<SavedItem>> _rawlists = new();
-	private Dictionary<string, List<PropertyRecord>> _shortlists = new();
-	private Dictionary<string, List<String>> _fetchErrors = new();
+	private ConcurrentDictionary<string, List<SavedItem>> _rawlists = new();
+	private ConcurrentDictionary<string, List<PropertyRecord>> _shortlists = new();
+	private ConcurrentDictionary<string, List<string>> _fetchErrors = new();
 
+	private readonly SemaphoreSlim _initLock = new(1, 1);
 	private bool _isInitialized = false;
 	
 	// One semaphore per list to allow different lists to populate concurrently (from multiple instances of PropertyList on the same page)
 	// while preventing the same list from being populated multiple times simultaneously
-	private readonly Dictionary<string, SemaphoreSlim> _locks = new();
-	private readonly HashSet<string> _populated = new();
+	private readonly ConcurrentDictionary<string, SemaphoreSlim> _locks = new();
+	private readonly ConcurrentDictionary<string, bool> _populated = new();
 	
 	public ShortlistService() {
 	}
@@ -30,35 +32,41 @@ public class ShortlistService {
 	/// <param name="injectedDataServiceRef">The singleton ListingDataService injected into the Blazor component that calls this service.</param>
 	/// <param name="injectedNbnServiceRef">The singleton InternetCoverageService injected into the Blazor component that calls this service.</param>
 	public async Task Init(FileService injectedFileServiceRef, ListingDataService injectedDataServiceRef, InternetCoverageService injectedNbnServiceRef) {
-		if (this._isInitialized) return;
-		
-		this._locks.Add("priority", new SemaphoreSlim(1, 1));
-		this._locks.Add("maybe", new SemaphoreSlim(1, 1));
-		this._locks.Add("dismissed", new SemaphoreSlim(1, 1));
-		this._locks.Add("sold", new SemaphoreSlim(1, 1));
-		
-		this._rawlists.Add("priority", new List<SavedItem>());
-		this._rawlists.Add("maybe", new List<SavedItem>());
-		this._rawlists.Add("dismissed", new List<SavedItem>());
-		
-		this._fetchErrors.Add("priority", new List<string>());
-		this._fetchErrors.Add("maybe", new List<string>());
-		this._fetchErrors.Add("dismissed", new List<string>());
-		this._fetchErrors.Add("sold", new List<string>());
-		
-		this._shortlists.Add("priority", new List<PropertyRecord>());
-		this._shortlists.Add("maybe", new List<PropertyRecord>());
-		this._shortlists.Add("dismissed", new List<PropertyRecord>());
-		this._shortlists.Add("sold", new List<PropertyRecord>());
-		
-		this._injectedFileService = injectedFileServiceRef;
-		this._injectedListingDataService = injectedDataServiceRef;
-		this._injectedInternetCoverageService = injectedNbnServiceRef;
-		
-		await this._injectedFileService.LoadFile();
-		this.SortRawSavedItems();
+		await _initLock.WaitAsync();
+		try {
+			if (this._isInitialized) return;
 
-		this._isInitialized = true;
+			this._locks.TryAdd("priority", new SemaphoreSlim(1, 1));
+			this._locks.TryAdd("maybe", new SemaphoreSlim(1, 1));
+			this._locks.TryAdd("dismissed", new SemaphoreSlim(1, 1));
+			this._locks.TryAdd("sold", new SemaphoreSlim(1, 1));
+
+			this._rawlists.TryAdd("priority", new List<SavedItem>());
+			this._rawlists.TryAdd("maybe", new List<SavedItem>());
+			this._rawlists.TryAdd("dismissed", new List<SavedItem>());
+
+			this._fetchErrors.TryAdd("priority", new List<string>());
+			this._fetchErrors.TryAdd("maybe", new List<string>());
+			this._fetchErrors.TryAdd("dismissed", new List<string>());
+			this._fetchErrors.TryAdd("sold", new List<string>());
+
+			this._shortlists.TryAdd("priority", new List<PropertyRecord>());
+			this._shortlists.TryAdd("maybe", new List<PropertyRecord>());
+			this._shortlists.TryAdd("dismissed", new List<PropertyRecord>());
+			this._shortlists.TryAdd("sold", new List<PropertyRecord>());
+
+			this._injectedFileService = injectedFileServiceRef;
+			this._injectedListingDataService = injectedDataServiceRef;
+			this._injectedInternetCoverageService = injectedNbnServiceRef;
+
+			await this._injectedFileService.LoadFile();
+			this.SortRawSavedItems();
+
+			this._isInitialized = true;
+		}
+		finally {
+			_initLock.Release();
+		}
 	}
 
 	/// <summary>
@@ -66,7 +74,7 @@ public class ShortlistService {
 	/// </summary>
 	/// <exception cref="NullReferenceException"></exception>
 	private void SortRawSavedItems() {
-		if(this._injectedFileService == null) {
+		if (this._injectedFileService == null) {
 			throw new InvalidOperationException("ShortlistService has not been initialized with a FileService instance. Call Init() before calling SortRawSavedItems().");
 		}
 		
@@ -76,12 +84,12 @@ public class ShortlistService {
 		}
 		
 		foreach (SavedItem item in rawList) {
-			if(item.IsPriority) {
+			if (item.IsPriority) {
 				this._rawlists["priority"].Add(item);
 				continue;
 			}
 			
-			if(item.DismissedReasons != null && item.DismissedReasons.Length > 0) {
+			if (item.DismissedReasons != null && item.DismissedReasons.Length > 0) {
 				this._rawlists["dismissed"].Add(item);
 				continue;
 			}
@@ -105,12 +113,15 @@ public class ShortlistService {
 		if (!this._rawlists.ContainsKey(listName)) {
 			throw new ArgumentException($"List '{listName}' does not exist.");
 		}
-		
-		var sem = _locks[listName];
+
+		if (!this._locks.TryGetValue(listName, out var sem)) {
+			throw new ArgumentException($"No lock found for list '{listName}'.");
+		}
+
 		await sem.WaitAsync();
 		try {
 			// Already populated by a concurrent caller
-			if (_populated.Contains(listName)) return;
+			if (_populated.ContainsKey(listName)) return;
 
 			// Store snapshot to avoid "collection was modified" if anything else touches it
 			var rawList = _rawlists[listName].ToList();
@@ -125,12 +136,12 @@ public class ShortlistService {
 				}
 				catch (HttpRequestException ex) {
 					this._fetchErrors[listName].Add(ex.Message);
-					// Include just the the SavedItem data if the API request failed
+					// Include just the SavedItem data if the API request failed
 					this._shortlists[listName].Add(new PropertyRecord(item));
 				}
 			}
             
-			_populated.Add(listName);
+			_populated.TryAdd(listName, true);
 		}
 		finally {
 			sem.Release();
@@ -140,18 +151,18 @@ public class ShortlistService {
 	public async Task<List<PropertyRecord>> GetList(string name) {
 		await this.PopulateList(name);
 		
-		if (!this._shortlists.ContainsKey(name)) {
+		if (!this._shortlists.TryGetValue(name, out var list)) {
 			throw new ArgumentException($"Shortlist '{name}' does not exist.");
 		}
 		
-		return _shortlists[name];
+		return list;
 	}
 	
 	public List<string> GetErrorsForList(string listName) {
-		if(!this._fetchErrors.ContainsKey(listName)) {
+		if (!this._fetchErrors.TryGetValue(listName, out var errors)) {
 			throw new ArgumentException($"Shortlist '{listName}' does not exist.");
 		}
 		
-		return this._fetchErrors[listName];
+		return errors;
 	}
 }
