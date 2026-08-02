@@ -16,4 +16,9 @@
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;NUnit3x::1FCB43D0-2F89-4F0A-9B9B-1036F59FE0E5::net10.0::PropertyPilesTests.NbnCoverageResponseTest&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c6d9cea5_002Dcfb0_002D48a5_002Da6b1_002D762679868919/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="InternetCoverageResponseTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::1FCB43D0-2F89-4F0A-9B9B-1036F59FE0E5::net10.0::PropertyPilesTests.InternetCoverageResponseTest&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

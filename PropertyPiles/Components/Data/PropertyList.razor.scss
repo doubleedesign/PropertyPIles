@@ -1,61 +1,17 @@
 ﻿@use "../mixins" as *;
 @use "../functions" as *;
 
-@mixin row-layout() {
-	@include media-breakpoint-up('narrow') {
-		display: grid;
-		grid-template-columns: repeat(12, 1fr);
-	}
-
-	[data-key="address"],
-	[data-key="notes"] {
-		width: 100%;
-		flex-basis: 100%;
-	}
-
-	[data-key="specs"],
-	[data-key="price"] {
-		width: 50%;
-		flex-basis: 50%;
-
-		@include media-breakpoint-up('narrow') {
-			width: unset;
-			flex-basis: unset;
-		}
-		
-	}
-	[data-key="address"] {
-		grid-column: span 3;
-	}
-	
-	[data-key="days-on-market"],
-	[data-key="size"] {
-		grid-column: span 1;
-	}
-
-	[data-key="specs"] {
-		grid-column: span 2;
-	}
-
-	[data-key="price"] {
-		grid-column: span 2;
-	}
-	
-	[data-key="notes"] {
-		grid-column: span 3;
-	}
-}
-
 .property-list {
 	@include section-padding(); 
 	
 	&__table {
 		display: block;
+		min-width: 325px;
 		
 		thead {
 			display: none;
 
-			@include media-breakpoint-up('narrow') {
+			@include media-breakpoint-up('contained') {
 				display: block;
 				font-weight: var(--font-weight-semibold);
 				color: var(--color-secondary);
@@ -65,8 +21,16 @@
 				}
 			}
 			
+			tr {
+				padding-block-end: var(--spacing-xs);
+				background: transparent !important;
+			}
+			
 			th {
 				text-align: left;
+				display: block;
+				@include label-text();
+				padding: 0;
 				
 				&[title] {
 					@include line-clamp(1);
@@ -78,6 +42,7 @@
 		tbody {
 			display: block;
 			width: 100%;
+			width: 100%;
 			border-block: 1px solid rgba(0, 0, 0, 0.15);
 			
 			@include dark-mode() {
@@ -87,14 +52,26 @@
 		}
 		
 		tr {
-			display: flex;
 			width: 100%;
-			flex-direction: column;
-			flex-wrap: wrap;
-			align-items: flex-start;
+			display: grid;
 			padding-block: var(--spacing-md);
 			padding-inline: var(--spacing-sm);
-			@include row-layout();
+			grid-template-columns: repeat(6, 1fr);
+			row-gap: var(--spacing-sm);
+			
+			@include media-breakpoint-up('small') {
+				grid-template-columns: repeat(12, 1fr);
+			}
+			
+			@include media-breakpoint-up('narrow') {
+			    row-gap: var(--spacing-xxs);
+				column-gap: var(--spacing-xs);
+			}
+			
+			@include media-breakpoint-up('contained') {
+				grid-template-columns: repeat(16, 1fr);
+				column-gap: var(--spacing-sm);
+			}
 
 			&:nth-of-type(odd) {
 				background: rgba(0, 0, 0, 0.05);
@@ -107,36 +84,10 @@
 			&[data-status="Archived"],
 			&[data-status="Sold"],
 			&[data-status="Under Offer"] {
-				
 				td:not([data-key="address"]),
 				[data-key="address"] span:not(.badge) {
 					opacity: 0.25;
 					text-decoration: line-through;
-				}
-			}
-
-			[data-key="address"] {
-				padding-inline-end: var(--spacing-md);
-				
-				.address {
-					&:has(.badge[data-key="New"]) {
-						display: flex;
-						column-gap: var(--spacing-xs);
-						align-items: center;
-						flex-wrap: wrap;
-					}
-				}
-				
-				a, span {
-					display: block;
-				}
-				
-				a {
-					font-weight: var(--font-weight-semibold);
-				}
-				
-				span:not(.badge) {
-					font-size: var(--font-size-sm);
 				}
 			}
 			
@@ -144,39 +95,216 @@
 				p {
 					margin: 0;
 				}
-				
-				&[data-key="days-on-market"],
-				&[data-key="size"],
-				&[data-key="notes"] {
-					display: flex;
-					align-items: center;
-					gap: 2px;
-					
+
+				&[aria-label] {
 					&:before {
 						content: attr(aria-label);
-						font-size: var(--font-size-sm);
+						@include label-text();
+
+						@include media-breakpoint-up('contained') {
+							display: none;
+						}
+					}
+				}
+			}
+			
+			th, td {
+				display: block;
+
+				&[data-key="address"],
+				&[data-key="price"],
+				&[data-key="specs"],
+				&[data-key="internet"],
+				&[data-key="notes"] {
+					grid-column: 1 / -1;
+				}
+				
+				&[data-key="address"] {
+					padding-inline-end: var(--spacing-md);
+					order: -10; // always first
+					
+					@include media-breakpoint-up('small') {
+					    grid-column: span 7;
+					}
+					
+					@include media-breakpoint-up('narrow') {
+					    grid-column: span 5;
+					}
+					
+					@include media-breakpoint-up('contained') {
+					    grid-column: span 5;
+					}
+					
+					.address {
+						&:has(.badge[data-key="New"]) {
+							display: flex;
+							column-gap: var(--spacing-xs);
+							align-items: center;
+							flex-wrap: wrap;
+						}
+					}
+
+					a, span {
+						display: block;
+					}
+
+					a {
+						font-weight: var(--font-weight-semibold);
+						font-size: var(--font-size-md);
 						
 						@include media-breakpoint-up('narrow') {
-						    display: none;
-						} 
+						    font-size: var(--font-size-base);
+							margin-block-end: var(--spacing-xxs);
+						}
+					}
+
+					span:not(.badge) {
+						font-size: var(--font-size-sm);
+						color: var(--body-color-muted);
+						font-style: italic;
+						
+						@include media-breakpoint-up('narrow') {
+						    font-size: var(--font-size-sm);
+						}
 					}
 				}
 
+				&[data-key="price"],
 				&[data-key="days-on-market"],
 				&[data-key="size"] {
-					width: fit-content;
-					flex-basis: fit-content;
+					font-weight: var(--font-weight-semibold);
+				}
+
+				&[data-key="price"] {
+					color: var(--body-color-muted);
+
+					@include media-breakpoint-up('small') {
+						grid-column: span 5;
+						text-align: right;
+					}
+					
+					@include media-breakpoint-up('narrow') {
+						text-align: left;
+						grid-column: 1 / -1;
+					}
+					
+					@include media-breakpoint-up('contained') {
+						grid-column: span 2;
+						color: var(--body-color);
+						font-weight: var(--font-weight-normal);
+						
+						&:is(td) {
+							font-size: var(--font-size-sm);
+						}
+					}
+				}
+				
+				&[data-key="days-on-market"],
+				&[data-key="specs"],
+				&[data-key="size"] {
+					display: flex;
+					gap: var(--spacing-sm);
+					align-items: center;
+					
+					@include media-breakpoint-up('narrow') {
+					    order: -1;
+					}
+					
+					@include media-breakpoint-up('contained') {
+					    order: unset;
+						align-items: flex-start;
+					}
+				}
+				
+				&[data-key="days-on-market"],
+				&[data-key="size"] {
+					grid-column: span 3;
+
+					@include media-breakpoint-up('small') {
+						justify-content: flex-end;
+					}
+					
+					@include media-breakpoint-up('narrower') {
+						justify-content: flex-end;
+					}
+
+					@include media-breakpoint-up('narrow') {
+						grid-column: span 2;
+					}
+
+					@include media-breakpoint-up('contained') {
+						grid-column: span 1;
+						font-weight: var(--font-weight-normal, 400);
+						justify-content: flex-start;
+						text-align: left;
+						
+						&:is(td) {
+							font-size: var(--font-size-sm);
+						}
+					}
+				}
+
+				&[data-key="specs"] {
+					@include media-breakpoint-up('small') {
+					    grid-column: span 6;
+					}
+					
+					@include media-breakpoint-up('narrow') {
+					    grid-column: span 3;
+					}
+					
+					@include media-breakpoint-up('contained') {
+					    grid-column: span 2;
+					}
+				}
+				
+				&[data-key="days-on-market"] {
+					&:is(th) {
+						@include line-clamp(1);
+					}
 				}
 
 				&[data-key="notes"] {
+					
+					@include media-breakpoint-up('contained') {
+					    grid-column: span 5;
+						
+						&:empty {
+							display: none;
+						}
+						
+						&:is(td) {
+							font-size: var(--font-size-sm);
+							
+							&:not(:last-child) {
+								padding-block-end: var(--spacing-sm);
+								border-block-end: 1px solid #DDD;
+								margin-block-end: var(--spacing-sm);
+							}
+						}
+					}
+					
 					ul:has(li:only-child) {
 						list-style: none;
 						margin: 0;
 					}
 				}
+
+				&[data-key="internet"] {
+					color: var(--body-color-muted);
+					
+					@include media-breakpoint-up('contained') {
+						grid-column: -6 / -1;
+					}
+					
+					&:is(th) {
+						display: none;
+					}
+				}
 			}
 		}
 	}
+	
 	
 	&__empty {
 		border: 1px solid var(--color-warning);

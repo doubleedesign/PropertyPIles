@@ -6,7 +6,20 @@ namespace PropertyPiles.Types;
 public class NbnCoverageResponse {
 	[JsonPropertyName("type")]
 	[AllowedValues("nbn", "opticomm")]
-	public string? Type { get; set; }
+	public string? Type {
+		get {
+			if (field == "nbn") {
+				return "NBN";
+			}
+
+			if (field == "opticomm") {
+				return "Opticomm";
+			}
+
+			return field;
+		}
+		set;
+	}
 	
 	[JsonPropertyName("serviceClass")]
 	public int ServiceClass  { get; set; }
@@ -20,6 +33,22 @@ public class NbnCoverageResponse {
 	
 	[JsonPropertyName("speedPotential")]
 	public SpeedPotentialData? SpeedPotential { get; set; }
+
+	public string GetFormattedDownloadSpeed() {
+		if (SpeedPotential is not null) {
+			return $"{SpeedPotential.DownloadSpeed} Mbps";
+		}
+
+		return "Unknown";
+	}
+	
+	public string GetFormattedUploadSpeed() {
+		if (SpeedPotential is not null) {
+			return $"{SpeedPotential.UploadSpeed} Mbps";
+		}
+
+		return "";
+	}
 }
 
 public record SpeedPotentialData(

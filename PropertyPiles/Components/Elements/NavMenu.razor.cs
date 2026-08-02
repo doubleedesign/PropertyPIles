@@ -32,10 +32,14 @@ public partial class NavMenu : ComponentBase {
 	protected override async Task OnAfterRenderAsync(bool firstRender) {
 		if (!firstRender) return;
 
-		_jsModule = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "/Components/Elements/NavMenu.razor.js");
-		_dotNetRef = DotNetObjectReference.Create(this);
+		try {
+			_jsModule = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "/Components/Elements/NavMenu.razor.js");
+			_dotNetRef = DotNetObjectReference.Create(this);
 
-		await this.Refresh();
+			await this.Refresh();
+		}
+		catch (JSDisconnectedException) { }
+		catch (ObjectDisposedException) { }
 	}
 
 	/// <summary>

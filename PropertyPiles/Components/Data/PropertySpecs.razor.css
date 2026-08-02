@@ -7,6 +7,9 @@
   align-items: center;
   gap: 2px;
 }
+.property-specs span[title] {
+  cursor: help;
+}
 .property-specs span svg {
   width: 1.25rem;
 }

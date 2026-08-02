@@ -24,7 +24,7 @@ public class PropertyDataResponse {
 	[JsonPropertyName("headline")]
 	public string? ShortDescription {
 		get;
-		set => field = value?.Trim().ToLower().Transform(To.SentenceCase);
+		set => field = value?.Trim().Transform(To.SentenceCase);
 	}
 	
 	[JsonPropertyName("price")]

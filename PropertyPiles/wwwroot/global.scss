@@ -34,7 +34,7 @@
 	--font-size-display: #{step-up(6)};
 
 	--font-weight-light: 300;
-	--font-weight-regular: 400;
+	--font-weight-normal: 400;
 	--font-weight-semibold: 600;
 	--font-weight-bold: 700;
 
@@ -48,6 +48,8 @@
 	--global-background: #FFF;
 	--global-inverse: var(--color-dark);
 	--body-color: var(--global-inverse);
+	--body-color-muted: #{color.scale(map.get($colors, 'dark'), $lightness: 40%, $saturation: -75%)};
+	--link-color: #{darken(primary, 10%)};
 
 	&[data-theme="dark"] {
 		--global-background: #0d0f17;
@@ -129,8 +131,34 @@ ul, ol {
 }
 
 a {
-	color: darken(primary, 10%);
+	color: var(--link-color);
 	@include link-underline-on-hover();
+}
+
+dl {
+	width: 100%;
+	margin: 0;
+	
+	span {
+		display: grid;
+		width: 100%;
+		grid-template-columns: repeat(7, 1fr);
+	}
+	
+	dd {
+		@include label-text();
+		font-weight: var(--font-weight-semibold);
+		margin: 0; 
+		grid-column: span 3;
+		height: 1.15lh;
+		display: flex;
+		align-items: center;
+	}
+	
+	dt {
+		grid-column: span 4;
+		font-size: var(--font-size-sm);
+	}
 }
 
 .badge {

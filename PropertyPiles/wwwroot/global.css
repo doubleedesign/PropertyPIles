@@ -28,7 +28,7 @@
   --font-size-xxl: calc(1rem * pow(var(--typescale), 4));
   --font-size-display: calc(1rem * pow(var(--typescale), 6));
   --font-weight-light: 300;
-  --font-weight-regular: 400;
+  --font-weight-normal: 400;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
   --base-font-size: 1rem;
@@ -36,7 +36,7 @@
   --color-primary: #00c1b1;
   --color-secondary: #262a70;
   --color-accent: #a82f63;
-  --color-info: #00bbed;
+  --color-info: #009bc8;
   --color-warning: #f9c971;
   --color-success: #00d4a9;
   --color-error: #C22B00;
@@ -46,6 +46,8 @@
   --global-background: #FFF;
   --global-inverse: var(--color-dark);
   --body-color: var(--global-inverse);
+  --body-color-muted: rgb(104.9960526316, 104.9960526316, 133.2039473684);
+  --link-color: color-mix(in srgb, var(--color-primary) 90%, black);
 }
 :root[data-theme=dark] {
   --global-background: #0d0f17;
@@ -134,7 +136,7 @@ ul, ol {
 }
 
 a {
-  color: color-mix(in srgb, var(--color-primary) 90%, black);
+  color: var(--link-color);
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-decoration-color: currentColor;
@@ -156,6 +158,31 @@ a:has(> span) > span:not(:has(svg)):not(:has(i)) {
 }
 a:has(> span):hover > span:not(:has(svg)):not(:has(i)), a:has(> span):focus > span:not(:has(svg)):not(:has(i)), a:has(> span):active > span:not(:has(svg)):not(:has(i)) {
   text-decoration-color: currentColor;
+}
+
+dl {
+  width: 100%;
+  margin: 0;
+}
+dl span {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(7, 1fr);
+}
+dl dd {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal, 400);
+  text-transform: uppercase;
+  font-weight: var(--font-weight-semibold);
+  margin: 0;
+  grid-column: span 3;
+  height: 1.15lh;
+  display: flex;
+  align-items: center;
+}
+dl dt {
+  grid-column: span 4;
+  font-size: var(--font-size-sm);
 }
 
 .badge {

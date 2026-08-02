@@ -1,4 +1,5 @@
-﻿<section id="@Id" class="property-list" data-size="wide">
+﻿@using PropertyPiles.Components.Elements
+<section id="@Id" class="property-list" data-size="wide">
     <h2>@Title</h2>
     
     @if (_isLoading) {
@@ -16,6 +17,7 @@
                 <th data-key="size">Land size</th>
                 <th data-key="days-on-market" title="Days on market">Days on market</th>
                 <th data-key="notes">@(Id == "dismissed" ? "Dismissed because" : "Notes")</th>
+                <th data-key="internet">Internet</th>
             </tr>
             </thead>
             <tbody>
@@ -38,7 +40,7 @@
                         </p>
                     </td>
                     <td data-key="price">@Item.Data?.Price</td>
-                    <td data-key="specs" aria-label="Property specifications">
+                    <td data-key="specs">
                         <PropertySpecs 
                             Bedrooms="@Item.Data?.Bedrooms" 
                             Bathrooms="@Item.Data?.Bathrooms"
@@ -51,7 +53,7 @@
                     <td data-key="days-on-market" aria-label="Days on market">
                         @Item.Data?.DaysOnMarket
                     </td>
-                    <td data-key="notes">
+                    <td data-key="notes" aria-label='@(Id == "dismissed" ? "Dismissed because" : "Notes")'>
                         @if (Item.GetNotes().Count > 0) {
                             <ul>
                                 @foreach (var note in Item.GetNotes()) {
@@ -60,6 +62,11 @@
                             </ul>
                         }
                     </td>
+                    @if (Item.Data?.Status == "Live" && Item.Data?.Status != "Sold" && Id != "dismissed") {
+                        <td data-key="internet">
+                            <PropertyInternet CoverageData="Item.NbnCoverage"/>
+                        </td>
+                    }
                 </tr>
             }
             </tbody>

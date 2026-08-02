@@ -1,0 +1,76 @@
+.property-internet {
+  max-width: 400px;
+  --link-color: var(--color-info);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+@media (min-width: 1140px) {
+  .property-internet {
+    max-width: none;
+  }
+}
+.property-internet__label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal, 400);
+  text-transform: uppercase;
+  color: var(--body-color);
+}
+.property-internet__links__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  appearance: none;
+  color: var(--color-info);
+  transition: all 0.2s ease-in-out;
+}
+.property-internet__links__toggle span {
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: all 0.3s ease-in-out;
+}
+.property-internet__links__toggle svg {
+  width: 1rem;
+  color: currentColor;
+}
+.property-internet__links__toggle svg path {
+  fill: currentColor;
+}
+.property-internet__links__toggle:hover, .property-internet__links__toggle:focus, .property-internet__links__toggle:active, [open] .property-internet__links__toggle {
+  color: var(--color-accent);
+}
+.property-internet__links__toggle:hover span, .property-internet__links__toggle:focus span, .property-internet__links__toggle:active span, [open] .property-internet__links__toggle span {
+  text-decoration-color: currentColor;
+}
+.property-internet__links::details-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s linear, content-visibility 0.2s allow-discrete;
+}
+.property-internet__links[open]::details-content {
+  max-height: 5rem;
+}
+.property-internet__links__content {
+  overflow: hidden;
+}
+.property-internet__links__content ul {
+  font-size: var(--font-size-sm);
+  list-style: none;
+  margin-inline: 0;
+  padding-inline: 0;
+  padding-block-start: var(--spacing-xs);
+  padding-block-end: var(--spacing-sm);
+  display: grid;
+  row-gap: 2px;
+}
+.property-internet__links__content ul ::deep a {
+  color: var(--color-accent);
+}
+.property-internet__data {
+  margin-block-start: var(--spacing-xxs);
+}
+
+/*# sourceMappingURL=PropertyInternet.razor.css.map */

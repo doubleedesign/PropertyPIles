@@ -1,0 +1,89 @@
+﻿@use "../mixins" as *;
+
+.property-internet {
+	max-width: 400px;
+	--link-color: var(--color-info);
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	
+	@include media-breakpoint-up('contained') {
+	    max-width: none;
+	}
+	
+	&__label {
+		@include label-text();
+		color: var(--body-color);
+	}
+	
+	&__links {
+		&__toggle {
+			display: inline-flex;
+			align-items: center;
+			gap: var(--spacing-xs);
+			cursor: pointer;
+			background: transparent;
+			border: 0;
+			appearance: none;
+			color: var(--color-info);
+			transition: all 0.2s ease-in-out;
+			
+			span {
+				text-decoration: underline;
+				text-decoration-color: transparent;
+				transition: all 0.3s ease-in-out;
+			}
+
+			svg {
+				width: 1rem;
+				color: currentColor;
+
+				path {
+					fill: currentColor;
+				}
+			}
+
+			&:hover, &:focus, &:active, [open] & {
+				color: var(--color-accent);
+
+				span {
+					text-decoration-color: currentColor;
+				}
+			}
+		}
+
+		&::details-content {
+			max-height: 0;
+			overflow: hidden;
+			transition: max-height 0.2s linear, content-visibility 0.2s allow-discrete;
+		}
+
+		&[open]::details-content {
+			max-height: 5rem;
+		}
+		
+		&__content {
+			overflow: hidden;
+			
+			ul {
+				font-size: var(--font-size-sm);
+				list-style: none;
+				margin-inline: 0;
+				padding-inline: 0;
+				padding-block-start: var(--spacing-xs);
+				padding-block-end: var(--spacing-sm);
+				display: grid;
+				row-gap: 2px;
+				
+				::deep a {
+					color: var(--color-accent);
+				}
+			}	
+		}
+	}
+	
+	&__data {
+		margin-block-start: var(--spacing-xxs);
+
+	}
+}

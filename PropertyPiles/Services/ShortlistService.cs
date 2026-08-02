@@ -1,6 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using PropertyPiles.Types;
 namespace PropertyPiles.Services;
+using PropertyPiles.Utils;
 
 
 public class ShortlistService {
@@ -59,10 +60,15 @@ public class ShortlistService {
 			this._injectedListingDataService = injectedDataServiceRef;
 			this._injectedInternetCoverageService = injectedNbnServiceRef;
 
-			await this._injectedFileService.LoadFile();
-			this.SortRawSavedItems();
+			try {
+				await this._injectedFileService.LoadFile();
+				this.SortRawSavedItems();
 
-			this._isInitialized = true;
+				this._isInitialized = true;
+			}
+			catch (Exception ex) {
+				Logger.Error(ex.Message);
+			}
 		}
 		finally {
 			_initLock.Release();

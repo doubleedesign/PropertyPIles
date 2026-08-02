@@ -31,7 +31,7 @@ public partial class PropertyList : ComponentBase {
 	
 	
 	protected override async Task OnInitializedAsync() {
-		await base.OnInitializedAsync();
+		await base.OnInitializedAsync(); 
 		await this.InjectedShortlistService.Init(this.InjectedFileService, this.InjectedListingDataService, this.InjectedInternetCoverageService);
 		this.Items = await this.InjectedShortlistService.GetList(this.ListName);
 		

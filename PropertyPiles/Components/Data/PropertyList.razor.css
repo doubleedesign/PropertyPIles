@@ -8,11 +8,12 @@
 }
 .property-list__table {
   display: block;
+  min-width: 325px;
 }
 .property-list__table thead {
   display: none;
 }
-@media (min-width: 940px) {
+@media (min-width: 1140px) {
   .property-list__table thead {
     display: block;
     font-weight: var(--font-weight-semibold);
@@ -22,8 +23,17 @@
     color: var(--global-inverse);
   }
 }
+.property-list__table thead tr {
+  padding-block-end: var(--spacing-xs);
+  background: transparent !important;
+}
 .property-list__table thead th {
   text-align: left;
+  display: block;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal, 400);
+  text-transform: uppercase;
+  padding: 0;
 }
 .property-list__table thead th[title] {
   display: -webkit-box;
@@ -36,58 +46,36 @@
 .property-list__table tbody {
   display: block;
   width: 100%;
+  width: 100%;
   border-block: 1px solid rgba(0, 0, 0, 0.15);
 }
 [data-theme=dark] .property-list__table tbody {
   border-block-color: rgba(255, 255, 255, 0.15);
 }
 .property-list__table tr {
-  display: flex;
   width: 100%;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-items: flex-start;
+  display: grid;
   padding-block: var(--spacing-md);
   padding-inline: var(--spacing-sm);
+  grid-template-columns: repeat(6, 1fr);
+  row-gap: var(--spacing-sm);
 }
-@media (min-width: 940px) {
+@media (min-width: 600px) {
   .property-list__table tr {
-    display: grid;
     grid-template-columns: repeat(12, 1fr);
   }
 }
-.property-list__table tr [data-key=address],
-.property-list__table tr [data-key=notes] {
-  width: 100%;
-  flex-basis: 100%;
-}
-.property-list__table tr [data-key=specs],
-.property-list__table tr [data-key=price] {
-  width: 50%;
-  flex-basis: 50%;
-}
 @media (min-width: 940px) {
-  .property-list__table tr [data-key=specs],
-  .property-list__table tr [data-key=price] {
-    width: unset;
-    flex-basis: unset;
+  .property-list__table tr {
+    row-gap: var(--spacing-xxs);
+    column-gap: var(--spacing-xs);
   }
 }
-.property-list__table tr [data-key=address] {
-  grid-column: span 3;
-}
-.property-list__table tr [data-key=days-on-market],
-.property-list__table tr [data-key=size] {
-  grid-column: span 1;
-}
-.property-list__table tr [data-key=specs] {
-  grid-column: span 2;
-}
-.property-list__table tr [data-key=price] {
-  grid-column: span 2;
-}
-.property-list__table tr [data-key=notes] {
-  grid-column: span 3;
+@media (min-width: 1140px) {
+  .property-list__table tr {
+    grid-template-columns: repeat(16, 1fr);
+    column-gap: var(--spacing-sm);
+  }
 }
 .property-list__table tr:nth-of-type(odd) {
   background: rgba(0, 0, 0, 0.05);
@@ -102,48 +90,199 @@
   opacity: 0.25;
   text-decoration: line-through;
 }
-.property-list__table tr [data-key=address] {
-  padding-inline-end: var(--spacing-md);
+.property-list__table tr td p {
+  margin: 0;
 }
-.property-list__table tr [data-key=address] .address:has(.badge[data-key=New]) {
+.property-list__table tr td[aria-label]:before {
+  content: attr(aria-label);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal, 400);
+  text-transform: uppercase;
+}
+@media (min-width: 1140px) {
+  .property-list__table tr td[aria-label]:before {
+    display: none;
+  }
+}
+.property-list__table tr th, .property-list__table tr td {
+  display: block;
+}
+.property-list__table tr th[data-key=address], .property-list__table tr th[data-key=price], .property-list__table tr th[data-key=specs], .property-list__table tr th[data-key=internet], .property-list__table tr th[data-key=notes], .property-list__table tr td[data-key=address], .property-list__table tr td[data-key=price], .property-list__table tr td[data-key=specs], .property-list__table tr td[data-key=internet], .property-list__table tr td[data-key=notes] {
+  grid-column: 1/-1;
+}
+.property-list__table tr th[data-key=address], .property-list__table tr td[data-key=address] {
+  padding-inline-end: var(--spacing-md);
+  order: -10;
+}
+@media (min-width: 600px) {
+  .property-list__table tr th[data-key=address], .property-list__table tr td[data-key=address] {
+    grid-column: span 7;
+  }
+}
+@media (min-width: 940px) {
+  .property-list__table tr th[data-key=address], .property-list__table tr td[data-key=address] {
+    grid-column: span 5;
+  }
+}
+@media (min-width: 1140px) {
+  .property-list__table tr th[data-key=address], .property-list__table tr td[data-key=address] {
+    grid-column: span 5;
+  }
+}
+.property-list__table tr th[data-key=address] .address:has(.badge[data-key=New]), .property-list__table tr td[data-key=address] .address:has(.badge[data-key=New]) {
   display: flex;
   column-gap: var(--spacing-xs);
   align-items: center;
   flex-wrap: wrap;
 }
-.property-list__table tr [data-key=address] a, .property-list__table tr [data-key=address] span {
+.property-list__table tr th[data-key=address] a, .property-list__table tr th[data-key=address] span, .property-list__table tr td[data-key=address] a, .property-list__table tr td[data-key=address] span {
   display: block;
 }
-.property-list__table tr [data-key=address] a {
+.property-list__table tr th[data-key=address] a, .property-list__table tr td[data-key=address] a {
   font-weight: var(--font-weight-semibold);
-}
-.property-list__table tr [data-key=address] span:not(.badge) {
-  font-size: var(--font-size-sm);
-}
-.property-list__table tr td p {
-  margin: 0;
-}
-.property-list__table tr td[data-key=days-on-market], .property-list__table tr td[data-key=size], .property-list__table tr td[data-key=notes] {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-}
-.property-list__table tr td[data-key=days-on-market]:before, .property-list__table tr td[data-key=size]:before, .property-list__table tr td[data-key=notes]:before {
-  content: attr(aria-label);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-md);
 }
 @media (min-width: 940px) {
-  .property-list__table tr td[data-key=days-on-market]:before, .property-list__table tr td[data-key=size]:before, .property-list__table tr td[data-key=notes]:before {
-    display: none;
+  .property-list__table tr th[data-key=address] a, .property-list__table tr td[data-key=address] a {
+    font-size: var(--font-size-base);
+    margin-block-end: var(--spacing-xxs);
   }
 }
-.property-list__table tr td[data-key=days-on-market], .property-list__table tr td[data-key=size] {
-  width: fit-content;
-  flex-basis: fit-content;
+.property-list__table tr th[data-key=address] span:not(.badge), .property-list__table tr td[data-key=address] span:not(.badge) {
+  font-size: var(--font-size-sm);
+  color: var(--body-color-muted);
+  font-style: italic;
 }
-.property-list__table tr td[data-key=notes] ul:has(li:only-child) {
+@media (min-width: 940px) {
+  .property-list__table tr th[data-key=address] span:not(.badge), .property-list__table tr td[data-key=address] span:not(.badge) {
+    font-size: var(--font-size-sm);
+  }
+}
+.property-list__table tr th[data-key=price], .property-list__table tr th[data-key=days-on-market], .property-list__table tr th[data-key=size], .property-list__table tr td[data-key=price], .property-list__table tr td[data-key=days-on-market], .property-list__table tr td[data-key=size] {
+  font-weight: var(--font-weight-semibold);
+}
+.property-list__table tr th[data-key=price], .property-list__table tr td[data-key=price] {
+  color: var(--body-color-muted);
+}
+@media (min-width: 600px) {
+  .property-list__table tr th[data-key=price], .property-list__table tr td[data-key=price] {
+    grid-column: span 5;
+    text-align: right;
+  }
+}
+@media (min-width: 940px) {
+  .property-list__table tr th[data-key=price], .property-list__table tr td[data-key=price] {
+    text-align: left;
+    grid-column: 1/-1;
+  }
+}
+@media (min-width: 1140px) {
+  .property-list__table tr th[data-key=price], .property-list__table tr td[data-key=price] {
+    grid-column: span 2;
+    color: var(--body-color);
+    font-weight: var(--font-weight-normal);
+  }
+  .property-list__table tr th[data-key=price]:is(td), .property-list__table tr td[data-key=price]:is(td) {
+    font-size: var(--font-size-sm);
+  }
+}
+.property-list__table tr th[data-key=days-on-market], .property-list__table tr th[data-key=specs], .property-list__table tr th[data-key=size], .property-list__table tr td[data-key=days-on-market], .property-list__table tr td[data-key=specs], .property-list__table tr td[data-key=size] {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+}
+@media (min-width: 940px) {
+  .property-list__table tr th[data-key=days-on-market], .property-list__table tr th[data-key=specs], .property-list__table tr th[data-key=size], .property-list__table tr td[data-key=days-on-market], .property-list__table tr td[data-key=specs], .property-list__table tr td[data-key=size] {
+    order: -1;
+  }
+}
+@media (min-width: 1140px) {
+  .property-list__table tr th[data-key=days-on-market], .property-list__table tr th[data-key=specs], .property-list__table tr th[data-key=size], .property-list__table tr td[data-key=days-on-market], .property-list__table tr td[data-key=specs], .property-list__table tr td[data-key=size] {
+    order: unset;
+    align-items: flex-start;
+  }
+}
+.property-list__table tr th[data-key=days-on-market], .property-list__table tr th[data-key=size], .property-list__table tr td[data-key=days-on-market], .property-list__table tr td[data-key=size] {
+  grid-column: span 3;
+}
+@media (min-width: 600px) {
+  .property-list__table tr th[data-key=days-on-market], .property-list__table tr th[data-key=size], .property-list__table tr td[data-key=days-on-market], .property-list__table tr td[data-key=size] {
+    justify-content: flex-end;
+  }
+}
+@media (min-width: 768px) {
+  .property-list__table tr th[data-key=days-on-market], .property-list__table tr th[data-key=size], .property-list__table tr td[data-key=days-on-market], .property-list__table tr td[data-key=size] {
+    justify-content: flex-end;
+  }
+}
+@media (min-width: 940px) {
+  .property-list__table tr th[data-key=days-on-market], .property-list__table tr th[data-key=size], .property-list__table tr td[data-key=days-on-market], .property-list__table tr td[data-key=size] {
+    grid-column: span 2;
+  }
+}
+@media (min-width: 1140px) {
+  .property-list__table tr th[data-key=days-on-market], .property-list__table tr th[data-key=size], .property-list__table tr td[data-key=days-on-market], .property-list__table tr td[data-key=size] {
+    grid-column: span 1;
+    font-weight: var(--font-weight-normal, 400);
+    justify-content: flex-start;
+    text-align: left;
+  }
+  .property-list__table tr th[data-key=days-on-market]:is(td), .property-list__table tr th[data-key=size]:is(td), .property-list__table tr td[data-key=days-on-market]:is(td), .property-list__table tr td[data-key=size]:is(td) {
+    font-size: var(--font-size-sm);
+  }
+}
+@media (min-width: 600px) {
+  .property-list__table tr th[data-key=specs], .property-list__table tr td[data-key=specs] {
+    grid-column: span 6;
+  }
+}
+@media (min-width: 940px) {
+  .property-list__table tr th[data-key=specs], .property-list__table tr td[data-key=specs] {
+    grid-column: span 3;
+  }
+}
+@media (min-width: 1140px) {
+  .property-list__table tr th[data-key=specs], .property-list__table tr td[data-key=specs] {
+    grid-column: span 2;
+  }
+}
+.property-list__table tr th[data-key=days-on-market]:is(th), .property-list__table tr td[data-key=days-on-market]:is(th) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (min-width: 1140px) {
+  .property-list__table tr th[data-key=notes], .property-list__table tr td[data-key=notes] {
+    grid-column: span 5;
+  }
+  .property-list__table tr th[data-key=notes]:empty, .property-list__table tr td[data-key=notes]:empty {
+    display: none;
+  }
+  .property-list__table tr th[data-key=notes]:is(td), .property-list__table tr td[data-key=notes]:is(td) {
+    font-size: var(--font-size-sm);
+  }
+  .property-list__table tr th[data-key=notes]:is(td):not(:last-child), .property-list__table tr td[data-key=notes]:is(td):not(:last-child) {
+    padding-block-end: var(--spacing-sm);
+    border-block-end: 1px solid #DDD;
+    margin-block-end: var(--spacing-sm);
+  }
+}
+.property-list__table tr th[data-key=notes] ul:has(li:only-child), .property-list__table tr td[data-key=notes] ul:has(li:only-child) {
   list-style: none;
   margin: 0;
+}
+.property-list__table tr th[data-key=internet], .property-list__table tr td[data-key=internet] {
+  color: var(--body-color-muted);
+}
+@media (min-width: 1140px) {
+  .property-list__table tr th[data-key=internet], .property-list__table tr td[data-key=internet] {
+    grid-column: -6/-1;
+  }
+}
+.property-list__table tr th[data-key=internet]:is(th), .property-list__table tr td[data-key=internet]:is(th) {
+  display: none;
 }
 .property-list__empty {
   border: 1px solid var(--color-warning);

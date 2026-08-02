@@ -1,0 +1,15 @@
+﻿.external-link {
+	display: inline-flex;
+	gap: var(--spacing-xxs);
+	color: var(--link-color);
+	
+	svg {
+		width: 0.65em;
+		color: currentColor;
+		transform: translateY(-0.15em);
+		
+		path {
+			fill: currentColor;
+		}
+	}
+}

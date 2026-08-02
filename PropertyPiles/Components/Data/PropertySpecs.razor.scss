@@ -6,6 +6,10 @@
 		display: flex;
 		align-items: center;
 		gap: 2px;
+		
+		&[title] {
+			cursor: help;
+		}
 
 		svg {
 			width: 1.25rem;
