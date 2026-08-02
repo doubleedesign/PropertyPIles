@@ -12,23 +12,23 @@ public static class Logger {
 	}
 
 	public static void Success(string message, string extra = "") {
-		var label = ("✅  " + message).PadRight(LABEL_WIDTH);
-		AnsiConsole.MarkupLine($"[green]{label}{extra}[/]");
+		var label = ("✅  " + message).PadRight(LABEL_WIDTH).EscapeMarkup();
+		AnsiConsole.MarkupLine($"[green]{label}{extra.EscapeMarkup()}[/]");
 	}
 
 	public static void Error(string message, string extra = "") {
-		var label = ("❌  " + message).PadRight(LABEL_WIDTH);
-		AnsiConsole.MarkupLine($"[red]{label}{extra}[/]");
+		var label = ("❌  " + message).PadRight(LABEL_WIDTH).EscapeMarkup();
+		AnsiConsole.MarkupLine($"[red]{label}{extra.EscapeMarkup()}[/]");
 	}
 
 	public static void Warning(string message, string extra = "") {
-		var label = ("⚠️  " + message).PadRight(LABEL_WIDTH);
-		AnsiConsole.MarkupLine($"[yellow]{label}{extra}[/]");
+		var label = ("⚠️  " + message).PadRight(LABEL_WIDTH).EscapeMarkup();
+		AnsiConsole.MarkupLine($"[yellow]{label}{extra.EscapeMarkup()}[/]");
 	}
 
 	public static void Info(string message, string extra = "") {
-		var label = ("📄 " + message).PadRight(LABEL_WIDTH);
-		AnsiConsole.MarkupLine($"[blue]{label}{extra}[/]");
+		var label = ("📄 " + message).PadRight(LABEL_WIDTH).EscapeMarkup();
+		AnsiConsole.MarkupLine($"[blue]{label}{extra.EscapeMarkup()}[/]");
 	}
 
 	public static void DebugObject(object? theObject) {
