@@ -1,5 +1,6 @@
 .property-internet {
   max-width: 400px;
+  color: var(--body-color-muted);
   --link-color: var(--color-info);
   display: flex;
   flex-wrap: wrap;

@@ -8,7 +8,7 @@
 }
 .property-list__table {
   display: block;
-  min-width: 325px;
+  min-width: 360px;
 }
 .property-list__table thead {
   display: none;
@@ -74,6 +74,10 @@
 @media (min-width: 1140px) {
   .property-list__table tr {
     grid-template-columns: repeat(16, 1fr);
+  }
+}
+@media (min-width: 1440px) {
+  .property-list__table tr {
     column-gap: var(--spacing-sm);
   }
 }
@@ -107,7 +111,7 @@
 .property-list__table tr th, .property-list__table tr td {
   display: block;
 }
-.property-list__table tr th[data-key=address], .property-list__table tr th[data-key=price], .property-list__table tr th[data-key=specs], .property-list__table tr th[data-key=internet], .property-list__table tr th[data-key=notes], .property-list__table tr td[data-key=address], .property-list__table tr td[data-key=price], .property-list__table tr td[data-key=specs], .property-list__table tr td[data-key=internet], .property-list__table tr td[data-key=notes] {
+.property-list__table tr th[data-key=address], .property-list__table tr th[data-key=price], .property-list__table tr th[data-key=specs], .property-list__table tr th[data-key=notes], .property-list__table tr td[data-key=address], .property-list__table tr td[data-key=price], .property-list__table tr td[data-key=specs], .property-list__table tr td[data-key=notes] {
   grid-column: 1/-1;
 }
 .property-list__table tr th[data-key=address], .property-list__table tr td[data-key=address] {
@@ -121,10 +125,16 @@
 }
 @media (min-width: 940px) {
   .property-list__table tr th[data-key=address], .property-list__table tr td[data-key=address] {
-    grid-column: span 5;
+    grid-column: span 6;
+    grid-row: 1;
   }
 }
 @media (min-width: 1140px) {
+  .property-list__table tr th[data-key=address], .property-list__table tr td[data-key=address] {
+    grid-column: span 4;
+  }
+}
+@media (min-width: 1440px) {
   .property-list__table tr th[data-key=address], .property-list__table tr td[data-key=address] {
     grid-column: span 5;
   }
@@ -163,6 +173,7 @@
 }
 .property-list__table tr th[data-key=price], .property-list__table tr td[data-key=price] {
   color: var(--body-color-muted);
+  grid-column: span 3;
 }
 @media (min-width: 600px) {
   .property-list__table tr th[data-key=price], .property-list__table tr td[data-key=price] {
@@ -173,12 +184,14 @@
 @media (min-width: 940px) {
   .property-list__table tr th[data-key=price], .property-list__table tr td[data-key=price] {
     text-align: left;
-    grid-column: 1/-1;
+    grid-column: span 6;
+    grid-row: 2;
   }
 }
 @media (min-width: 1140px) {
   .property-list__table tr th[data-key=price], .property-list__table tr td[data-key=price] {
     grid-column: span 2;
+    grid-row: 1;
     color: var(--body-color);
     font-weight: var(--font-weight-normal);
   }
@@ -186,15 +199,15 @@
     font-size: var(--font-size-sm);
   }
 }
+@media (min-width: 1440px) {
+  .property-list__table tr th[data-key=price], .property-list__table tr td[data-key=price] {
+    grid-column: span 2;
+  }
+}
 .property-list__table tr th[data-key=days-on-market], .property-list__table tr th[data-key=specs], .property-list__table tr th[data-key=size], .property-list__table tr td[data-key=days-on-market], .property-list__table tr td[data-key=specs], .property-list__table tr td[data-key=size] {
   display: flex;
   gap: var(--spacing-sm);
   align-items: center;
-}
-@media (min-width: 940px) {
-  .property-list__table tr th[data-key=days-on-market], .property-list__table tr th[data-key=specs], .property-list__table tr th[data-key=size], .property-list__table tr td[data-key=days-on-market], .property-list__table tr td[data-key=specs], .property-list__table tr td[data-key=size] {
-    order: -1;
-  }
 }
 @media (min-width: 1140px) {
   .property-list__table tr th[data-key=days-on-market], .property-list__table tr th[data-key=specs], .property-list__table tr th[data-key=size], .property-list__table tr td[data-key=days-on-market], .property-list__table tr td[data-key=specs], .property-list__table tr td[data-key=size] {
@@ -207,25 +220,27 @@
 }
 @media (min-width: 600px) {
   .property-list__table tr th[data-key=days-on-market], .property-list__table tr th[data-key=size], .property-list__table tr td[data-key=days-on-market], .property-list__table tr td[data-key=size] {
-    justify-content: flex-end;
+    grid-column: span 3;
+    grid-row: 2;
   }
 }
 @media (min-width: 768px) {
   .property-list__table tr th[data-key=days-on-market], .property-list__table tr th[data-key=size], .property-list__table tr td[data-key=days-on-market], .property-list__table tr td[data-key=size] {
-    justify-content: flex-end;
+    justify-content: flex-start;
   }
 }
 @media (min-width: 940px) {
   .property-list__table tr th[data-key=days-on-market], .property-list__table tr th[data-key=size], .property-list__table tr td[data-key=days-on-market], .property-list__table tr td[data-key=size] {
     grid-column: span 2;
+    grid-row: 4;
+    text-align: left;
   }
 }
 @media (min-width: 1140px) {
   .property-list__table tr th[data-key=days-on-market], .property-list__table tr th[data-key=size], .property-list__table tr td[data-key=days-on-market], .property-list__table tr td[data-key=size] {
     grid-column: span 1;
+    grid-row: 1;
     font-weight: var(--font-weight-normal, 400);
-    justify-content: flex-start;
-    text-align: left;
   }
   .property-list__table tr th[data-key=days-on-market]:is(td), .property-list__table tr th[data-key=size]:is(td), .property-list__table tr td[data-key=days-on-market]:is(td), .property-list__table tr td[data-key=size]:is(td) {
     font-size: var(--font-size-sm);
@@ -233,18 +248,32 @@
 }
 @media (min-width: 600px) {
   .property-list__table tr th[data-key=specs], .property-list__table tr td[data-key=specs] {
-    grid-column: span 6;
+    grid-column: span 4;
+    grid-row: 2;
+  }
+}
+@media (min-width: 768px) {
+  .property-list__table tr th[data-key=specs], .property-list__table tr td[data-key=specs] {
+    grid-column: span 3;
   }
 }
 @media (min-width: 940px) {
   .property-list__table tr th[data-key=specs], .property-list__table tr td[data-key=specs] {
-    grid-column: span 3;
+    grid-column: span 6;
+    grid-row: 3;
+    padding-block: var(--spacing-xs);
   }
 }
 @media (min-width: 1140px) {
   .property-list__table tr th[data-key=specs], .property-list__table tr td[data-key=specs] {
     grid-column: span 2;
+    grid-row: 1;
+    padding: 0;
   }
+}
+.property-list__table tr th[data-key=days-on-market], .property-list__table tr td[data-key=days-on-market] {
+  justify-content: flex-end;
+  grid-column: span 3;
 }
 .property-list__table tr th[data-key=days-on-market]:is(th), .property-list__table tr td[data-key=days-on-market]:is(th) {
   display: -webkit-box;
@@ -253,36 +282,53 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+@media (min-width: 600px) {
+  .property-list__table tr th[data-key=days-on-market], .property-list__table tr td[data-key=days-on-market] {
+    grid-column: -5/-1;
+  }
+}
+@media (min-width: 768px) {
+  .property-list__table tr th[data-key=days-on-market], .property-list__table tr td[data-key=days-on-market] {
+    transform: translateY(-2em);
+  }
+}
+@media (min-width: 940px) {
+  .property-list__table tr th[data-key=days-on-market], .property-list__table tr td[data-key=days-on-market] {
+    grid-row: 4;
+    grid-column: span 2;
+    justify-content: flex-start;
+    transform: none;
+  }
+}
 @media (min-width: 1140px) {
+  .property-list__table tr th[data-key=days-on-market], .property-list__table tr td[data-key=days-on-market] {
+    grid-row: 1;
+    grid-column: span 1;
+  }
+}
+@media (min-width: 940px) {
   .property-list__table tr th[data-key=notes], .property-list__table tr td[data-key=notes] {
-    grid-column: span 5;
+    grid-row: span 6;
+    grid-column: 7/-1;
   }
-  .property-list__table tr th[data-key=notes]:empty, .property-list__table tr td[data-key=notes]:empty {
-    display: none;
-  }
-  .property-list__table tr th[data-key=notes]:is(td), .property-list__table tr td[data-key=notes]:is(td) {
-    font-size: var(--font-size-sm);
-  }
-  .property-list__table tr th[data-key=notes]:is(td):not(:last-child), .property-list__table tr td[data-key=notes]:is(td):not(:last-child) {
-    padding-block-end: var(--spacing-sm);
+}
+.property-list__table tr th[data-key=notes]:is(td), .property-list__table tr td[data-key=notes]:is(td) {
+  font-size: var(--font-size-sm);
+}
+.property-list__table tr th[data-key=notes]:is(td) ul:not(:last-child), .property-list__table tr td[data-key=notes]:is(td) ul:not(:last-child) {
+  padding-block-end: var(--spacing-sm);
+}
+@media (min-width: 940px) {
+  .property-list__table tr th[data-key=notes]:is(td) ul:not(:last-child), .property-list__table tr td[data-key=notes]:is(td) ul:not(:last-child) {
     border-block-end: 1px solid #DDD;
     margin-block-end: var(--spacing-sm);
   }
 }
-.property-list__table tr th[data-key=notes] ul:has(li:only-child), .property-list__table tr td[data-key=notes] ul:has(li:only-child) {
-  list-style: none;
-  margin: 0;
-}
-.property-list__table tr th[data-key=internet], .property-list__table tr td[data-key=internet] {
-  color: var(--body-color-muted);
-}
 @media (min-width: 1140px) {
-  .property-list__table tr th[data-key=internet], .property-list__table tr td[data-key=internet] {
-    grid-column: -6/-1;
+  .property-list__table tr th[data-key=notes], .property-list__table tr td[data-key=notes] {
+    grid-row: 1;
+    grid-column: span 6;
   }
-}
-.property-list__table tr th[data-key=internet]:is(th), .property-list__table tr td[data-key=internet]:is(th) {
-  display: none;
 }
 .property-list__empty {
   border: 1px solid var(--color-warning);

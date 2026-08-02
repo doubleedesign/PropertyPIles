@@ -131,8 +131,8 @@ h2 {
 
 ul, ol {
   margin: 0;
-  margin-inline-start: 1rem;
   padding: 0;
+  padding-inline-start: 1rem;
 }
 
 a {

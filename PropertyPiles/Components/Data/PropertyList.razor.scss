@@ -6,7 +6,7 @@
 	
 	&__table {
 		display: block;
-		min-width: 325px;
+		min-width: 360px;
 		
 		thead {
 			display: none;
@@ -70,6 +70,9 @@
 			
 			@include media-breakpoint-up('contained') {
 				grid-template-columns: repeat(16, 1fr);
+			}
+
+			@include media-breakpoint-up('wide') {
 				column-gap: var(--spacing-sm);
 			}
 
@@ -114,7 +117,6 @@
 				&[data-key="address"],
 				&[data-key="price"],
 				&[data-key="specs"],
-				&[data-key="internet"],
 				&[data-key="notes"] {
 					grid-column: 1 / -1;
 				}
@@ -128,11 +130,16 @@
 					}
 					
 					@include media-breakpoint-up('narrow') {
-					    grid-column: span 5;
+						grid-column: span 6;
+						grid-row: 1;
 					}
 					
 					@include media-breakpoint-up('contained') {
-					    grid-column: span 5;
+					    grid-column: span 4;
+					}
+
+					@include media-breakpoint-up('wide') {
+						grid-column: span 5;
 					}
 					
 					.address {
@@ -176,7 +183,8 @@
 				}
 
 				&[data-key="price"] {
-					color: var(--body-color-muted);
+					color: var(--body-color-muted); 
+					grid-column: span 3; 
 
 					@include media-breakpoint-up('small') {
 						grid-column: span 5;
@@ -185,17 +193,23 @@
 					
 					@include media-breakpoint-up('narrow') {
 						text-align: left;
-						grid-column: 1 / -1;
+						grid-column: span 6;
+						grid-row: 2;
 					}
 					
 					@include media-breakpoint-up('contained') {
 						grid-column: span 2;
+						grid-row: 1;
 						color: var(--body-color);
 						font-weight: var(--font-weight-normal);
 						
 						&:is(td) {
 							font-size: var(--font-size-sm);
 						}
+					}
+
+					@include media-breakpoint-up('wide') {
+						grid-column: span 2;
 					}
 				}
 				
@@ -205,10 +219,6 @@
 					display: flex;
 					gap: var(--spacing-sm);
 					align-items: center;
-					
-					@include media-breakpoint-up('narrow') {
-					    order: -1;
-					}
 					
 					@include media-breakpoint-up('contained') {
 					    order: unset;
@@ -221,22 +231,25 @@
 					grid-column: span 3;
 
 					@include media-breakpoint-up('small') {
-						justify-content: flex-end;
+						grid-column: span 3;
+						grid-row: 2;
 					}
 					
 					@include media-breakpoint-up('narrower') {
-						justify-content: flex-end;
+		
+						justify-content: flex-start;
 					}
 
 					@include media-breakpoint-up('narrow') {
 						grid-column: span 2;
+						grid-row: 4;
+						text-align: left;
 					}
 
 					@include media-breakpoint-up('contained') {
 						grid-column: span 1;
+						grid-row: 1;
 						font-weight: var(--font-weight-normal, 400);
-						justify-content: flex-start;
-						text-align: left;
 						
 						&:is(td) {
 							font-size: var(--font-size-sm);
@@ -246,59 +259,83 @@
 
 				&[data-key="specs"] {
 					@include media-breakpoint-up('small') {
-					    grid-column: span 6;
+					    grid-column: span 4;
+						grid-row: 2;
+					}
+
+					@include media-breakpoint-up('narrower') {
+						grid-column: span 3;
 					}
 					
 					@include media-breakpoint-up('narrow') {
-					    grid-column: span 3;
+					    grid-column: span 6;
+						grid-row: 3;
+						padding-block: var(--spacing-xs);
 					}
 					
 					@include media-breakpoint-up('contained') {
 					    grid-column: span 2;
+						grid-row: 1;
+						padding: 0;
 					}
 				}
 				
 				&[data-key="days-on-market"] {
+					justify-content: flex-end;
+					grid-column: span 3;
+					
 					&:is(th) {
 						@include line-clamp(1);
+					}
+					
+					@include media-breakpoint-up('small') {
+						grid-column: -5 / -1;
+					}
+
+					@include media-breakpoint-up('narrower') {
+						transform: translateY(-2em);
+					}
+					
+					@include media-breakpoint-up('narrow') {
+					    grid-row: 4;
+						grid-column: span 2;
+						justify-content: flex-start;
+						transform: none;
+					}
+					
+					@include media-breakpoint-up('contained') {
+					    grid-row: 1;
+						grid-column: span 1;
 					}
 				}
 
 				&[data-key="notes"] {
 					
-					@include media-breakpoint-up('contained') {
-					    grid-column: span 5;
-						
-						&:empty {
-							display: none;
-						}
-						
-						&:is(td) {
-							font-size: var(--font-size-sm);
+					@include media-breakpoint-up('narrow') {
+						grid-row: span 6;
+						grid-column: 7 / -1;
+					}
+
+					&:is(td) {
+						font-size: var(--font-size-sm);
+
+						ul:not(:last-child) {
+							padding-block-end: var(--spacing-sm);
 							
-							&:not(:last-child) {
-								padding-block-end: var(--spacing-sm);
+							@include media-breakpoint-up('narrow') {
 								border-block-end: 1px solid #DDD;
 								margin-block-end: var(--spacing-sm);
 							}
 						}
 					}
 					
-					ul:has(li:only-child) {
-						list-style: none;
-						margin: 0;
-					}
-				}
-
-				&[data-key="internet"] {
-					color: var(--body-color-muted);
 					
 					@include media-breakpoint-up('contained') {
-						grid-column: -6 / -1;
+						grid-row: 1;
+						grid-column: span 6;
 					}
 					
-					&:is(th) {
-						display: none;
+					ul:has(li:only-child) {
 					}
 				}
 			}

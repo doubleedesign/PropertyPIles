@@ -2,10 +2,11 @@
 
 .property-internet {
 	max-width: 400px;
+	color: var(--body-color-muted);
 	--link-color: var(--color-info);
 	display: flex;
 	flex-wrap: wrap;
-	align-items: center;
+	align-items: center; 
 	
 	@include media-breakpoint-up('contained') {
 	    max-width: none;
