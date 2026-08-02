@@ -6,23 +6,27 @@ namespace PropertyPiles.Services.JsonParsers;
 
 public class JsonNestedPropertyAttribute(string[] hierarchy) : JsonConverterAttribute {
 	public override JsonConverter CreateConverter(Type type) {
-		if (type == typeof(bool)) {
+		Type underlyingType = Nullable.GetUnderlyingType(type) ?? type;
+
+		if (underlyingType == typeof(bool)) {
 			return new NestedBool(hierarchy);
 		}
 
-		if (type == typeof(string)) {
+		if (underlyingType == typeof(string)) {
 			return new NestedString(hierarchy);
 		}
 
-		if (type == typeof(int)) {
+		if (underlyingType == typeof(int)) {
 			return new NestedInt(hierarchy);
 		}
-		
-		if(type == typeof(List<Dictionary<string, string>>)) {
+
+		if (type == typeof(List<Dictionary<string, string>>)) {
 			return new NestedList(hierarchy);
 		}
 
-		throw new NotImplementedException("Could not process nested attribute at path: " + string.Join(".", hierarchy));
+		throw new NotImplementedException(
+			$"Could not process nested attribute at path: {string.Join(".", hierarchy)} of type {type.FullName}"
+		);
 	}
 	
 	private class NestedBool(string[] hierarchy) : JsonConverter<bool> {
