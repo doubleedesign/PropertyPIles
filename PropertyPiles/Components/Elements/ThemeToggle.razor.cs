@@ -15,11 +15,15 @@ public partial class ThemeToggle : ComponentBase, IAsyncDisposable {
 	
 	protected override async Task OnAfterRenderAsync(bool firstRender) {
 		if (!firstRender) return;
-		
-		_jsModule = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "/Components/Elements/ThemeToggle.razor.js");
-		
-		var theme = await _jsModule.InvokeAsync<string>("loadTheme");
-		AppState.SetTheme(theme);
+
+		try {
+			_jsModule = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "/Components/Elements/ThemeToggle.razor.js");
+
+			var theme = await _jsModule.InvokeAsync<string>("loadTheme");
+			AppState.SetTheme(theme);
+		}
+		catch (JSDisconnectedException) { }
+		catch (ObjectDisposedException) { }
 	}
 
 	private async Task OnToggle() { 
