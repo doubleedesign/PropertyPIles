@@ -34,11 +34,16 @@ public partial class PropertyList : ComponentBase {
 		await base.OnInitializedAsync(); 
 		await this.InjectedShortlistService.Init(this.InjectedFileService, this.InjectedListingDataService, this.InjectedInternetCoverageService);
 		this.Items = await this.InjectedShortlistService.GetList(this.ListName);
+		this.SortItemsByDaysOnMarket();
 		
 		if (this.InjectedShortlistService.GetErrorsForList(this.ListName).Count > 0) {
 			// TODO: Show a single error message somewhere
 		}
 		
 		this._isLoading = false;
+	}
+
+	protected void SortItemsByDaysOnMarket() {
+		this.Items = this.Items.OrderBy(p => p.Data?.DaysOnMarket).ToList();
 	}
 }
