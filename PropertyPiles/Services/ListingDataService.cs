@@ -48,7 +48,7 @@ public class ListingDataService : DataService {
 			long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 			long timeAgo = now - timestamp;
 			// Return the data if less than or equal to the max cache age (set in seconds)
-			int maxCacheAge = int.TryParse(Environment.GetEnvironmentVariable("MAX_CACHE_AGE"), out int parsedValue) ? parsedValue : 3600;
+			int maxCacheAge = int.TryParse(Environment.GetEnvironmentVariable("MAX_CACHE_AGE"), out int parsedValue) ? parsedValue : 86400;
 			if (timeAgo < maxCacheAge) {
 				Logger.Info($"Found recent cached record for property {id}");
 				return this.ConvertJsonResponseDetail(doc);

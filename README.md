@@ -35,7 +35,7 @@ For Australian users: National Broadband Network, Opticomm or alternative covera
 
 ### Caching
 
-The nature of the API's capabilities are such that a request is made for every property on every page load, so a rudimentary caching mechanism has been implemented in the form of saving the API responses to JSON files, and only querying the API when the data is more than an hour old. Customise the cache max time by setting the `MAX_CACHE_AGE` environment variable to your desired expiry time in seconds.
+The nature of the API's capabilities are such that a request is made for every property on every page load, so a rudimentary caching mechanism has been implemented in the form of saving the API responses to JSON files, and only querying the API when the data is more than 24 hours old. Customise the cache max time by setting the `MAX_CACHE_AGE` environment variable to your desired expiry time in seconds.
 
 ### Authentication
 
