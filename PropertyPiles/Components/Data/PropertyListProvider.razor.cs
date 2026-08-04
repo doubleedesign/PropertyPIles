@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using PropertyPiles.Services;
+using PropertyPiles.Utils;
 
 namespace PropertyPiles.Components.Data;
 
@@ -11,6 +12,7 @@ public partial class PropertyListProvider : ComponentBase {
 	public required RenderFragment ChildContent { get; set; }
 
 	protected override async Task OnInitializedAsync() {
+		Logger.Info("Initializing property list provider");
 		await base.OnInitializedAsync();
 		await this.ShortlistService.Init();
 		

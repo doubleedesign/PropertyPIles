@@ -25,7 +25,9 @@
                 <tr class="property-list__table__row" data-property-id="@Item.Id" data-status="@Item.Data?.Status">
                     <td data-key="address">
                         <p class="address">
-                            <a href="@Item.GetUrl()" target="_blank">@Item.GetFormattedAddress()</a>
+                            <a href="@Item.GetUrl()" target="_blank">
+                                @(string.IsNullOrEmpty(Item.GetFormattedAddress()) ? Item.GetShortAddress() : Item.GetFormattedAddress())
+                            </a>
                             @if (Item.Data?.Status == "Archived") {
                                 <span class="badge" data-key="Removed">Removed</span>
                             }
