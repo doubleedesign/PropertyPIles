@@ -1,7 +1,9 @@
 ﻿@page "/"
 @using PropertyPiles.Components.Data
 
-<PropertyList Id="shortlist" ListName="priority" Title="Priority Pile" />
-<PropertyList Id="maybe" ListName="maybe" Title="Maybe Pile" />
-<PropertyList Id="dismissed" ListName="dismissed" Title="Rubbish Pile"/>
-<PropertyList Id="sold" ListName="sold" Title="Sold Pile" />
+<PropertyListProvider>
+    <PropertyList Id="shortlist" ListName="priority" Title="Priority Pile" />
+    <PropertyList Id="maybe" ListName="maybe" Title="Maybe Pile" />
+    <PropertyList Id="dismissed" ListName="dismissed" Title="Rubbish Pile"/>
+    <PropertyList Id="sold" ListName="sold" Title="Sold Pile" />
+</PropertyListProvider>

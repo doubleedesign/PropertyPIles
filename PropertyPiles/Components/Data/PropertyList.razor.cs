@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using PropertyPiles.Services;
 using PropertyPiles.Types;
+using PropertyPiles.Utils;
 
 namespace PropertyPiles.Components.Data;
 
@@ -9,16 +10,7 @@ public partial class PropertyList : ComponentBase {
 	private bool _isLoading = true;
 	
 	[Inject]
-	private ListingDataService InjectedListingDataService { get; set; } = default!;
-	
-	[Inject]
-	private FileService InjectedFileService { get; set; } = default!;
-	
-	[Inject]
-	private ShortlistService InjectedShortlistService { get; set; } = default!;
-	
-	[Inject]
-	private InternetCoverageService InjectedInternetCoverageService { get; set; } = default!;
+	private ShortlistService ShortlistService { get; set; } = default!;
 	
 	[Parameter]
 	public required string Id { get; set; }
@@ -31,19 +23,14 @@ public partial class PropertyList : ComponentBase {
 	
 	
 	protected override async Task OnInitializedAsync() {
-		await base.OnInitializedAsync(); 
-		await this.InjectedShortlistService.Init(this.InjectedFileService, this.InjectedListingDataService, this.InjectedInternetCoverageService);
-		this.Items = await this.InjectedShortlistService.GetList(this.ListName);
+		await base.OnInitializedAsync();
+		this.Items = await this.ShortlistService.GetList(this.ListName);
 		this.SortItemsByDaysOnMarket();
-		
-		if (this.InjectedShortlistService.GetErrorsForList(this.ListName).Count > 0) {
-			// TODO: Show a single error message somewhere
-		}
 		
 		this._isLoading = false;
 	}
-
-	protected void SortItemsByDaysOnMarket() {
+	
+	private void SortItemsByDaysOnMarket() {
 		this.Items = this.Items.OrderBy(p => p.Data?.DaysOnMarket).ToList();
 	}
 }

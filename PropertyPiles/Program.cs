@@ -12,14 +12,15 @@ AnsiConsole.Profile.Width = 160;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the container
+// Note: Loading order matters here. If a service depends on another one, the dependency must be loaded first.
 builder.Services.AddSingleton<AppState>();
 builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 builder.Services.AddHttpClient();
 builder.Services.AddSingleton<FileService>();
 builder.Services.AddSingleton<ListingDataService>();
-builder.Services.AddSingleton<ShortlistService>();
 builder.Services.AddSingleton<InternetCoverageService>();
+builder.Services.AddSingleton<ShortlistService>();
 
 var app = builder.Build();
 

@@ -1,8 +1,8 @@
-﻿using Azure;
-using PropertyPiles.Extensions;
-namespace PropertyPiles.Services;
-using Types;
+﻿using PropertyPiles.Extensions;
 using System.Text.Json;
+using PropertyPiles.Types;
+
+namespace PropertyPiles.Services;
 
 public class FileService {
 	private List<SavedItem>? _savedItems;
@@ -19,7 +19,6 @@ public class FileService {
 		}
 		
 		this._savedItems = JsonSerializer.Deserialize<List<SavedItem>>(json);
-
 	}
 
 	private string GetLocalFileContents() {
