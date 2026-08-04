@@ -26,7 +26,7 @@ public abstract class DataService {
 
 			// Convert to mutable JsonObject, remove some fields if present, and add timestamp
 			string rawJson = response.RootElement.GetRawText();
-			JsonObject jsonObject = JsonSerializer.Deserialize<JsonObject>(rawJson)!;
+			JsonObject jsonObject = JsonSerializer.Deserialize<JsonObject>(rawJson,  new JsonSerializerOptions { AllowTrailingCommas = true })!;
 			jsonObject.Remove("broadbandPlans");
 			if (!jsonObject.ContainsKey("timestamp")) {
 				jsonObject.Add("timestamp", JsonValue.Create(DateTimeOffset.UtcNow.ToUnixTimeSeconds()));

@@ -18,7 +18,7 @@ public class FileService {
 			throw new FileLoadException("Failed to load data.json from storage service, or the file is empty.");
 		}
 		
-		this._savedItems = JsonSerializer.Deserialize<List<SavedItem>>(json);
+		this._savedItems = JsonSerializer.Deserialize<List<SavedItem>>(json, new JsonSerializerOptions { AllowTrailingCommas = true });
 	}
 
 	private string GetLocalFileContents() {
