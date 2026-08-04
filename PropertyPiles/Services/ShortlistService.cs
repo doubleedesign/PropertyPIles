@@ -81,17 +81,24 @@ public class ShortlistService {
 			}
 			finally {
 				var listToAddTo = this.DetermineListForProperty(property);
-				this._shortlists[listToAddTo].Add(property);
+				if (listToAddTo != null) {
+					this._shortlists[listToAddTo].Add(property);
+				}
 			}
 		}
 	}
 
-	private string DetermineListForProperty(PropertyRecord property) {
+	private string? DetermineListForProperty(PropertyRecord property) {
 		// Discard dismissed properties when they get sold
-		if (property.Data?.Status == "Sold" && property.DismissedReasons?.Length < 1) {
+		if (property.Data?.Status == "Sold") {
+			// Ignore dismissed properties once they are sold
+			if (property.DismissedReasons != null && property.DismissedReasons.Any()) {
+				return null;
+			}
+			
 			return "sold";
 		}
-		if (property.DismissedReasons?.Length > 0) {
+		if (property.DismissedReasons != null && property.DismissedReasons.Any()) {
 			return "dismissed";
 		}
 		if (property.IsPriority) {
